@@ -17,15 +17,14 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 
 @app.route('/')
 def home():
-    #cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    #cursor.execute("select distinct(product_name), base_price, supplier_name, count(product_name) as amount from products join suppliers on suppliers.supplier_id=products.supplier_id group by base_price, product_name, supplier_name")
-    #data = cursor.fetchall()
-    #if 'loggedin' in session:
-        #if session['is_admin'] == True:
-            #return render_template('home_admin.html', email=session['email'], is_admin=session['is_admin'], data=data )
-        #else:
-            #return render_template('home_user.html', email=session['email'], data=data)
-    return render_template('home.html')#, data=data)
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("select username from users where username = '%s'")#fixa så att där står username
+    data = cursor.fetchall()
+    if 'loggedin' in session:
+            return render_template('home_user.html', data=data)
+    elif 'loggedin' not in session:
+         return redirect(url_for('login'))
+
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -64,8 +63,8 @@ def register():
             flash('Account already exists!')
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             flash('Invalid email address!')
-        #elif not password or not email or not username:
-            #flash('Please fill out the form!')
+        elif not password or not email or not username:
+            flash('Please fill out the form!')
         else:
             cursor.execute("INSERT INTO users (username, email, password) VALUES (%s,%s,%s)", (username, email, _hashed_password,))
             conn.commit()
