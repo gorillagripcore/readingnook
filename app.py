@@ -1,29 +1,30 @@
 from flask import Flask, request, session, redirect, url_for, render_template, flash
-import psycopg2 #pip install psycopg2 
+import psycopg2  # pip install psycopg2
 import psycopg2.extras
-import re 
+import re
 from werkzeug.security import generate_password_hash, check_password_hash
- 
+
 app = Flask(__name__)
 app.secret_key = 'an4231'
- 
+
 DB_HOST = "pgserver.mau.se"
 DB_NAME = "an4231"
 DB_USER = "an4231"
 DB_PASS = "6umx36wl"
 
-conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
+conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER,
+                        password=DB_PASS, host=DB_HOST)
 
 
 @app.route('/')
 def home():
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("select username from users where username = '%s'")#fixa så att där står username
-    data = cursor.fetchall()
-    if 'loggedin' in session:
-            return render_template('home_user.html', data=data)
-    elif 'loggedin' not in session:
-         return redirect(url_for('login'))
+    # cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    # cursor.execute("select username from users where username = '%s'")#fixa så att där står username
+    # data = cursor.fetchall()
+    if 'loggedin' not in session:
+        return redirect(url_for('login'))
+    return render_template('home.html')  # data=data)
+    
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -49,6 +50,7 @@ def login():
             flash('Incorrect username/password')
     return render_template('login.html')
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -66,12 +68,20 @@ def register():
         elif not password or not email or not username:
             flash('Please fill out the form!')
         else:
-            cursor.execute("INSERT INTO users (username, email, password) VALUES (%s,%s,%s)", (username, email, _hashed_password,))
+            cursor.execute("INSERT INTO users (username, email, password) VALUES (%s,%s,%s)",
+                           (username, email, _hashed_password,))
             conn.commit()
             flash('You have successfully registered!')
     elif request.method == 'POST':
         flash('Please fill out the form!')
     return render_template('register.html')
+
+@app.route('/logout')
+def logout():
+   session.pop('loggedin', None)
+   session.pop('username', None)
+   return redirect(url_for('login'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
