@@ -18,13 +18,10 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER,
 
 @app.route('/')
 def home():
-    # cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    # cursor.execute("select username from users where username = '%s'")#fixa så att där står username
-    # data = cursor.fetchall()
     if 'loggedin' not in session:
         return redirect(url_for('login'))
-    return render_template('home.html')  # data=data)
-    
+    username = session['username']
+    return render_template('home.html', username=username)
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -76,11 +73,12 @@ def register():
         flash('Please fill out the form!')
     return render_template('register.html')
 
+
 @app.route('/logout')
 def logout():
-   session.pop('loggedin', None)
-   session.pop('username', None)
-   return redirect(url_for('login'))
+    session.pop('loggedin', None)
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
 
 if __name__ == "__main__":
