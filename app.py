@@ -73,6 +73,21 @@ def register():
         flash('Please fill out the form!')
     return render_template('register.html')
 
+@app.route('/profile')
+def profile():
+    username = session['username']
+    return render_template('profile.html', username=username)
+
+@app.route('/your_club')
+def your_club():
+    username = session['username']
+    return render_template('your_club.html', username=username)
+
+@app.route('/public_clubs')
+def public_clubs():
+    username = session['username']
+    return render_template('public_clubs.html', username=username)
+
 
 @app.route('/logout')
 def logout():
