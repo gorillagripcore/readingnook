@@ -76,7 +76,10 @@ def register():
 @app.route('/profile')
 def profile():
     username = session['username']
-    return render_template('profile.html', username=username)
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("select pfp from users where username = %s", (username,))
+    pfp = cursor.fetchone()[0]
+    return render_template('profile.html', username=username, pfp=pfp)
 
 @app.route('/your_club')
 def your_club():
