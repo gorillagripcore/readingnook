@@ -204,53 +204,37 @@ span.input-group-addon i {
    color: #fff;
 }
 
-
-
-.columns {
-   margin: 5rem auto;
-   width: min(90%, 75rem);
+.grid-container {
    display: grid;
-   grid-auto-flow: row;
-   gap: 2em;
+   grid-template-columns: repeat(3, 1fr);
+   grid-gap: 10px;
  }
  
- @media (min-width: 55em) {
-   .columns {
-     grid-auto-flow: column;
-   
-    }
+ .section1 {
+   background-color: rgb(182, 199, 238);
+   height: 700px;
  }
  
- 
- *,
- *::before,
- *::after {
-   box-sizing: border-box;
+ .section2 {
+   background-color: rgb(255, 255, 255);
+   height: 700px;
+   width: 550px;
  }
  
- :root {  
-   --clr-primary: #ee6352;
-   --clr-secondary: #d16e8d;
-   --clr-accent: #F7F7FF;
-   --clr-gradient: linear-gradient(-90deg, var(--clr-primary), var(--clr-secondary));
-   --ff-title: bungee, sans-serif;
-   --ff-body: canada-type-gibson,sans-serif;
-   --fw-body: 300;
-   --fw-bold: 800;
-   --fw-title: 400;
-   --fw-number: 800;
+ .section3 {
+   background-color:rgb(182, 199, 238);
+   height: 700px;
  }
  
- body {
-   
-   font-size: 1.25rem;
- }
- 
+ header {
+   background-color: #333;
+   color: #fff;
+   padding: 20px;
 
+}
  
  footer {
-   background-color: #b6c7f7;
-   color: white;
+   background-color: #333;
+   color: #fff;
    padding: 20px;
  }
- 
