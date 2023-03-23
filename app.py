@@ -81,6 +81,22 @@ def profile():
     pfp = cursor.fetchone()[0]
     return render_template('profile.html', username=username, pfp=pfp)
 
+@app.route('/pfp', methods=['GET', 'POST'])
+def pfp():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        pfp = request.form['pfp']
+        cursor.execute("UPDATE users SET pfp = %s WHERE username = %s;", (pfp, username,))
+        conn.commit()
+        cursor.close()
+        flash('Profile picture updated successfully!')
+        return redirect(url_for('pfp'))
+    else:
+        return render_template('pfp.html')
+
+
+
 @app.route('/your_club')
 def your_club():
     username = session['username']
