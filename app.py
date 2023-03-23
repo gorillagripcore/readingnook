@@ -109,7 +109,7 @@ def public_clubs():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute("select title, pic, descr from book_clubs")
     book_clubs = cursor.fetchall()
-    return render_template('public_clubs.html', book_clubs = book_clubs)
+    return render_template('public_clubs.html', book_clubs=book_clubs)
 
 
 @app.route('/logout')

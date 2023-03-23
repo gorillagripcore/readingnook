@@ -21,29 +21,29 @@
 <body>
   {% include 'navbar.html' %}
 
-<div class="container text-center pc" style="margin-top: 60px;">
-  <div class="row">
-    <div class="col">
-      
-    </div>
-    <div class="col">
-      {% for book_club in book_clubs %}
-      <div class="container text-center pc_box">
-        <div class="row">
-          <div class="col-3">
-            <img src="{{ book_club[1] }}" alt="pic" class="pc" width="100px" height="135px">
-          </div>
-          <div class="col-8">
-            <h4>{{ book_club[0] }}</h4>
-            <p>{{ book_club[2] }}</p>
-            <input type="submit" value="Join" class="form-control btn" name="">
+  <div class="container text-center pc" style="margin-top: 60px;">
+    <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col">
+        {% for book_club in book_clubs %}
+        <div class="container text-center pc_box">
+          <div class="row">
+            <div class="col-3">
+              <img src="{{ book_club[1] }}" alt="pic" class="pc" width="100px" height="135px">
+            </div>
+            <div class="col-8">
+              <h4>{{ book_club[0] }}</h4>
+              <p>{{ book_club[2] }}</p>
+              <input type="submit" value="Join" class="form-control btn" name="">
+            </div>
           </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    <div class="col">
-      
+      <div class="col">
+
+      </div>
     </div>
   </div>
-</div>

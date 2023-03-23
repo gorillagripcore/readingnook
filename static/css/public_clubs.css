@@ -1,4 +1,4 @@
-.pc_box{
+.pc_box {
     background-color: #fdf5ea;
     width: 450px;
     height: 170px;
@@ -7,7 +7,7 @@
     position: relative
 }
 
-.pc_box img{
+.pc_box img {
     margin-top: 15px;
     margin-right: 100px;
     width: 100px;
@@ -15,24 +15,24 @@
     border-radius: 7px;
 }
 
-.pc_box h4{
+.pc_box h4 {
     margin-top: 10px;
     text-align: left;
 }
 
-.pc_box input{
-    width:100px; 
-    margin: 2% 2% 1% 35%; 
+.pc_box input {
+    width: 100px;
+    margin: 2% 2% 1% 35%;
     background-color: #c8ebf7;
     position: absolute;
-    top: 65%; 
+    top: 65%;
     left: 41%;
 }
 
-.pc_box p{
+.pc_box p {
     text-align: left;
 }
 
-.pc{
-   background-color: white; 
+.pc {
+    background-color: white;
 }
