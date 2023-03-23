@@ -73,6 +73,7 @@ def register():
         flash('Please fill out the form!')
     return render_template('register.html')
 
+
 @app.route('/profile')
 def profile():
     username = session['username']
@@ -81,13 +82,15 @@ def profile():
     pfp = cursor.fetchone()[0]
     return render_template('profile.html', username=username, pfp=pfp)
 
+
 @app.route('/pfp', methods=['GET', 'POST'])
 def pfp():
     if request.method == 'POST':
         username = session['username']
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         pfp = request.form['pfp']
-        cursor.execute("UPDATE users SET pfp = %s WHERE username = %s;", (pfp, username,))
+        cursor.execute(
+            "UPDATE users SET pfp = %s WHERE username = %s;", (pfp, username,))
         conn.commit()
         cursor.close()
         return redirect(url_for('profile'))
@@ -95,16 +98,18 @@ def pfp():
         return render_template('pfp.html')
 
 
-
 @app.route('/your_club')
 def your_club():
     username = session['username']
     return render_template('your_club.html', username=username)
 
+
 @app.route('/public_clubs')
 def public_clubs():
-    username = session['username']
-    return render_template('public_clubs.html', username=username)
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("select title, pic, descr from book_clubs")
+    book_clubs = cursor.fetchall()
+    return render_template('public_clubs.html', book_clubs = book_clubs)
 
 
 @app.route('/logout')
