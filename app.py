@@ -90,8 +90,7 @@ def pfp():
         cursor.execute("UPDATE users SET pfp = %s WHERE username = %s;", (pfp, username,))
         conn.commit()
         cursor.close()
-        flash('Profile picture updated successfully!')
-        return redirect(url_for('pfp'))
+        return redirect(url_for('profile'))
     else:
         return render_template('pfp.html')
 
