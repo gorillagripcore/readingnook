@@ -1,0 +1,47 @@
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+ }
+ 
+ body {
+    background-color: #ffffff;
+    margin: 0;
+    padding-right: calc(100vw - 100%);
+    overflow-y: scroll;
+    scrollbar-width: none; 
+ }
+ .section1 {
+    background-color: rgb(255, 255, 255);
+    height: 700px;
+ }
+ 
+ .section2 {
+    border-radius: 10px;
+    border-color: rgb(195, 195, 195);
+    border-width: 1px;
+    border-style: solid;
+    height: 700px;
+    width: 550px;
+    background-color: #faf6f0;
+    
+ }
+ 
+ .section3 {
+    background-color: rgb(255, 255, 255);
+    height: 700px;
+ }
+ 
+ header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+ 
+ }
+ 
+ footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+ }

@@ -1,7 +1,15 @@
 body {
    background-color: #ffffff;
    margin: 0;
+   padding-right: calc(100vw - 100%);
+   overflow-y: scroll;
+   scrollbar-width: none; 
 }
+
+.beige {
+   background-color: #fefbf7;
+}
+
 
 .login-box {
    padding: 20px;
@@ -15,17 +23,6 @@ body {
    border-radius: 10px;
 }
 
-
-.msg {
-   color: #721c24;
-   background-color: #f8d7da;
-   border-color: #f5c6cb;
-   padding: .75rem 1.25rem;
-   margin-bottom: 1rem;
-   border: 1px solid transparent;
-   border-radius: .25rem;
-}
-
 .main {
    margin-top: 50px;
 }
@@ -69,16 +66,6 @@ input::-webkit-input-placeholder {
    padding: 8px 12px !important;
 }
 
-.main-center {
-   border-radius: 10px;
-   margin-top: 30px;
-   margin: 0 auto;
-   width: 400px;
-   padding: 10px 40px;
-   background: #f4fafd;
-   color: #3b3434;
-   text-shadow: none;
-}
 
 span.input-group-addon i {
    color: #fff;
@@ -89,7 +76,7 @@ span.input-group-addon i {
 .login-button:hover {
    margin-top: 5px;
    background-color: #b6c7f7;
-   
+
 }
 
 .login-register {
@@ -97,45 +84,14 @@ span.input-group-addon i {
    text-align: center;
 }
 
-.site-header {
-   background-color: rgba(0, 0, 0, .85);
-   -webkit-backdrop-filter: saturate(180%) blur(20px);
-   backdrop-filter: saturate(180%) blur(20px);
-}
-
-.site-header a {
-   color: #ffffff;
-}
-
-body {
-   background-color: #b6c7f7;
-   margin: 0;
-}
-
-
 .login-body {
    padding: 20px;
    line-height: 2;
 }
 
-.msg {
-   color: #721c24;
-   background-color: #f8d7da;
-   border-color: #f5c6cb;
-   padding: .75rem 1.25rem;
-   margin-bottom: 1rem;
-   border: 1px solid transparent;
-   border-radius: .25rem;
-}
 
 .main {
    margin-top: 50px;
-}
-
-h1.title {
-   font-size: 50px;
-   font-family: 'Passion One', cursive;
-   font-weight: 400;
 }
 
 hr {
@@ -157,29 +113,9 @@ input::-webkit-input-placeholder {
    padding-top: 3px;
 }
 
-.main-login {
-   background-color: #fff;
-   /* shadows and rounded borders */
-   -moz-border-radius: 2px;
-   -webkit-border-radius: 2px;
-   border-radius: 2px;
-
-}
-
-.form-control {
+z .form-control {
    height: auto !important;
    padding: 8px 12px !important;
-}
-
-.main-center {
-   border-radius: 10px;
-   margin-top: 30px;
-   margin: 0 auto;
-   width: 400px;
-   padding: 10px 40px;
-   background: #f9f7f3;
-   color: #3b3434;
-   text-shadow: none;
 }
 
 span.input-group-addon i {
@@ -188,11 +124,11 @@ span.input-group-addon i {
    padding: 10px;
 }
 
-
 .login-register {
    font-size: 11px;
    text-align: center;
 }
+<<<<<<< Updated upstream
 
 .site-header {
    background-color: rgba(0, 0, 0, .85);
@@ -254,3 +190,5 @@ span.input-group-addon i {
    padding: 20px;
  }
  
+=======
+>>>>>>> Stashed changes
