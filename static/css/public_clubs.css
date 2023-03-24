@@ -1,10 +1,12 @@
+
 .pc_box {
-    background-color: #fdf5ea;
+    background-color: #faf6f0;
     width: 450px;
     height: 170px;
     border-radius: 7px;
-    margin-top: 20px;
+    margin: 15px;
     position: relative
+
 }
 
 .pc_box img {
@@ -29,10 +31,18 @@
     left: 41%;
 }
 
+.pc_box input:hover{
+    background-color: #c8ebf7;
+}
+
 .pc_box p {
     text-align: left;
 }
 
+
 .pc {
-    background-color: white;
+    border-radius: 10px;
+    border-color: rgb(195, 195, 195);
+    border-width: 1px;
+    border-style: solid;
 }

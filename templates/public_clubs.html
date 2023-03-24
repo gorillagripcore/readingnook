@@ -21,14 +21,14 @@
 <body>
   {% include 'navbar.html' %}
 
-  <div class="container text-center pc" style="margin-top: 60px;">
+  <div class="container text-center" style="margin-top: 75px;">
     <div class="row">
       <div class="col">
 
       </div>
-      <div class="col">
+      <div class="col pc">
         {% for book_club in book_clubs %}
-        <div class="container text-center pc_box">
+        <div class="container text-center pc_box pc">
           <div class="row">
             <div class="col-3">
               <img src="{{ book_club[1] }}" alt="pic" class="pc" width="100px" height="135px">
