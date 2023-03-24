@@ -136,18 +136,22 @@ span.input-group-addon i {
 }
 
 .section1 {
-   background-color: rgb(182, 199, 238);
+   background-color: rgb(255, 255, 255);
    height: 700px;
 }
 
 .section2 {
-   background-color: rgb(255, 255, 255);
+   border-radius: 10px;
+   border-color: rgb(195, 195, 195);
+   border-width: 1px;
+   border-style: solid;
    height: 700px;
    width: 550px;
+   background-color: #faf6f0;
 }
 
 .section3 {
-   background-color: rgb(182, 199, 238);
+   background-color: rgb(255, 255, 255);
    height: 700px;
 }
 
