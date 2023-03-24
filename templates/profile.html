@@ -24,11 +24,40 @@
   <div class="grid-container">
     <div class="section1">Section 1</div>
     <div class="section2">
-    <div>
-      <img src="{{pfp}}" alt="pfp" width="100">
-      <a href="{{ url_for('pfp') }}">Change Profile Picture</a>
-      <h2>{{ username }}</h2>
-    </div>
+      <div>
+        <img src="{{pfp}}" alt="pfp" width="100">
+        <h2>{{ username }}</h2>
+        <!--Dialog box-->
+        <input type="submit" value="Submit" class="form-control btn" name="" id="openDialogBtn"
+        style="width:100px; margin: 2% 2% 1% 35%; background-color: #c8ebf7;">
+
+        <dialog id="my_dialog" class="dialog_box">
+          <div class="dialog">
+            <form class="form-group" action="{{ url_for('pfp') }}" method="post">
+              <input type="text" class="form-control" name="pfp" placeholder="Link please" id="pfp" required>
+              <label> </label>
+              <input type="submit" value="Submit" class="form-control btn" name=""
+                style="width:100px; margin: 2% 2% 1% 35%; background-color: #c8ebf7;">
+            </form>
+          </div>
+        </dialog>
+
+        <script>
+          const dialog = document.querySelector('#my_dialog');
+          const openDialogBtn = document.querySelector('#openDialogBtn');
+
+          openDialogBtn.addEventListener('click', () => {
+            dialog.showModal();
+          });
+
+          dialog.addEventListener('close', () => {
+            document.querySelector('form').reset();
+          });
+        </script>
+
+
+
+      </div>
     </div>
     <div class="section3">Section 3</div>
   </div>

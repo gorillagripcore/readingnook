@@ -45,3 +45,15 @@
     color: #fff;
     padding: 20px;
  }
+
+ .dialog {
+   height: 95px;
+   width: 400px;
+   border-radius: 10px;
+}
+
+.dialog_box{
+   border-radius: 10px;
+   border-color: black;
+   border-width: 1px;
+}
