@@ -10,6 +10,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300&display=swap" rel="stylesheet">
@@ -20,4 +21,85 @@
 
   <h1>Welcome, {{ username }}!</h1>
 
-  <div class="col"></div>
+  <div class="main_container">
+    <div class="flex_item">
+      <div class="widget widget_left">
+        <h4>Important updates</h4>
+        <ul>
+          <li>Text 1</li>
+          <li>Text 2</li>
+          <li>Text 3</li>
+        </ul>
+      </div>
+      <div class="widget widget_left bottom_widget">
+        <h4>Club goal</h4>
+        <!-- försöka fixa checkboxes -->
+        <p>Goal 1</p>
+        <p>Goal 2</p>
+      </div>
+    </div>
+
+    <div class="flex_item">
+      <div class="widget widget_right current_book">
+        <h4>Currently reading</h4>
+        <img
+          src="https://kbimages1-a.akamaihd.net/6963d990-cef3-4c05-8709-a6e79c4a0967/1200/1200/False/no-longer-human.jpg"
+          alt="" id="book_cover">
+        <h6>No Longer Human</h6>
+        <p>Osamu Dazai</p>
+      </div>
+      <div class="widget widget_right bottom_widget meeting_info">
+        <h4>Upcoming meeting</h4>
+        <p>2023-03-25</p>
+        <em>Nordenskiöldsgatan 1, 211 19 Malmö</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="home_container flex_item">
+    <div class="posts">
+      <div class="user user_rating">
+        <img src="https://img.freepik.com/premium-vector/cute-flower-cartoon-character_313669-38.jpg?w=2000" alt="">
+        <p>Username</p>
+        <div class="star-container">
+          <div class="star">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/001/189/165/small/star.png" alt="">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/001/189/165/small/star.png" alt="">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/001/189/165/small/star.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="rating">
+        <img src="https://images.penguinrandomhouse.com/cover/9780307455192" alt="">
+        <p class="content">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus magnam eum exercitationem, tempore aperiam
+          vitae quod placeat dicta quae sed nesciunt enim nulla adipisci nobis dolores ullam in fugiat labore. Lorem
+          ipsum dolor sit amet, consectetur adipisicing elit. Unde reiciendis eaque temporibus! Vero sint maxime eveniet
+          debitis atque maiores ducimus. Quos maxime repellat hic quaerat ex ducimus ipsam sint eius!
+        </p>
+      </div>
+      <div class="comment">
+        <form action="">
+          <textarea name="" id="" cols="45" rows="1" placeholder="Add a comment"></textarea>
+          <input type="submit" value="Send" id="submit_button">
+        </form>
+      </div>
+    </div>
+
+    <div class="posts">
+      <div class="user user_post">
+        <img src="https://i1.sndcdn.com/artworks-000081774154-2c17bp-t500x500.jpg" alt="">
+        <p>Chiyo-chichi</p>
+      </div>
+      <p class="content">
+        Hello everyone! How are you? Fine, thank you!
+      </p>
+      <div class="comment">
+        <form action="">
+          <textarea name="" id="" cols="45" rows="1" placeholder="Add a comment"></textarea>
+          <input type="submit" value="Send" id="submit_button">
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
