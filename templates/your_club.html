@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reading Nook</title>
     <link rel="icon" type="image" href="">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/your_club.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">  
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,3 +19,63 @@
 
 <body>
   {% include 'navbar.html' %}
+
+	<div class="profile-section">
+		<img src="cutebear.jpg" alt="Club Picture">
+		<p>hello guys this club is about bears
+            bla bla bla bla bla bla bla
+        </p>
+		<div class="members-box">
+			<h2>Members</h2>
+			<ul>
+				<li>Dummie 1</li>
+				<li>Dummie 2</li>
+				<li>Dummie 3</li>
+			</ul>
+		</div>
+	</div>
+	<div class="box-container">
+        <div class="box">
+          <h2>Book of the Month</h2>
+          <img src="cutebear.jpg" alt="Book Cover">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="box">
+          <h2>Books to Come Suggestion Box</h2>
+          <form>
+            <label for="book-suggestion">Suggest a Book:</label>
+            <input type="text" id="book-suggestion" name="book-suggestion">
+            <input type="submit" value="Submit">
+          </form>
+        </div>
+        <div class="box">
+          <h2>Upcoming Meeting</h2>
+          <p>Date: </p>
+          <p>Time: </p>
+        </div>
+        <div class="box">
+          <h2>Meeting Location</h2>
+          <p>in the backrooms</p>
+        </div>
+    </div>   
+
+
+    <div class="poll-section">
+        <h2>Poll</h2>
+        <div class="poll-container">
+          <div class="poll-box">
+            <img src="cutebear.jpg">
+          </div>
+          <div class="poll-box">
+            <img src="cutebear.jpg">
+          </div>
+        </div>
+        <div class="submit-button">
+          <button>Submit</button>
+        </div>
+      </div>
+      
+      </div>             
+</body>
+</html>
+        
