@@ -5,12 +5,12 @@ body {
 	line-height: 1.5;
 	margin: 0;
 	padding: 0;
-	background-color: #f5f5f5;
+	background-color: #ffffff;
 }
 
 /* Profile Section Styles */
 .profile-section {
-	background-color: #fff;
+	background-color: #faf6f0;
 	border-bottom: 2px solid #ddd;
 	padding: 20px;
 	display: flex;
@@ -52,7 +52,7 @@ body {
 .members-box {
     margin-top: 20px;
     flex: 0 0 200px; 
-    background-color: #fff;
+    background-color: #faf6f0;
     border: 2px solid #ddd;
     border-radius: 10px;
     padding: 20px;
@@ -76,7 +76,7 @@ body {
     height: 400px;
     margin: 10px;
     border-radius: 10px;
-    background-color: #f2f2f2;
+    background-color: #faf6f0;
     margin: 10px;
     padding: 20px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
@@ -91,7 +91,7 @@ body {
   
 .box img {
     width: 80%;
-    margin-top: 20px;
+    height:auto;
 }
   
 .box p {
@@ -109,7 +109,7 @@ body {
     flex: 1;
     margin-right: 10px;
     padding: 10px;
-    background-color: #f2f2f2;
+    background-color: #faf6f0;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     text-align: center;
 }
