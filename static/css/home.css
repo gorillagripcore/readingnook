@@ -1,14 +1,12 @@
-.main_container {
-    display: flex;
-}
-
-.flex_item {
-    justify-content: space-evenly;
+.home_container{
+    margin-top: 75px;
+    border-radius: 10px;
+    border: 1px solid #c3c3c3;
 }
 
 .widget {
     padding: 20px;
-    margin-top: 50px;
+    margin-top: 75px;
     border: 1px solid #c3c3c3;
     border-radius: 10px;
     height: 235px;
@@ -22,42 +20,8 @@
     text-align: center;
 }
 
-.widget_left {
-    display: flex;
-    position: fixed;
-    flex-direction: column;
-    top: 80px;
-    left: 170px;
-}
-
-.widget_right {
-    display: flex;
-    position: fixed;
-    flex-direction: column;
-    top: 80px;
-    right: 170px;
-}
-
-.bottom_widget {
-    top: 370px;
-}
-
-.meeting_info {
-    text-align: center;
-    font-size: 18px;
-}
-
-.meeting_info>h4 {
-    margin-bottom: 15px;
-}
-
-.meeting_info>p {
-    margin-bottom: 1px;
-}
-
 .current_book>h6,
 .current_book>p {
-    text-align: center;
     margin-top: 1px;
     margin-bottom: 1px;
 }
@@ -71,17 +35,20 @@
     border: 1px solid #888;
 }
 
-.home_container {
-    margin: auto;
-    margin-top: 75px;
-    width: 510px;
-    border-radius: 10px;
-    border: 1px solid #c3c3c3;
+.meeting_info {
+    font-size: 18px;
+}
+
+.meeting_info>h4 {
+    margin-bottom: 15px;
+}
+
+.meeting_info>p {
+    margin-bottom: 1px;
 }
 
 .posts {
     position: relative;
-    margin: auto;
     margin-top: 15px;
     margin-bottom: 15px;
     width: 450px;
@@ -113,6 +80,27 @@
     display: flex;
     padding: 10px;
     max-width: 450px;
+}
+
+.submit_button {
+    position: relative;
+    top: -10px;
+    width: 60px;
+    height: 32px;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #c8ebf7;
+    border: 1px solid #bce0ec;
+    border-radius: 2px;
+}
+.submit_button:hover{
+    background-color: #bce0ec;
+    transition: 0.3s;
+}
+
+textarea{
+    margin-top: 15px;
+    height: 32px;
 }
 
 .user_rating {
@@ -154,42 +142,4 @@
     width: 70px;
     border-radius: 4px;
     border: 1px solid #888;
-}
-
-
-.comment>form {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.submit_button {
-    width: 60px;
-    margin-left: 10px;
-    margin-top: 10px;
-    font-size: 15px;
-    cursor: pointer;
-    background-color: #c8ebf7;
-}
-
-textarea{
-    margin-top: 15px;
-    height: 32px;
-}
-
-@media only screen and (max-width: 1400px) {
-    .widget {
-        padding: 20px;
-        height: 235px;
-        width: 250px;
-        max-height: 235px;
-    }
-
-    .widget_left {
-        left: 70px;
-    }
-
-    .widget_right {
-        right: 70px;
-    }
 }

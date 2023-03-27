@@ -19,11 +19,9 @@
 <body>
   {% include 'navbar.html' %}
 
-  <h1>Welcome, {{ username }}!</h1>
-
-  <div class="main_container">
-    <div class="flex_item">
-      <div class="widget widget_left">
+  <div class="row">
+    <div class="col">
+      <div class="col-6 col-sm-3 mx-auto widget">
         <h4>Important updates</h4>
         <ul>
           <li>Text 1</li>
@@ -31,36 +29,37 @@
           <li>Text 3</li>
         </ul>
       </div>
-      <div class="widget widget_left bottom_widget">
-        <h4>Club goal</h4>
-        <!-- försöka fixa checkboxes -->
-        <p>Goal 1</p>
-        <p>Goal 2</p>
-      </div>
+        <div class="col-6 col-sm-3 mx-auto widget">
+          <h4>Club goal</h4>
+          <p>Goal 1</p>
+          <p>Goal 2</p>
+        </div>
     </div>
 
-    <div class="flex_item">
-      <div class="widget widget_right current_book">
-        <h4>Currently reading</h4>
-        <img
-          src="https://kbimages1-a.akamaihd.net/6963d990-cef3-4c05-8709-a6e79c4a0967/1200/1200/False/no-longer-human.jpg"
-          alt="" id="book_cover">
-        <h6>No Longer Human</h6>
-        <p>Osamu Dazai</p>
+    <div class="col home_container">
+      <div class="col-6 col-sm-3 mx-auto posts">
+        <div class="col user user_post">
+          <img src="https://i1.sndcdn.com/artworks-000081774154-2c17bp-t500x500.jpg" alt="">
+          <p>Chiyo-chichi</p>
+        </div>
+        <div class="col">
+          <p class="content">
+            Hello everyone! How are you? Fine, thank you!
+          </p>
+        </div>
+        <div class="col comment text-center">
+          <form action="POST">
+            <textarea cols="45" rows="1" placeholder="Add comment"></textarea>
+            <input type="submit" value="Send" class="submit_button">
+          </form>
+        </div>
       </div>
-      <div class="widget widget_right bottom_widget meeting_info">
-        <h4>Upcoming meeting</h4>
-        <p>2023-03-25</p>
-        <em>Nordenskiöldsgatan 1, 211 19 Malmö</em>
-      </div>
-    </div>
-  </div>
 
-  <div class="home_container flex_item">
-    <div class="posts">
-      <div class="user user_rating">
-        <img src="https://img.freepik.com/premium-vector/cute-flower-cartoon-character_313669-38.jpg?w=2000" alt="">
-        <p>Username</p>
+      <div class="col-6 col-sm-3 mx-auto posts">
+        <div class="user user_post">
+          <img src="https://i1.sndcdn.com/artworks-000081774154-2c17bp-t500x500.jpg" alt="">
+          <p>Chiyo-chichi</p>
+        </div>
         <div class="star-container">
           <div class="star">
             <img src="https://static.vecteezy.com/system/resources/thumbnails/001/189/165/small/star.png" alt="">
@@ -68,37 +67,37 @@
             <img src="https://static.vecteezy.com/system/resources/thumbnails/001/189/165/small/star.png" alt="">
           </div>
         </div>
-      </div>
-      <div class="rating">
-        <img src="https://images.penguinrandomhouse.com/cover/9780307455192" alt="">
-        <p class="content">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus magnam eum exercitationem, tempore aperiam
-          vitae quod placeat dicta quae sed nesciunt enim nulla adipisci nobis dolores ullam in fugiat labore. Lorem
-          ipsum dolor sit amet, consectetur adipisicing elit. Unde reiciendis eaque temporibus! Vero sint maxime eveniet
-          debitis atque maiores ducimus. Quos maxime repellat hic quaerat ex ducimus ipsam sint eius!
-        </p>
-      </div>
-      <div class="comment">
-        <form action="">
-          <textarea name="" id="" cols="30" rows="1" placeholder="Add a comment"></textarea>
-          <input type="submit" value="Send" class="form-control submit_button">
-        </form>
+        <div class="rating">
+          <img src="https://images.penguinrandomhouse.com/cover/9780307455192" alt="">
+          <p class="content">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus magnam eum exercitationem, tempore aperiam
+            vitae quod placeat dicta quae sed nesciunt enim nulla adipisci nobis dolores ullam in fugiat labore. Lorem
+            ipsum dolor sit amet, consectetur adipisicing elit. Unde reiciendis eaque temporibus! Vero sint maxime eveniet
+            debitis atque maiores ducimus. Quos maxime repellat hic quaerat ex ducimus ipsam sint eius!
+          </p>
+        </div>
+        <div class="col comment text-center">
+          <form action="POST">
+            <textarea cols="45" rows="1" placeholder="Add comment"></textarea>
+            <input type="submit" value="Send" class="submit_button">
+          </form>
+        </div>
       </div>
     </div>
 
-    <div class="posts">
-      <div class="user user_post">
-        <img src="https://i1.sndcdn.com/artworks-000081774154-2c17bp-t500x500.jpg" alt="">
-        <p>Chiyo-chichi</p>
+    <div class="col">
+      <div class="col-6 col-sm-3 mx-auto widget current_book">
+        <h4>Currently reading</h4>
+        <img
+          src="https://kbimages1-a.akamaihd.net/6963d990-cef3-4c05-8709-a6e79c4a0967/1200/1200/False/no-longer-human.jpg"
+          alt="" id="book_cover">
+        <h6 class="text-center">No Longer Human</h6>
+        <p class="text-center">Osamu Dazai</p>
       </div>
-      <p class="content">
-        Hello everyone! How are you? Fine, thank you!
-      </p>
-      <div class="comment">
-        <form action="">
-          <textarea name="" id="" cols="30" rows="1" placeholder="Add a comment"></textarea>
-          <input type="submit" value="Send" class="form-control submit_button" name="">
-        </form>
+      <div class="col-6 col-sm-3 mx-auto widget meeting_info">
+        <h4>Upcoming meeting</h4>
+        <p class="text-center">2023-03-25</p>
+        <p class="text-center"><em>Nordenskiöldsgatan 1, 211 19 Malmö</em></p>
       </div>
     </div>
   </div>
