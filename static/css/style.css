@@ -14,6 +14,9 @@ body {
    height: 55px;
    width: 55px;
    border-radius: 50%;
+   border-width: 1px;
+   border-style: solid;
+   border-color: rgb(138, 138, 138);
 }
 
 .login-box {
