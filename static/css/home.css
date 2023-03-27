@@ -156,15 +156,25 @@
     border: 1px solid #888;
 }
 
+
 .comment>form {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
 }
 
-#submit_button {
+.submit_button {
     width: 60px;
     margin-left: 10px;
+    margin-top: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #c8ebf7;
+}
+
+textarea{
+    margin-top: 15px;
+    height: 32px;
 }
 
 @media only screen and (max-width: 1400px) {
