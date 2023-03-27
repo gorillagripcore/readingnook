@@ -10,6 +10,11 @@ body {
    background-color: #fefbf7;
 }
 
+.logo{
+   height: 55px;
+   width: 55px;
+   border-radius: 50%;
+}
 
 .login-box {
    padding: 20px;
