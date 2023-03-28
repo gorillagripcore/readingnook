@@ -13,7 +13,7 @@ body {
 
 .section1 {
    background-color: rgb(255, 255, 255);
-   height: 700px;
+  
 }
 
 .section2 {
@@ -21,14 +21,28 @@ body {
    border-color: rgb(195, 195, 195);
    border-width: 1px;
    border-style: solid;
-   height: 700px;
-   background-color: #faf6f0;
-
+   background-color: #ffffff;
+  
 }
+
+
+.widget {
+   display: inline-block;
+   vertical-align: top;
+   margin-right: 20px; 
+   padding: 10px;
+   margin-top: 50px;
+   border: 1px solid #c3c3c3;
+   border-radius: 10px;
+   height: 250px;
+  
+   background-color: #faf6f0;
+}
+
 
 .section3 {
    background-color: rgb(255, 255, 255);
-   height: 700px;
+   
 }
 
 header {
@@ -36,10 +50,6 @@ header {
 
 }
 
-footer {
-   text-align: center;
-   padding: 20px;
-}
 
 .dialog {
    height: 95px;
@@ -65,6 +75,55 @@ footer {
    width: 150px;
 }
 
-.name_desc{
+.name_desc {
    text-align: left;
+}
+
+.feed_container {
+   padding: 10px;
+   margin-top: 75px;
+   border-radius: 10px;
+   border: 1px solid #c3c3c3;
+   background-color: #ffffff;
+}
+
+img{
+   height:150px;
+
+}
+.user_post {
+   display: flex;
+   padding: 10px;
+   max-width: 450px;
+}
+
+.feed_content {
+   margin-left: 15px;
+   max-height: 100px;
+   overflow-y: auto;
+}
+
+.feed_pfp {
+   object-fit: cover;
+   border-radius: 50%;
+   height: 50px;
+   width: 50px;
+}
+
+
+.posts {
+   position: relative;
+   margin-top: 15px;
+   margin-bottom: 15px;
+   width: 450px;
+   border-radius: 10px;
+   border: 1px solid #c3c3c3;
+   background-color: #faf6f0;
+}
+
+
+textarea {
+   margin-top: 15px;
+   height: 32px;
+
 }
