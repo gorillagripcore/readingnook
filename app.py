@@ -68,6 +68,7 @@ def register():
                            (username, email, _hashed_password, user_desc, pfp))
             conn.commit()
             flash('You have successfully registered!')
+            return render_template('login.html')
     elif request.method == 'POST':
         flash('Please fill out the form!')
     return render_template('register.html')
