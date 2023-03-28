@@ -1,9 +1,3 @@
-.grid-container {
-   display: grid;
-   grid-template-columns: repeat(3, 1fr);
-   grid-gap: 10px;
-}
-
 body {
    background-color: #ffffff;
    margin: 0;
@@ -11,45 +5,45 @@ body {
    scrollbar-width: none;
 }
 
-.section1 {
-   background-color: rgb(255, 255, 255);
-  
+hr {
+   width: 100%;
 }
 
-.section2 {
+
+.section {
    border-radius: 10px;
    border-color: rgb(195, 195, 195);
    border-width: 1px;
    border-style: solid;
    background-color: #ffffff;
-  
+   margin-bottom: 15px;
+   padding-top: 20px;
+   margin-top: 75px;
 }
 
+.container_widget {
+   margin-top: 30px;
+   margin-bottom: 30px;
+}
 
 .widget {
-   display: inline-block;
-   vertical-align: top;
-   margin-right: 20px; 
+   margin: 10px 10px 0px 10px;
    padding: 10px;
-   margin-top: 50px;
    border: 1px solid #c3c3c3;
    border-radius: 10px;
-   height: 250px;
-  
+   height: 230px;
    background-color: #faf6f0;
-}
-
-
-.section3 {
-   background-color: rgb(255, 255, 255);
-   
 }
 
 header {
    padding: 20px;
-
 }
 
+.content {
+   margin-left: 30px;
+   max-height: 100px;
+   text-align: left;
+}
 
 .dialog {
    height: 95px;
@@ -61,11 +55,13 @@ header {
    border-radius: 10px;
    border-color: black;
    border-width: 1px;
+   width: 435px;
+   height: 130px;
 }
-
 
 .pfp_container {
    overflow: hidden;
+   margin-bottom: 10px;
 }
 
 .pfp {
@@ -73,6 +69,11 @@ header {
    border-radius: 50%;
    height: 150px;
    width: 150px;
+   border: 1px solid #767676;
+}
+
+.pfp_btn{
+   margin-bottom: 12px;
 }
 
 .name_desc {
@@ -81,20 +82,16 @@ header {
 
 .feed_container {
    padding: 10px;
+   margin: 10px;
    margin-top: 75px;
    border-radius: 10px;
    border: 1px solid #c3c3c3;
    background-color: #ffffff;
 }
 
-img{
-   height:150px;
-
-}
-.user_post {
-   display: flex;
-   padding: 10px;
-   max-width: 450px;
+.widget img {
+   height: 150px;
+   border-radius: 10px;
 }
 
 .feed_content {
@@ -110,20 +107,70 @@ img{
    width: 50px;
 }
 
+textarea {
+   margin-top: 15px;
+   height: 32px;
+}
+
 
 .posts {
    position: relative;
    margin-top: 15px;
    margin-bottom: 15px;
-   width: 450px;
+   padding-bottom: 50px;
    border-radius: 10px;
    border: 1px solid #c3c3c3;
    background-color: #faf6f0;
 }
 
+.content {
+   margin-left: 15px;
+   max-height: 100px;
+   overflow-y: auto;
+}
+
+
+.user>img {
+   border: 1px solid;
+   object-fit: cover;
+   border-radius: 50%;
+   height: 50px;
+   width: 50px;
+}
+
+.user>p {
+   margin-left: 10px;
+   margin-top: 10px;
+}
+
+.user_post {
+   display: flex;
+   padding: 10px;
+   max-width: 450px;
+}
+
+.submit_button {
+   width: 60px;
+   height: 32px;
+   font-size: 15px;
+   padding: 1px;
+   margin: 10px;
+   cursor: pointer;
+   background-color: #c8ebf7;
+   border: 1px solid #c8ebf7;
+   border-radius: 6px;
+   position: absolute;
+   top: 73%;
+   left: 1%;
+}
+
+.submit_button:hover {
+   background-color: #bce0ec;
+   transition: 0.3s;
+}
 
 textarea {
    margin-top: 15px;
    height: 32px;
-
+   width: 470px;
 }

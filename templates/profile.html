@@ -22,115 +22,137 @@
 
   <div class="container text-center">
     <div class="row">
-      <div class="col">
+      <div class="col-3" style="margin-right: 42px;">
+        <!--Empty Sides-->
+      </div>
+      <div class="col-5 section" style="width: 600px;">
+
         <div class="container text-center">
           <div class="row">
-
             <div class="col">
-              <!--Empty Sides-->
-            </div>
-            <div class="col-6">
-              <div class="section2">
-                <div class="container text-center">
-                  <div class="row">
-                    <div class="col">
-                      <div class="pfp_container">
-                        <img src="{{pfp}}" alt="pfp" class="pfp">
-                      </div>
-                      <!--Dialog box-->
-                      <input type="submit" value="Submit" class="form-control btn" name="" id="openDialogBtn"
-                        style="width:100px; background-color: #c8ebf7;">
-
-                      <dialog id="my_dialog" class="dialog_box">
-                        <div class="dialog">
-                          <form class="form-group" action="{{ url_for('pfp') }}" method="post">
-                            <input type="text" class="form-control" name="pfp" placeholder="Link please" id="pfp"
-                              required>
-                            <label> </label>
-                            <input type="submit" value="Submit" class="form-control btn" name=""
-                              style="width:100px; margin: 2% 2% 1% 35%; background-color: #c8ebf7;">
-                          </form>
-                        </div>
-                      </dialog>
-                    </div>
-                    <div class="col name_desc">
-                      <h2>{{ username }}</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <div class="col">
-                    </div>
-                  </div>
-                </div>
-
-                <!--Widgets-->
-                <div class="row">
-                  <div class="col">
-                    <div class="col-6 col-sm-3 mx-auto widget">
-                      <p>favourite book</p>
-                      <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1665008650i/18490.jpg" alt="frankenstein">
-                      
-                    </div>
-                    <div class="col-6 col-sm-3 mx-auto widget">
-                      <p>favourite quote:</p>
-                      <p><i>"Just give me the f*cking valium" Girl, Interrupted</i></p>
-
-
-                    </div>
-                    <div class="col-6 col-sm-3 mx-auto widget">
-                      <p>least favourite book</p>
-                      <img src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/41JFqILaXyL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg" alt="the great gatsby">
-                    </div>
-                  </div>
-                </div>
-
-
-                <!--Posts-->
-                <div class="row">
-                  <div class="col feed_container">
-                    <div class="col-6 col-sm-8 mx-auto posts">
-                      <div class="col user user_post">
-                        <img src="{{pfp}}" alt="pfp" class="feed_pfp">
-                        <p>{{username}}:</p>
-                      </div>
-                      <div class="col">
-                        <p class="feed_content">
-                          HEyyo The Great Gatsby sucks
-                        </p>
-                      </div>
-                    </div>
-                    <div class="col-6 col-sm-8 mx-auto posts">
-                      <div class="col user user_post">
-                        <img src="{{pfp}}" alt="pfp" class="feed_pfp">
-                        <p>{{username}}:</p>
-                      </div>
-                      <div class="col">
-                        <p class="feed_content">
-                          In the great words of Osamu Dazai: I decided to kill myself.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+              <!--Profile Picture-->
+              <div class="pfp_container">
+                <img src="{{pfp}}" alt="pfp" class="pfp">
               </div>
-              <div class="col">
-                <!--Empty Sides-->
+              <!--Dialog box for profile picture-->
+              <input type="submit" value="Change pic" class="form-control btn pfp_btn" name="" id="openpfpDialogBtn"
+                style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+
+              <dialog id="pfp_dialog" class="dialog_box">
+                <div class="dialog">
+                  <form class="form-group" action="{{ url_for('pfp') }}" method="post">
+                    <input type="text" class="form-control" name="pfp" placeholder="Link please" id="pfp" required>
+                    <label> </label>
+                    <input type="submit" value="Submit" class="form-control btn" name=""
+                      style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
+                  </form>
+                </div>
+              </dialog>
+            </div>
+
+            <!--Name and Description-->
+            <div class="col-4 name_desc">
+              <h2>{{ username }}</h2>
+              <p>{{user_desc}}</p>
+
+              <input type="submit" value="Change desc" class="form-control btn pfp_btn" name="" id="opendescDialogBtn"
+                style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+
+              <dialog id="desc_dialog" class="dialog_box">
+                <div class="dialog">
+                  <form class="form-group" action="{{ url_for('user_desc') }}" method="post">
+                    <input type="text" class="form-control" name="user_desc" placeholder="New description please" id="user_desc"
+                      required>
+                    <label> </label>
+                    <input type="submit" value="Submit" class="form-control btn" name=""
+                      style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
+                  </form>
+                </div>
+              </dialog>
+            </div>
+
+            <div class="col-4 currently_reading">
+
+            </div>
+
+            <hr>
+
+            <div class="container text-center container_widget">
+              <div class="row">
+                <div class="col widget">
+                  <p>Favourite book</p>
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1665008650i/18490.jpg"
+                    alt="frankenstein">
+                </div>
+                <div class="col widget">
+                  <p>Favourite quote:</p>
+                  <p><i>"Just give me the f*cking valium" -Girl, Interrupted</i></p>
+                </div>
+                <div class="col widget">
+                  <p>Least favourite book</p>
+                  <img
+                    src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/41JFqILaXyL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg"
+                    alt="the great gatsby">
+                </div>
               </div>
             </div>
+
+            <hr>
+
+            <!--Hela denna ska bli till en forloop-->
+            <div class="col">
+              <div class="col-6 col-sm-3 mx-auto posts" style="width: 500px;">
+                <div class="col user user_post">
+                  <img src="{{pfp}}" alt="">
+                  <p>{{username}}</p>
+                </div>
+                <div class="col">
+                  <p class="content">
+                    Hello everyone! How are you? Fine, thank you!
+                  </p>
+                </div>
+                <div class="col text-center">
+                  <form action="POST">
+                    <textarea placeholder="Add comment"></textarea>
+                    <input type="submit" value="Send" class="submit_button">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!--Hit-->
           </div>
-        </div>
 
 
-        <script>
-          const dialog = document.querySelector('#my_dialog');
-          const openDialogBtn = document.querySelector('#openDialogBtn');
 
-          openDialogBtn.addEventListener('click', () => {
-            dialog.showModal();
-          });
+          <div class="col-2">
+            <!--Empty Sides-->
+          </div>
+        </div> <!--Hela row slut-->
+      </div> <!--Hela container slut-->
 
-          dialog.addEventListener('close', () => {
-            document.querySelector('form').reset();
-          });
-        </script>
+
+      <script>
+        const dialog = document.querySelector('#pfp_dialog');
+        const openpfpDialogBtn = document.querySelector('#openpfpDialogBtn');
+        const dialog_desc = document.querySelector('#desc_dialog');
+        const opendescpDialogBtn = document.querySelector('#opendescDialogBtn');
+
+        openpfpDialogBtn.addEventListener('click', () => {
+          dialog.showModal();
+        });
+
+        opendescDialogBtn.addEventListener('click', () => {
+          dialog_desc.showModal();
+        });
+
+        dialog.addEventListener('close', () => {
+          document.querySelector('form').reset();
+        });
+
+        desc_dialog.addEventListener('close', () => {
+          document.querySelector('form').reset();
+        });
+      </script>
+
 </body>
