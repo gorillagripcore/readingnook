@@ -11,7 +11,6 @@
     border-radius: 10px;
     height: 235px;
     width: 250px;
-    overflow-y: auto;
     max-height: 235px;
     background-color: #faf6f0;
 }
@@ -26,7 +25,7 @@
     margin-bottom: 1px;
 }
 
-#book_cover {
+.book_cover {
     display: block;
     margin: auto;
     border-radius: 7px;
@@ -59,7 +58,8 @@
 
 .content {
     margin-left: 15px;
-    max-height: 100px;
+    max-height: 100px;top: 50px;
+    left: 50px;
     overflow-y: auto;
 }
 
@@ -83,15 +83,14 @@
 }
 
 .submit_button {
-    position: relative;
-    top: -10px;
     width: 60px;
-    height: 32px;
     font-size: 15px;
+    padding: 1px;
+    margin: 10px;
     cursor: pointer;
     background-color: #c8ebf7;
-    border: 1px solid #bce0ec;
-    border-radius: 2px;
+    border: 1px solid #c8ebf7;
+    border-radius: 6px;  
 }
 .submit_button:hover{
     background-color: #bce0ec;

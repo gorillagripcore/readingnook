@@ -53,6 +53,8 @@ def register():
         password = request.form['password']
         username = request.form['username']
         _hashed_password = generate_password_hash(password)
+        user_desc = "Add Description!"
+        pfp = "https://cdn.discordapp.com/attachments/1078973373608112128/1089867595383050291/2opekg.png"
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
         if account:
@@ -62,10 +64,11 @@ def register():
         elif not password or not email or not username:
             flash('Please fill out the form!')
         else:
-            cursor.execute("INSERT INTO users (username, email, password) VALUES (%s,%s,%s)",
-                           (username, email, _hashed_password,))
+            cursor.execute("INSERT INTO users (username, email, password, user_desc, pfp) VALUES (%s,%s,%s,%s,%s)",
+                           (username, email, _hashed_password, user_desc, pfp))
             conn.commit()
             flash('You have successfully registered!')
+            return render_template('login.html')
     elif request.method == 'POST':
         flash('Please fill out the form!')
     return render_template('register.html')
@@ -75,9 +78,12 @@ def register():
 def profile():
     username = session['username']
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("select user_desc from users where username = %s", (username,))
+    user_desc = cursor.fetchone()[0]
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute("select pfp from users where username = %s", (username,))
     pfp = cursor.fetchone()[0]
-    return render_template('profile.html', username=username, pfp=pfp)
+    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc)
 
 
 @app.route('/pfp', methods=['GET', 'POST'])
@@ -90,9 +96,20 @@ def pfp():
             "UPDATE users SET pfp = %s WHERE username = %s;", (pfp, username,))
         conn.commit()
         cursor.close()
-        return redirect(url_for('profile'))
-    else:
-        return render_template('pfp.html')
+    return redirect(url_for('profile'))
+
+@app.route('/user_desc', methods=['GET', 'POST'])
+def user_desc():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        user_desc = request.form['user_desc']
+        cursor.execute(
+            "UPDATE users SET user_desc = %s WHERE username = %s;", (user_desc, username,))
+        conn.commit()
+        cursor.close()
+    return redirect(url_for('profile'))
+  
 
 
 @app.route('/your_club')
