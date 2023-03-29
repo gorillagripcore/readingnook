@@ -136,3 +136,13 @@ span.input-group-addon i {
    font-size: 11px;
    text-align: center;
 }
+
+.error_msg{
+   font-size: 12px;
+   border-radius: 10px;
+   border-width: 1px;
+   border-color: #ababab;
+   border-style: solid;
+   padding: 3px;
+   height: 62px;
+}

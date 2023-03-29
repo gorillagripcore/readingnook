@@ -18,6 +18,7 @@
 
 <body>
   {% include 'navbar.html' %}
+
   <header style="margin-top: 50px;"></header>
 
   <div class="container text-center">
@@ -72,38 +73,43 @@
             </div>
 
             <div class="col-4 currently_reading">
-
+              <!--add currently reading senare-->
             </div>
 
             <hr>
 
             <div class="container text-center container_widget">
               <div class="row">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul class="flashes">
-                  {% for message in messages %}
-                  <li>{{ message }}</li>
-                  {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
-
                 <div class="col widget">
                   <p>Favorite book</p>
                   {% if favorite_book %}
                   <img src="{{ favorite_book }}" alt="favorite_book">
-                  <!--Dialog-->
+
+                  <input type="submit" value="Update Book" class="form-control btn pfp_btn" name=""
+                    id="open_updatefavbook_DialogBtn" style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+
+                  <dialog id="updatefavbook_dialog" class="dialog_box">
+                    <div class="dialog">
+                      <form class="form-group" action="{{ url_for('update_fav_book') }}" method="post">
+                        <input type="text" class="form-control" name="update_fav_book"
+                          placeholder="Pick favorite book please" id="update_fav_book" required>
+                        <label> </label>
+                        <input type="submit" value="Submit" class="form-control btn" name=""
+                          style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
+                      </form>
+                    </div>
+                  </dialog>
+                
                   {% else %}
                   <p>No favorite book selected</p>
                   <input type="submit" value="Select Book" class="form-control btn pfp_btn" name=""
-                    id="openfavbookDialogBtn" style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+                    id="open_newfavbook_DialogBtn" style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
 
-                  <dialog id="favbook_dialog" class="dialog_box">
+                  <dialog id="newfavbook_dialog" class="dialog_box">
                     <div class="dialog">
-                      <form class="form-group" action="{{ url_for('fav_book') }}" method="post">
-                        <input type="text" class="form-control" name="favbook_desc"
-                          placeholder="Pick favorite book please" id="favbook_desc" required>
+                      <form class="form-group" action="{{ url_for('new_fav_book') }}" method="post">
+                        <input type="text" class="form-control" name="new_fav_book"
+                          placeholder="Pick favorite book please" id="new_fav_book" required>
                         <label> </label>
                         <input type="submit" value="Submit" class="form-control btn" name=""
                           style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
@@ -111,7 +117,15 @@
                     </div>
                   </dialog>
                   {% endif %}
+                  {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                  <div class="error_msg">
+                    <p>Book Not Found :c Make sure you capitalized the title corretly.</p>
+                  </div>
+                  {% endif %}
+                  {% endwith %}
                 </div>
+
 
                 <div class="col widget">
                   <p>Favourite quote:</p>
@@ -161,36 +175,52 @@
 
 
       <script>
+        //pfp
         const dialog = document.querySelector('#pfp_dialog');
         const openpfpDialogBtn = document.querySelector('#openpfpDialogBtn');
-        const dialog_desc = document.querySelector('#desc_dialog');
-        const opendescpDialogBtn = document.querySelector('#opendescDialogBtn');
-        const favbook_desc = document.querySelector('#favbook_dialog');
-        const openfavbookDialogBtn = document.querySelector('#openfavbookDialogBtn');
 
         openpfpDialogBtn.addEventListener('click', () => {
           dialog.showModal();
-        });
-
-        opendescDialogBtn.addEventListener('click', () => {
-          dialog_desc.showModal();
-        });
-
-        openfavbookDialogBtn.addEventListener('click', () => {
-          favbook_desc.showModal();
         });
 
         dialog.addEventListener('close', () => {
           document.querySelector('form').reset();
         });
 
+        //desc
+        const dialog_desc = document.querySelector('#desc_dialog');
+        const opendescpDialogBtn = document.querySelector('#opendescDialogBtn');
+
+        opendescDialogBtn.addEventListener('click', () => {
+          dialog_desc.showModal();
+        });
+
         desc_dialog.addEventListener('close', () => {
           document.querySelector('form').reset();
         });
 
-        favbook_desc.addEventListener('close', () => {
+        //new fav book
+        const new_fav_book = document.querySelector('#newfavbook_dialog');
+        const open_newfavbook_DialogBtn = document.querySelector('#open_newfavbook_DialogBtn');
+
+        open_newfavbook_DialogBtn.addEventListener('click', () => {
+          new_fav_book.showModal();
+        });
+
+        new_fav_book.addEventListener('close', () => {
+          document.querySelector('form').reset();
+        });
+
+        //update fav book
+        const update_fav_book = document.querySelector('#updatefavbook_dialog');
+        const open_updatefavbook_DialogBtn = document.querySelector('#open_updatefavbook_DialogBtn');
+
+        open_updatefavbook_DialogBtn.addEventListener('click', () => {
+          update_fav_book.showModal();
+        });
+
+        update_fav_book.addEventListener('close', () => {
           document.querySelector('form').reset();
         });
       </script>
-
 </body>
