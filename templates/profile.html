@@ -61,8 +61,8 @@
               <dialog id="desc_dialog" class="dialog_box">
                 <div class="dialog">
                   <form class="form-group" action="{{ url_for('user_desc') }}" method="post">
-                    <input type="text" class="form-control" name="user_desc" placeholder="New description please" id="user_desc"
-                      required>
+                    <input type="text" class="form-control" name="user_desc" placeholder="New description please"
+                      id="user_desc" required>
                     <label> </label>
                     <input type="submit" value="Submit" class="form-control btn" name=""
                       style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
@@ -79,12 +79,39 @@
 
             <div class="container text-center container_widget">
               <div class="row">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class="flashes">
+                  {% for message in messages %}
+                  <li>{{ message }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+
                 <div class="col widget">
-                  <p>Favourite book</p>
-                  <img
-                    src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1665008650i/18490.jpg"
-                    alt="frankenstein">
+                  <p>Favorite book</p>
+                  {% if favorite_book %}
+                  <img src="{{ favorite_book }}" alt="favorite_book">
+                  {% else %}
+                  <p>No favorite book selected</p>
+                  <input type="submit" value="Select Book" class="form-control btn pfp_btn" name=""
+                    id="openfavbookDialogBtn" style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+
+                  <dialog id="favbook_dialog" class="dialog_box">
+                    <div class="dialog">
+                      <form class="form-group" action="{{ url_for('fav_book') }}" method="post">
+                        <input type="text" class="form-control" name="favbook_desc"
+                          placeholder="Pick favorite book please" id="favbook_desc" required>
+                        <label> </label>
+                        <input type="submit" value="Submit" class="form-control btn" name=""
+                          style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
+                      </form>
+                    </div>
+                  </dialog>
+                  {% endif %}
                 </div>
+
                 <div class="col widget">
                   <p>Favourite quote:</p>
                   <p><i>"Just give me the f*cking valium" -Girl, Interrupted</i></p>
@@ -137,6 +164,8 @@
         const openpfpDialogBtn = document.querySelector('#openpfpDialogBtn');
         const dialog_desc = document.querySelector('#desc_dialog');
         const opendescpDialogBtn = document.querySelector('#opendescDialogBtn');
+        const favbook_desc = document.querySelector('#favbook_dialog');
+        const openfavbookDialogBtn = document.querySelector('#openfavbookDialogBtn');
 
         openpfpDialogBtn.addEventListener('click', () => {
           dialog.showModal();
@@ -146,11 +175,19 @@
           dialog_desc.showModal();
         });
 
+        openfavbookDialogBtn.addEventListener('click', () => {
+          favbook_desc.showModal();
+        });
+
         dialog.addEventListener('close', () => {
           document.querySelector('form').reset();
         });
 
         desc_dialog.addEventListener('close', () => {
+          document.querySelector('form').reset();
+        });
+
+        favbook_desc.addEventListener('close', () => {
           document.querySelector('form').reset();
         });
       </script>
