@@ -1,3 +1,7 @@
 # readingnook
 
-# MUST DOWNLOAD ON VSC MAKE LIFE BETTER: tonybaloney.vscode-pets
+# pip install these: 
+- flask 
+- psycopg2 
+- psycopg2.extras
+- werkzeug
