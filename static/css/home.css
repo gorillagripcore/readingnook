@@ -91,6 +91,8 @@
     background-color: #c8ebf7;
     border: 1px solid #c8ebf7;
     border-radius: 6px;  
+    position: relative;
+    left: -170px;
 }
 .submit_button:hover{
     background-color: #bce0ec;
