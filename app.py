@@ -29,12 +29,10 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        print(password)
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
         if account:
             password_rs = account['password']
-            print(password_rs)
             if check_password_hash(password_rs, password):
                 session['loggedin'] = True
                 session['username'] = account['username']
