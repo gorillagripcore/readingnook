@@ -4,6 +4,7 @@ import psycopg2.extras
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app = Flask(__name__)
 app.secret_key = 'an4231'
 
@@ -87,11 +88,39 @@ def profile():
     else:
         favorite_book = None
     cursor.execute(
+        "select cover from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (username,))
+    least_favorite_book_row = cursor.fetchone()
+    if least_favorite_book_row is not None:
+        least_favorite_book = least_favorite_book_row[0]
+    else:
+        least_favorite_book = None
+    cursor.execute(
         "select user_desc from users where username = %s", (username,))
     user_desc = cursor.fetchone()[0]
     cursor.execute("select pfp from users where username = %s", (username,))
     pfp = cursor.fetchone()[0]
-    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book,)
+    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, least_favorite_book=least_favorite_book,)
+
+
+@app.route('/your_club')
+def your_club():
+    username = session['username']
+    return render_template('your_club.html', username=username)
+
+
+@app.route('/public_clubs')
+def public_clubs():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("select title, pic, descr from book_clubs")
+    book_clubs = cursor.fetchall()
+    return render_template('public_clubs.html', book_clubs=book_clubs)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('loggedin', None)
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
 
 @app.route('/pfp', methods=['GET', 'POST'])
@@ -161,26 +190,46 @@ def update_fav_book():
             flash('Could not find the book. Please try again.')
     return redirect(url_for('profile'))
 
+@app.route('/new_least_fav_book', methods=['GET', 'POST'])
+def new_least_fav_book():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        new_least_fav_book = request.form['new_least_fav_book']
+        cursor.execute(
+            "SELECT isbn FROM books WHERE title = %s;", (new_least_fav_book,))
+        result = cursor.fetchone()
+        if result is not None:
+            isbn = result['isbn']
+            cursor.execute(
+                "INSERT INTO public.least_favorite_book(username, isbn) VALUES (%s, %s);", (username, isbn))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('profile'))
+        else:
+            flash('Could not find the book. Please try again.')
+    return redirect(url_for('profile'))
 
-@app.route('/your_club')
-def your_club():
-    username = session['username']
-    return render_template('your_club.html', username=username)
 
-
-@app.route('/public_clubs')
-def public_clubs():
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("select title, pic, descr from book_clubs")
-    book_clubs = cursor.fetchall()
-    return render_template('public_clubs.html', book_clubs=book_clubs)
-
-
-@app.route('/logout')
-def logout():
-    session.pop('loggedin', None)
-    session.pop('username', None)
-    return redirect(url_for('login'))
+@app.route('/update_least_fav_book', methods=['GET', 'POST'])
+def update_least_fav_book():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        update_least_fav_book = request.form['update_least_fav_book']
+        cursor.execute(
+            "SELECT isbn FROM books WHERE title = %s;", (update_least_fav_book,))
+        result = cursor.fetchone()
+        if result is not None:
+            isbn = result['isbn']
+            cursor.execute(
+                "UPDATE public.least_favorite_book SET isbn = %s WHERE username = %s", (isbn, username,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('profile'))
+        else:
+            flash('Could not find the book. Please try again.')
+    return redirect(url_for('profile'))
 
 
 if __name__ == "__main__":

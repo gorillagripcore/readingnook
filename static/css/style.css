@@ -83,7 +83,7 @@ span.input-group-addon i {
 
 .login-button:hover {
    margin-top: 5px;
-   background-color: #b6c7f7;
+   background-color: #b8d7e9;
 
 }
 
@@ -121,10 +121,16 @@ input::-webkit-input-placeholder {
    padding-top: 3px;
 }
 
-z .form-control {
+.form-control {
    height: auto !important;
    padding: 8px 12px !important;
+   background-color: none !important;
 }
+
+.btn{
+   width: 100%;
+}
+
 
 span.input-group-addon i {
    color: #fff;
@@ -146,3 +152,6 @@ span.input-group-addon i {
    padding: 3px;
    height: 62px;
 }
+
+
+

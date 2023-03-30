@@ -36,8 +36,12 @@
                 <img src="{{pfp}}" alt="pfp" class="pfp">
               </div>
               <!--Dialog box for profile picture-->
-              <input type="submit" value="Change pic" class="form-control btn pfp_btn" name="" id="openpfpDialogBtn"
-                style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+              <button class="btn" id="openpfpDialogBtn"">
+                <svg xmlns=" http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
+                <path
+                  d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                </svg>
+              </button>
 
               <dialog id="pfp_dialog" class="dialog_box">
                 <div class="dialog">
@@ -45,7 +49,7 @@
                     <input type="text" class="form-control" name="pfp" placeholder="Link please" id="pfp" required>
                     <label> </label>
                     <input type="submit" value="Submit" class="form-control btn" name=""
-                      style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
+                      style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
                   </form>
                 </div>
               </dialog>
@@ -56,8 +60,12 @@
               <h2>{{ username }}</h2>
               <p>{{user_desc}}</p>
 
-              <input type="submit" value="Change desc" class="form-control btn pfp_btn" name="" id="opendescDialogBtn"
-                style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+              <button class="btn" id="opendescDialogBtn" style="margin-left: -65px; margin-top: -10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
+                  <path
+                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                </svg>
+              </button>
 
               <dialog id="desc_dialog" class="dialog_box">
                 <div class="dialog">
@@ -66,7 +74,7 @@
                       id="user_desc" required>
                     <label> </label>
                     <input type="submit" value="Submit" class="form-control btn" name=""
-                      style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
+                      style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
                   </form>
                 </div>
               </dialog>
@@ -78,6 +86,7 @@
 
             <hr>
 
+            <!--Favorite Book Box-->
             <div class="container text-center container_widget">
               <div class="row">
                 <div class="col widget">
@@ -85,25 +94,28 @@
                   {% if favorite_book %}
                   <img src="{{ favorite_book }}" alt="favorite_book">
 
-                  <input type="submit" value="Update Book" class="form-control btn pfp_btn" name=""
-                    id="open_updatefavbook_DialogBtn" style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+                  <button class="btn" id="open_updatefavbook_DialogBtn" style="margin-top: 10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
+                      <path
+                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                  </button>
 
                   <dialog id="updatefavbook_dialog" class="dialog_box">
                     <div class="dialog">
                       <form class="form-group" action="{{ url_for('update_fav_book') }}" method="post">
                         <input type="text" class="form-control" name="update_fav_book"
                           placeholder="Pick favorite book please" id="update_fav_book" required>
-                        <label> </label>
                         <input type="submit" value="Submit" class="form-control btn" name=""
-                          style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
+                          style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
                       </form>
                     </div>
                   </dialog>
-                
+
                   {% else %}
                   <p>No favorite book selected</p>
                   <input type="submit" value="Select Book" class="form-control btn pfp_btn" name=""
-                    id="open_newfavbook_DialogBtn" style=" width: 80px; background-color: #c8ebf7; font-size: x-small;">
+                    id="open_newfavbook_DialogBtn" style=" width: 80px; background-color: #b8d7e9; font-size: x-small;">
 
                   <dialog id="newfavbook_dialog" class="dialog_box">
                     <div class="dialog">
@@ -112,7 +124,7 @@
                           placeholder="Pick favorite book please" id="new_fav_book" required>
                         <label> </label>
                         <input type="submit" value="Submit" class="form-control btn" name=""
-                          style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
+                          style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
                       </form>
                     </div>
                   </dialog>
@@ -131,96 +143,95 @@
                   <p>Favourite quote:</p>
                   <p><i>"Just give me the f*cking valium" -Girl, Interrupted</i></p>
                 </div>
+
+
+                <!--Least Favorite Book Box-->
                 <div class="col widget">
-                  <p>Least favourite book</p>
-                  <img
-                    src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/41JFqILaXyL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg"
-                    alt="the great gatsby">
+                  <p>Least favorite book</p>
+                  {% if least_favorite_book %}
+                  <img src="{{ least_favorite_book }}" alt="least_favorite_book">
+
+                  <button class="btn" id="open_updateleastfavbook_DialogBtn" style="margin-top: 10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
+                      <path
+                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                  </button>
+
+                  <dialog id="update_least_fav_book_dialog" class="dialog_box">
+                    <div class="dialog">
+                      <form class="form-group" action="{{ url_for('update_least_fav_book') }}" method="post">
+                        <input type="text" class="form-control" name="update_least_fav_book"
+                          placeholder="Pick favorite book please" id="update_least_fav_book" required>
+                        <input type="submit" value="Submit" class="form-control btn" name=""
+                          style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
+                      </form>
+                    </div>
+                  </dialog>
+
+
+                  {% else %}
+                  <p>No Least favorite book selected</p>
+                  <button class="btn" id="open_newleastfavbook_DialogBtn" style="margin-top: 10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
+                      <path
+                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                  </button>
+
+                  <dialog id="newleastfavbook_dialog" class="dialog_box">
+                    <div class="dialog">
+                      <form class="form-group" action="{{ url_for('new_least_fav_book') }}" method="post">
+                        <input type="text" class="form-control" name="new_least_fav_book"
+                          placeholder="Pick favorite book please" id="new_least_fav_book" required>
+                        <label> </label>
+                        <input type="submit" value="Submit" class="form-control btn" name=""
+                          style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
+                      </form>
+                    </div>
+                  </dialog>
+                  {% endif %}
+                  {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                  <div class="error_msg">
+                    <p>Book Not Found :c Make sure you capitalized the title corretly.</p>
+                  </div>
+                  {% endif %}
+                  {% endwith %}
                 </div>
               </div>
             </div>
+          </div>
 
-            <hr>
+          <hr>
 
-            <!--Hela denna ska bli till en forloop-->
-            <div class="col">
-              <div class="col-6 col-sm-3 mx-auto posts" style="width: 500px;">
-                <div class="col user user_post">
-                  <img src="{{pfp}}" alt="">
-                  <p>{{username}}</p>
-                </div>
-                <div class="col">
-                  <p class="content">
-                    Hello everyone! How are you? Fine, thank you!
-                  </p>
-                </div>
-                <div class="col text-center">
-                  <form action="POST">
-                    <textarea placeholder="Add comment"></textarea>
-                    <input type="submit" value="Send" class="submit_button">
-                  </form>
-                </div>
+          <!--Hela denna ska bli till en forloop-->
+          <div class="col">
+            <div class="col-6 col-sm-3 mx-auto posts" style="width: 500px;">
+              <div class="col user user_post">
+                <img src="{{pfp}}" alt="">
+                <p>{{username}}</p>
+              </div>
+              <div class="col">
+                <p class="content">
+                  Hello everyone! How are you? Fine, thank you!
+                </p>
+              </div>
+              <div class="col text-center">
+                <form action="POST">
+                  <textarea placeholder="Add comment"></textarea>
+                  <input type="submit" value="Send" class="submit_button">
+                </form>
               </div>
             </div>
-            <!--Hit-->
           </div>
+          <!--Hit-->
+        </div>
 
-
-
-          <div class="col-2">
-            <!--Empty Sides-->
-          </div>
-        </div> <!--Hela row slut-->
-      </div> <!--Hela container slut-->
-
-
-      <script>
-        //pfp
-        const dialog = document.querySelector('#pfp_dialog');
-        const openpfpDialogBtn = document.querySelector('#openpfpDialogBtn');
-
-        openpfpDialogBtn.addEventListener('click', () => {
-          dialog.showModal();
-        });
-
-        dialog.addEventListener('close', () => {
-          document.querySelector('form').reset();
-        });
-
-        //desc
-        const dialog_desc = document.querySelector('#desc_dialog');
-        const opendescpDialogBtn = document.querySelector('#opendescDialogBtn');
-
-        opendescDialogBtn.addEventListener('click', () => {
-          dialog_desc.showModal();
-        });
-
-        desc_dialog.addEventListener('close', () => {
-          document.querySelector('form').reset();
-        });
-
-        //new fav book
-        const new_fav_book = document.querySelector('#newfavbook_dialog');
-        const open_newfavbook_DialogBtn = document.querySelector('#open_newfavbook_DialogBtn');
-
-        open_newfavbook_DialogBtn.addEventListener('click', () => {
-          new_fav_book.showModal();
-        });
-
-        new_fav_book.addEventListener('close', () => {
-          document.querySelector('form').reset();
-        });
-
-        //update fav book
-        const update_fav_book = document.querySelector('#updatefavbook_dialog');
-        const open_updatefavbook_DialogBtn = document.querySelector('#open_updatefavbook_DialogBtn');
-
-        open_updatefavbook_DialogBtn.addEventListener('click', () => {
-          update_fav_book.showModal();
-        });
-
-        update_fav_book.addEventListener('close', () => {
-          document.querySelector('form').reset();
-        });
-      </script>
+        <div class="col-2">
+          <!--Empty Sides-->
+        </div>
+      </div> <!--Hela row slut-->
+    </div> <!--Hela container slut-->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
