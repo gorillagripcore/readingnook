@@ -1,17 +1,19 @@
 const pfp_dialog = document.getElementById('pfp_dialog');
 const desc_dialog = document.getElementById('desc_dialog');
 const updatefavbook_dialog = document.getElementById('updatefavbook_dialog');
-
+const newfavbook_dialog = document.getElementById('newfavbook_dialog');
 
 const openpfpDialogBtn = document.getElementById('openpfpDialogBtn');
 const opendescDialogBtn = document.getElementById('opendescDialogBtn');
 const open_updatefavbook_DialogBtn = document.getElementById('open_updatefavbook_DialogBtn');
+const open_newfavbook_DialogBtn = document.getElementById('open_newfavbook_DialogBtn');
+
 
 
 openpfpDialogBtn.addEventListener('click', () => {
   pfp_dialog.showModal();
 });
-
+  
 opendescDialogBtn.addEventListener('click', () => {
   desc_dialog.showModal();
 });
@@ -20,8 +22,8 @@ open_updatefavbook_DialogBtn.addEventListener('click', () => {
   updatefavbook_dialog.showModal();
 });
 
-open_newleastfavbook_DialogBtn.addEventListener('click', () => {
-  newleastfavbook_dialog.showModal();
+open_newfavbook_DialogBtn.addEventListener('click', () => {
+  newfavbook_dialog.showModal();
 });
 
 
@@ -44,23 +46,12 @@ updatefavbook_dialog.addEventListener('click', (e) => {
   }
 });
 
-newleastfavbook_dialog.addEventListener('click', (e) => {
-  if (e.target === newleastfavbook_dialog) {
-    newleastfavbook_dialog.close();
+newfavbook_dialog.addEventListener('click', (e) => {
+  if (e.target === newfavbook_dialog) {
+    newfavbook_dialog.close();
   }
-})
+});
 
 
 
-const open_updateleastfavbook_DialogBtn = document.getElementById('open_updateleastfavbook_DialogBtn');
-  const update_least_fav_book_dialog = document.getElementById('update_least_fav_book_dialog');
 
-  open_updateleastfavbook_DialogBtn.addEventListener('click', () => {
-    update_least_fav_book_dialog.showModal();
-  });
-
-  update_least_fav_book_dialog.addEventListener('click', (e) => {
-    if (e.target === update_least_fav_book_dialog) {
-      update_least_fav_book_dialog.close();
-    }
-  });
