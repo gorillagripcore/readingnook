@@ -91,7 +91,6 @@
               <div class="row">
                 <div class="col widget">
                   <p>Favorite book</p>
-                  {% if favorite_book %}
                   <img src="{{ favorite_book }}" alt="favorite_book">
 
                   <button class="btn" id="open_updatefavbook_DialogBtn" style="margin-top: 10px;">
@@ -109,30 +108,9 @@
                         <input type="submit" value="Submit" class="form-control btn" name=""
                           style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
                       </form>
-                    </div>  
-                  </dialog>
-
-                  {% else %}
-                  <p>No favorite book selected</p>
-                  <button class="btn" id="open_newfavbook_DialogBtn" style="margin-top: 10px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
-                      <path
-                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                    </svg>
-                  </button>
-
-                  <dialog id="newfavbook_dialog" class="dialog_box">
-                    <div class="dialog">
-                      <form class="form-group" action="{{ url_for('new_fav_book') }}" method="post">
-                        <input type="text" class="form-control" name="new_fav_book"
-                          placeholder="Pick favorite book please" id="new_fav_book" required>
-                        <label> </label>
-                        <input type="submit" value="Submit" class="form-control btn" name=""
-                          style="width:80px; margin-top: 10px; background-color: #c8ebf7;">
-                      </form>
                     </div>
                   </dialog>
-                  {% endif %}
+
                   {% with messages = get_flashed_messages() %}
                   {% if messages %}
                   <div class="error_msg">
@@ -152,7 +130,6 @@
                 <!--Least Favorite Book Box-->
                 <div class="col widget">
                   <p>Least favorite book</p>
-                  {% if least_favorite_book %}
                   <img src="{{ least_favorite_book }}" alt="least_favorite_book">
 
                   <button class="btn" id="open_updateleastfavbook_DialogBtn" style="margin-top: 10px;">
@@ -173,28 +150,6 @@
                     </div>
                   </dialog>
 
-
-                  {% else %}
-                  <p>No Least favorite book selected</p>
-                  <button class="btn" id="open_newleastfavbook_DialogBtn" style="margin-top: 10px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
-                      <path
-                        d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                    </svg>
-                  </button>
-
-                  <dialog id="newleastfavbook_dialog" class="dialog_box">
-                    <div class="dialog">
-                      <form class="form-group" action="{{ url_for('new_least_fav_book') }}" method="post">
-                        <input type="text" class="form-control" name="new_least_fav_book"
-                          placeholder="Pick favorite book please" id="new_least_fav_book" required>
-                        <label> </label>
-                        <input type="submit" value="Submit" class="form-control btn" name=""
-                          style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
-                      </form>
-                    </div>
-                  </dialog>
-                  {% endif %}
                   {% with messages = get_flashed_messages() %}
                   {% if messages %}
                   <div class="error_msg">
@@ -239,3 +194,4 @@
     </div> <!--Hela container slut-->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+

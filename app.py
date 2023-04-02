@@ -66,8 +66,9 @@ def register():
         elif not password or not email or not username:
             flash('Please fill out the form!')
         else:
-            cursor.execute("INSERT INTO users (username, email, password, user_desc, pfp) VALUES (%s,%s,%s,%s,%s)",
-                           (username, email, _hashed_password, user_desc, pfp))
+            cursor.execute("INSERT INTO users (username, email, password, user_desc, pfp) VALUES (%s,%s,%s,%s,%s)",(username, email, _hashed_password, user_desc, pfp))
+            cursor.execute("INSERT INTO favorite_book (username, isbn) VALUES (%s, 1)",(username,))
+            cursor.execute("INSERT INTO least_favorite_book (username, isbn) VALUES (%s, 2)",(username,))
             conn.commit()
             flash('You have successfully registered!')
             return render_template('login.html')
@@ -149,27 +150,6 @@ def user_desc():
     return redirect(url_for('profile'))
 
 
-@app.route('/new_fav_book', methods=['GET', 'POST'])
-def new_fav_book():
-    if request.method == 'POST':
-        username = session['username']
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        new_fav_book = request.form['new_fav_book']
-        cursor.execute(
-            "SELECT isbn FROM books WHERE title = %s;", (new_fav_book,))
-        result = cursor.fetchone()
-        if result is not None:
-            isbn = result['isbn']
-            cursor.execute(
-                "INSERT INTO public.favorite_book(username, isbn) VALUES (%s, %s);", (username, isbn))
-            conn.commit()
-            cursor.close()
-            return redirect(url_for('profile'))
-        else:
-            flash('Could not find the book. Please try again.')
-    return redirect(url_for('profile'))
-
-
 @app.route('/update_fav_book', methods=['GET', 'POST'])
 def update_fav_book():
     if request.method == 'POST':
@@ -189,27 +169,6 @@ def update_fav_book():
         else:
             flash('Could not find the book. Please try again.')
     return redirect(url_for('profile'))
-
-@app.route('/new_least_fav_book', methods=['GET', 'POST'])
-def new_least_fav_book():
-    if request.method == 'POST':
-        username = session['username']
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        new_least_fav_book = request.form['new_least_fav_book']
-        cursor.execute(
-            "SELECT isbn FROM books WHERE title = %s;", (new_least_fav_book,))
-        result = cursor.fetchone()
-        if result is not None:
-            isbn = result['isbn']
-            cursor.execute(
-                "INSERT INTO public.least_favorite_book(username, isbn) VALUES (%s, %s);", (username, isbn))
-            conn.commit()
-            cursor.close()
-            return redirect(url_for('profile'))
-        else:
-            flash('Could not find the book. Please try again.')
-    return redirect(url_for('profile'))
-
 
 @app.route('/update_least_fav_book', methods=['GET', 'POST'])
 def update_least_fav_book():
