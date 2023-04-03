@@ -167,7 +167,7 @@ def update_fav_book():
             cursor.close()
             return redirect(url_for('profile'))
         else:
-            flash('Could not find the book. Please try again.')
+            flash('Book Not Found :c Make sure you capitalized the title corretly.')
     return redirect(url_for('profile'))
 
 @app.route('/update_least_fav_book', methods=['GET', 'POST'])
