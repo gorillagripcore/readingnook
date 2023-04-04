@@ -1,88 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>Register</title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <!-- Google Fonts -->
-  <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
-    id="bootstrap-css">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+      id="bootstrap-css">
+  </head>
 
-<body>
-  <!--NAV BAR-->
-  <nav class="navbar fixed-top navbar-expand-lg" style="padding: 10px">
-    <div class=" beige container-fluid">
+  <body>
+    <!--NAV BAR-->
+    <nav class="navbar fixed-top navbar-expand-lg" style="padding: 10px">
+      <div class=" beige container-fluid">
 
-      <!--Loggan (ligger utanför grid)-->
-      <a class="navbar-brand float-start" href="#">
-        <img
-          src="https://see.fontimg.com/api/renderfont4/gxnGR/eyJyIjoiZnMiLCJoIjo2NywidyI6MTAwMCwiZnMiOjY3LCJmZ2MiOiIjMDAwMDAwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/UmVhZGluZyBOb29r/creamy-sugar.png"
-          alt="Logo" width="200">
-      </a>
-  </nav>
+        <!--Loggan (ligger utanför grid)-->
+        <a class="navbar-brand float-start" href="#">
+          <img
+            src="https://see.fontimg.com/api/renderfont4/gxnGR/eyJyIjoiZnMiLCJoIjo2NywidyI6MTAwMCwiZnMiOjY3LCJmZ2MiOiIjMDAwMDAwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/UmVhZGluZyBOb29r/creamy-sugar.png"
+            alt="Logo" width="200">
+        </a>
+      </div>
+    </nav>
 
-  <div class="login-box">
-    <form action="{{ url_for('register') }}" method="post" autocomplete="off">
-      <div class="form-group">
-        <label for="username" class="cols-sm-2 control-label"> </label>
-        <div class="cols-sm-10">
-          <div class="input-group">
-            <input type="text" class="form-control" name="username" id="username" placeholder="Your username please!"
-              required>
+    <div class="login-box">
+      <form action="{{ url_for('register') }}" method="post" autocomplete="off">
+        <div class="form-group">
+          <label for="username" class="cols-sm-2 control-label"> </label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <input type="text" class="form-control" name="username" id="username" placeholder="Your username please!"
+                required>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="email" class="cols-sm-2 control-label"> </label>
-        <div class="cols-sm-10">
-          <div class="input-group">
-            <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+        <div class="form-group">
+          <label for="email" class="cols-sm-2 control-label"> </label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="password" class="cols-sm-2 control-label"> </label>
-        <div class="cols-sm-10">
-          <div class="input-group">
-            <input type="password" class="form-control" name="password" placeholder="Password" id="password" required
-              placeholder="Enter your Password" />
+        <div class="form-group">
+          <label for="password" class="cols-sm-2 control-label"> </label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <input type="password" class="form-control" name="password" placeholder="Password" id="password" required/>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-group ">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+        <div class="form-group ">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+
+          <input type="submit" value="Register" class="form-control btn" name="submitregister"
+            style="width:100px; margin: 2% 2% 1% 35%; background-color: #c8ebf7;">
+
+
         </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
 
-        <input type="submit" value="Register" class="form-control btn" name=""
-        style="width:100px; margin: 2% 2% 1% 35%; background-color: #c8ebf7;">
-
-
-      </div>
-
-    </form>
-  </div>
-  </div>
-  </div>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</body>
-
+      </form>
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </body>
 </html>
