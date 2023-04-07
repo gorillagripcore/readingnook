@@ -55,8 +55,11 @@ def register():
         password = request.form['password']
         username = request.form['username']
         _hashed_password = generate_password_hash(password)
+
         user_desc = "Add Description!"
         pfp = "https://cdn.discordapp.com/attachments/1078973373608112128/1089867595383050291/2opekg.png"
+        quote = "Forgive me, for all the things I did but mostly for the ones that I did not."
+        isbn = "9781400031702"
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
         if account:
@@ -69,6 +72,7 @@ def register():
             cursor.execute("INSERT INTO users (username, email, password, user_desc, pfp) VALUES (%s,%s,%s,%s,%s)",(username, email, _hashed_password, user_desc, pfp))
             cursor.execute("INSERT INTO favorite_book (username, isbn) VALUES (%s, 1)",(username,))
             cursor.execute("INSERT INTO least_favorite_book (username, isbn) VALUES (%s, 2)",(username,))
+            cursor.execute("INSERT INTO favorite_quote (isbn, username, quote) VALUES (%s,%s,%s)",(isbn, username, quote,))
             conn.commit()
             flash('You have successfully registered!')
             return render_template('login.html')
@@ -88,6 +92,7 @@ def profile():
         favorite_book = favorite_book_row[0]
     else:
         favorite_book = None
+
     cursor.execute(
         "select cover from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (username,))
     least_favorite_book_row = cursor.fetchone()
@@ -95,12 +100,23 @@ def profile():
         least_favorite_book = least_favorite_book_row[0]
     else:
         least_favorite_book = None
+
     cursor.execute(
         "select user_desc from users where username = %s", (username,))
     user_desc = cursor.fetchone()[0]
+
     cursor.execute("select pfp from users where username = %s", (username,))
     pfp = cursor.fetchone()[0]
-    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, least_favorite_book=least_favorite_book,)
+
+    cursor.execute(
+        "select quote from favorite_quote where username = %s", (username,))
+    favorite_quote = cursor.fetchone()[0]
+    cursor.execute(
+        "SELECT title from books join favorite_quote on favorite_quote.isbn=books.isbn where username = %s", (username,))
+    quote_book = cursor.fetchone()[0]
+
+
+    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, least_favorite_book=least_favorite_book, favorite_quote=favorite_quote, quote_book=quote_book)
 
 
 @app.route('/your_club')
@@ -183,6 +199,27 @@ def update_least_fav_book():
             isbn = result['isbn']
             cursor.execute(
                 "UPDATE public.least_favorite_book SET isbn = %s WHERE username = %s", (isbn, username,))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('profile'))
+        else:
+            flash('Could not find the book. Please try again.')
+    return redirect(url_for('profile'))
+
+@app.route('/favorite_quote', methods=['GET', 'POST'])
+def favorite_quote():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        quote = request.form['quote']
+        book_quote = request.form['book_quote']
+        cursor.execute(
+            "SELECT isbn FROM books WHERE title = %s;", (book_quote,))
+        result = cursor.fetchone()
+        if result is not None:
+            isbn = result['isbn']
+            cursor.execute(
+                "UPDATE favorite_quote SET isbn = %s, quote = %s WHERE username = %s", (isbn, quote, username,))
             conn.commit()
             cursor.close()
             return redirect(url_for('profile'))
