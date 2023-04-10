@@ -185,8 +185,8 @@ svg{
 }
 
 .quote_btn{
-   position: fixed;
-   margin-top: -4px;
-   top: 56%;
+   position: absolute;
+   margin-top: 20px;
+   top: 68%;
    left: 0%
 }
