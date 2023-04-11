@@ -1,0 +1,47 @@
+.books_container {
+    margin-top: 75px;
+    border-radius: 10px;
+    border: 1px solid #c3c3c3;
+    background-color: #faf6f0;
+}
+
+.book_cover {
+    padding: 25px;
+    padding-left: 35px;
+}
+
+.book_cover>img {
+    height: 350px;
+    width: 220px;
+    border-radius: 10px;
+}
+
+.book_info {
+    padding: 25px;
+}
+
+.divider {
+    border-left: 2px solid #000;
+    height: 30px;
+}
+
+.author {
+    margin-top: 7px;
+}
+
+.author>h5 {
+    margin-left: -35px;
+}
+
+.book_pages>p {
+    margin-left: 90px;
+}
+
+.dot_divider {
+    font-size: 25px;
+    margin-top: -10px;
+}
+
+.book_description {
+    padding: 5px;
+}
