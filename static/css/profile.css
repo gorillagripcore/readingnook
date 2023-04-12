@@ -72,7 +72,7 @@ header {
    border: 1px solid #767676;
 }
 
-.pfp_btn{
+.pfp_btn {
    margin-bottom: 12px;
 }
 
@@ -175,7 +175,7 @@ textarea {
    width: 470px;
 }
 
-svg{
+svg {
    width: 35px;
    height: 20px;
    margin-top: -10px;
@@ -184,9 +184,15 @@ svg{
    border-radius: 5px;
 }
 
-.quote_btn{
-   position: absolute;
-   margin-top: 20px;
-   top: 68%;
-   left: 0%
+.quote_btn {
+   width: 70px;
+   height: 30px;
+   margin: 20px;
+   margin-top: 24px;
+   cursor: pointer;
+   border-radius: 6px;
+   top: 34%;
+   left: 0%;
+  
 }
+
