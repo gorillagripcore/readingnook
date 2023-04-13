@@ -123,9 +123,11 @@
 
                 <div class="col widget">
                   <p>Favorite quote</p>
-                  <i>"{{ favorite_quote }}"</i>
-                  <p>- {{ quote_book }}</p>
-
+                  <div class="quote_box">
+                    <i>"{{ favorite_quote }}"</i>
+                    <p>- {{ quote_book }}</p>  
+                  </div>
+                  
                   <button class="btn quote_btn" id="open_quote_DialogBtn" >
                     <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
                       <path
