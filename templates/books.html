@@ -22,7 +22,7 @@
         <div class="row">
             <!-- book cover -->
             <div class="col-sm-4 book_cover">
-                <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1669077583i/60536444.jpg"
+                <img src="{{book[2]}}"
                     alt="" class="mx-auto">
             </div>
 
@@ -30,20 +30,20 @@
             <div class="col-sm-7 mx-auto book_info">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>The Forgetting</h3>
+                        <h3>{{book[1]}}</h3>
                     </div>
                     <div class="col-sm-1 divider"></div>
                     <div class="col-sm-5 author">
-                        <h5>Hannah Beckerman</h5>
+                        <h5>-</h5>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col book_pages">
-                        <p>329 pages</p>
+                        <p>{{book[4]}} pages</p>
                     </div>
                     <div class="col-sm-1 dot_divider">•</div>
                     <div class="col">
-                        <p>Published: 2023</p>
+                        <p>Published: {{book[3]}}</p>
                     </div>
                 </div>
                 <div class="col mx-auto book_description">

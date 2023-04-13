@@ -227,6 +227,18 @@ def favorite_quote():
             flash('Could not find the book. Please try again.')
     return redirect(url_for('profile'))
 
+@app.route('/books/<int:book_isbn>')
+def book(book_isbn):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute(
+        "select * from books where isbn = %s", (book_isbn,))
+    book = cursor.fetchone()
+
+    conn.commit()
+    cursor.close()
+
+    return render_template('books.html', book_isbn=book_isbn, book=book)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
