@@ -23,7 +23,7 @@
             <!-- book cover -->
             <div class="col-sm-4 book_cover">
                 <img src="{{book[2]}}"
-                    alt="" class="mx-auto">
+                    alt="book_cover" class="mx-auto">
             </div>
 
             <!-- book information -->
@@ -37,6 +37,7 @@
                         <h5>-</h5>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col book_pages">
                         <p>{{book[4]}} pages</p>
@@ -46,13 +47,18 @@
                         <p>Published: {{book[3]}}</p>
                     </div>
                 </div>
+
                 <div class="col mx-auto book_description">
                     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil id magnam sunt similique sed,
                         autem libero dolore at eos ab, blanditiis quos maiores? Fuga est debitis necessitatibus
                         accusantium, assumenda sint.</p>
                 </div>
+                
+                <!-- button -->
+                <div>
+                    <input type="submit" value="Want to read" id="want_to_read_button">
+                </div>
             </div>
         </div>
     </div>
-
 </body>

@@ -1,5 +1,6 @@
 .books_container {
     margin-top: 75px;
+    width: 750px;
     border-radius: 10px;
     border: 1px solid #c3c3c3;
     background-color: #faf6f0;
@@ -34,7 +35,7 @@
 }
 
 .book_pages>p {
-    margin-left: 90px;
+    margin-left: 80px;
 }
 
 .dot_divider {
@@ -44,4 +45,20 @@
 
 .book_description {
     padding: 5px;
+}
+
+#want_to_read_button{
+    font-size: 15px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #c8ebf7;
+    border: 1px solid #c8ebf7;
+    border-radius: 6px;
+    margin-top: 80px;
+    margin-left: 270px;
+}
+
+#want_to_read_button:hover{
+    background-color: #bce0ec;
+    transition: 0.3s;
 }
