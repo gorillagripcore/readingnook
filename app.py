@@ -234,10 +234,14 @@ def book(book_isbn):
         "select * from books where isbn = %s", (book_isbn,))
     book = cursor.fetchone()
 
+    cursor.execute(
+        "select * from authors join authors_books on authors.author_id=authors_books.author_id where authors_books.isbn=%s", (book_isbn,))
+    author_name = cursor.fetchone()
+
     conn.commit()
     cursor.close()
 
-    return render_template('books.html', book_isbn=book_isbn, book=book)
+    return render_template('books.html', book_isbn=book_isbn, book=book, author_name=author_name)
 
 
 if __name__ == "__main__":
