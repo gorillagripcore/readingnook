@@ -109,6 +109,7 @@ def profile():
     "select least_favorite_book.isbn from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (username,))
     least_favorite_book_isbn = cursor.fetchone()[0]
 
+
     cursor.execute(
         "select user_desc from users where username = %s", (username,))
     user_desc = cursor.fetchone()[0]
@@ -236,6 +237,9 @@ def favorite_quote():
 
 @app.route('/books/<int:book_isbn>')
 def book(book_isbn):
+    if book_isbn in (1, 2):
+        return redirect(url_for('profile'))
+
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute(
         "select * from books where isbn = %s", (book_isbn,))
