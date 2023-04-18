@@ -91,7 +91,7 @@
               <div class="row">
                 <div class="col widget">
                   <p>Favorite book</p>
-                  <img src="{{ favorite_book }}" alt="favorite_book">
+                  <a href="{{ url_for('book', book_isbn=favorite_book_isbn) }}"><img src="{{ favorite_book }}" alt="favorite_book"></a>
 
                   <button class="btn" id="open_updatefavbook_DialogBtn" style="margin-top: 10px;">
                     <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -167,7 +167,7 @@
                 <!--Least Favorite Book Box-->
                 <div class="col widget">
                   <p>Least favorite book</p>
-                  <img src="{{ least_favorite_book }}" alt="least_favorite_book">
+                  <a href="{{ url_for('book', book_isbn=least_favorite_book_isbn) }}"><img src="{{ least_favorite_book }}" alt="least_favorite_book"></a>
 
                   <button class="btn" id="open_updateleastfavbook_DialogBtn" style="margin-top: 10px;">
                     <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">

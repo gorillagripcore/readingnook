@@ -94,12 +94,20 @@ def profile():
         favorite_book = None
 
     cursor.execute(
+    "select favorite_book.isbn from favorite_book join books on favorite_book.isbn=books.isbn where username = %s", (username,))
+    favorite_book_isbn = cursor.fetchone()[0]
+
+    cursor.execute(
         "select cover from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (username,))
     least_favorite_book_row = cursor.fetchone()
     if least_favorite_book_row is not None:
         least_favorite_book = least_favorite_book_row[0]
     else:
         least_favorite_book = None
+
+    cursor.execute(
+    "select least_favorite_book.isbn from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (username,))
+    least_favorite_book_isbn = cursor.fetchone()[0]
 
     cursor.execute(
         "select user_desc from users where username = %s", (username,))
@@ -115,8 +123,7 @@ def profile():
         "SELECT title from books join favorite_quote on favorite_quote.isbn=books.isbn where username = %s", (username,))
     quote_book = cursor.fetchone()[0]
 
-
-    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, least_favorite_book=least_favorite_book, favorite_quote=favorite_quote, quote_book=quote_book)
+    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book)
 
 
 @app.route('/your_club')
