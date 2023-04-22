@@ -20,13 +20,10 @@
     {% include 'navbar.html' %}
     <div class="col-lg-5 mx-auto books_container">
         <div class="row">
-            <!-- book cover -->
             <div class="col-sm-4 book_cover">
-                <img src="{{book[2]}}"
-                    alt="book_cover" class="mx-auto">
+                <img src="{{book[2]}}" alt="book_cover" class="mx-auto">
             </div>
 
-            <!-- book information -->
             <div class="col-sm-7 mx-auto book_info">
                 <div class="row">
                     <div class="col-sm-6">
@@ -51,8 +48,7 @@
                 <div class="col mx-auto book_description">
                     <p>{{book[5]}}</p>
                 </div>
-                
-                <!-- button -->
+
                 <div>
                     <input type="submit" value="Want to read" id="want_to_read_button">
                 </div>

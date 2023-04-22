@@ -47,7 +47,7 @@
     padding: 5px;
 }
 
-#want_to_read_button{
+#want_to_read_button {
     font-size: 15px;
     padding: 10px;
     cursor: pointer;
@@ -58,7 +58,7 @@
     margin-left: 270px;
 }
 
-#want_to_read_button:hover{
+#want_to_read_button:hover {
     background-color: #bce0ec;
     transition: 0.3s;
 }

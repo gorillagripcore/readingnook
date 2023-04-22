@@ -1,4 +1,4 @@
-.home_container{
+.home_container {
     margin-top: 75px;
     border-radius: 10px;
     border: 1px solid #c3c3c3;
@@ -58,7 +58,8 @@
 
 .content {
     margin-left: 15px;
-    max-height: 100px;top: 50px;
+    max-height: 100px;
+    top: 50px;
     left: 50px;
     overflow-y: auto;
 }
@@ -90,16 +91,17 @@
     cursor: pointer;
     background-color: #c8ebf7;
     border: 1px solid #c8ebf7;
-    border-radius: 6px;  
+    border-radius: 6px;
     position: relative;
     left: -170px;
 }
-.submit_button:hover{
+
+.submit_button:hover {
     background-color: #bce0ec;
     transition: 0.3s;
 }
 
-textarea{
+.add_comment {
     margin-top: 15px;
     height: 32px;
 }
@@ -112,7 +114,7 @@ textarea{
     max-width: 450px;
 }
 
-.star-container {
+.star_container {
     display: flex;
     justify-content: flex-end;
     width: 100%;
