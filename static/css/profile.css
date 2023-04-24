@@ -110,6 +110,7 @@ header {
 textarea {
    margin-top: 15px;
    height: 32px;
+   width: 470px;
 }
 
 
@@ -169,12 +170,6 @@ textarea {
    transition: 0.3s;
 }
 
-textarea {
-   margin-top: 15px;
-   height: 32px;
-   width: 470px;
-}
-
 svg {
    width: 35px;
    height: 20px;
@@ -186,9 +181,7 @@ svg {
 
 
 
-.quote_box{
+.quote_box {
    height: 160px;
    width: 140px;
 }
-
-

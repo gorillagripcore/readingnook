@@ -1,15 +1,13 @@
-
-.pc_box {
+.public_club_box {
     background-color: #faf6f0;
     width: 450px;
     height: 170px;
     border-radius: 7px;
     margin: 15px;
     position: relative
-
 }
 
-.pc_box img {
+.public_club_box img {
     margin-top: 15px;
     margin-right: 100px;
     width: 100px;
@@ -17,12 +15,12 @@
     border-radius: 7px;
 }
 
-.pc_box h4 {
+.public_club_box h4 {
     margin-top: 10px;
     text-align: left;
 }
 
-.pc_box input {
+.public_club_box input {
     width: 100px;
     margin: 2% 2% 1% 35%;
     background-color: #c8ebf7;
@@ -31,16 +29,16 @@
     left: 41%;
 }
 
-.pc_box input:hover{
+.public_club_box input:hover {
     background-color: #c8ebf7;
 }
 
-.pc_box p {
+.public_club_box p {
     text-align: left;
 }
 
 
-.pc {
+.public_club {
     border-radius: 10px;
     border-color: rgb(195, 195, 195);
     border-width: 1px;

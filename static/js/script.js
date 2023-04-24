@@ -1,19 +1,16 @@
-//Dialogen
+
 const pfp_dialog = document.getElementById('pfp_dialog');
 const desc_dialog = document.getElementById('desc_dialog');
 const update_fav_book_dialog = document.getElementById('update_fav_book_dialog');
 const update_least_fav_book_dialog = document.getElementById('update_least_fav_book_dialog');
 const quote_dialog = document.getElementById('quote_dialog');
 
-//Knappen för dialogen
 const open_pfp_dialog_btn = document.getElementById('open_pfp_dialog_btn');
 const open_desc_dialog_btn = document.getElementById('open_desc_dialog_btn');
 const open_update_fav_book_dialog_btn = document.getElementById('open_update_fav_book_dialog_btn');
 const open_update_least_fav_book_dialog_btn = document.getElementById('open_update_least_fav_book_dialog_btn');
 const open_quote_dialog_btn = document.getElementById('open_quote_dialog_btn');
 
-
-//Om man klickar på "knappen" så öppnas respektive dialog
 open_pfp_dialog_btn.addEventListener('click', () => {
   pfp_dialog.showModal();
 });
@@ -35,7 +32,6 @@ open_quote_dialog_btn.addEventListener('click', () => {
 });
 
 
-//
 pfp_dialog.addEventListener('click', (e) => {
   if (e.target === pfp_dialog) {
     pfp_dialog.close();

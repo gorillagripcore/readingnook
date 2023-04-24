@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reading Nook</title>
-  <link rel="icon" href="https://cdn.discordapp.com/attachments/1078973373608112128/1089867595383050291/2opekg.png">
+  <link rel="icon" href="https://cdn.discordapp.com/attachments/1078973373608112128/1099769461256503396/Untitled_Artwork.png">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -16,26 +16,24 @@
 </head>
 
 <body>
-  <!--NAV BAR-->
+
   <nav class="navbar fixed-top navbar-expand-lg" style="padding: 10px">
     <div class=" beige container-fluid">
 
-      <!--Loggan (ligger utanför grid)-->
       <a class="navbar-brand float-start" href="#">
-        <img
-          src="https://cdn.discordapp.com/attachments/1078973373608112128/1099769461256503396/Untitled_Artwork.png"
+        <img src="https://cdn.discordapp.com/attachments/1078973373608112128/1099769461256503396/Untitled_Artwork.png"
           alt="Logo" width="50">
       </a>
     </div>
   </nav>
-  <div class="login-box">
-    <form class="form-group" action="{{ url_for('login') }}" method="post">
-      <input type="text" class="form-control" name="username" placeholder="Username" id="username" required>
+  <div class="login_box">
+    <form class="form_group" action="{{ url_for('login') }}" method="post">
+      <input type="text" class="form_control" name="username" placeholder="Username" id="username" required>
       <label> </label>
-      <input type="password" class="form-control" name="password" placeholder="Password" id="password" required>
+      <input type="password" class="form_control" name="password" placeholder="Password" id="password" required>
       <br>
-      <input type="submit" value="Login" class="form-control btn" name="submitloggin"
-        style="width:100px; margin: 2% 2% 1% 35%; background-color: #c8ebf7;">
+      <input type="submit" value="Login" class="form_control btn" name="submitloggin"
+        style="width:100px; margin: 5% 2% 1% 35%; background-color: #c8ebf7;">
     </form>
     {% with messages = get_flashed_messages() %}
     {% if messages %}

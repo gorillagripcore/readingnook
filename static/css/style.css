@@ -3,14 +3,14 @@ body {
    margin: 0;
    padding-right: calc(100vw - 100%);
    overflow-y: scroll;
-   scrollbar-width: none; 
+   scrollbar-width: none;
 }
 
 .beige {
    background-color: #fefbf7;
 }
 
-.logo{
+.logo {
    height: 55px;
    width: 55px;
    border-radius: 50%;
@@ -19,10 +19,10 @@ body {
    border-color: rgb(138, 138, 138);
 }
 
-.login-box {
+.login_box {
    padding: 20px;
    padding-top: 50px;
-   height: 360px;
+   height: 300px;
    width: 500px;
    margin-left: 37%;
    margin-top: 230px;
@@ -46,7 +46,7 @@ hr {
    color: #ffffff;
 }
 
-.form-group {
+.form_group {
    margin-bottom: 15px;
 }
 
@@ -60,77 +60,20 @@ input::-webkit-input-placeholder {
    padding-top: 3px;
 }
 
-.main-login {
-   background-color: #fff;
-   /* shadows and rounded borders */
-   -moz-border-radius: 2px;
-   -webkit-border-radius: 2px;
-   border-radius: 2px;
-
-}
-
-.form-control {
-   height: auto !important;
-   padding: 8px 12px !important;
-}
-
-
-span.input-group-addon i {
-   color: #fff;
-   font-size: 17px;
-   padding: 10px;
-}
-
-.login-button:hover {
-   margin-top: 5px;
-   background-color: #b8d7e9;
-
-}
-
-.login-register {
-   font-size: 11px;
-   text-align: center;
-}
-
-.login-body {
-   padding: 20px;
-   line-height: 2;
-}
-
-
-.main {
-   margin-top: 50px;
-}
-
-hr {
-   width: 10%;
-   color: #fff;
-}
-
-.form-group {
-   margin-bottom: 15px;
-}
-
-label {
-   margin-bottom: 15px;
-}
-
-input,
-input::-webkit-input-placeholder {
-   font-size: 11px;
-   padding-top: 3px;
-}
-
-.form-control {
+.form_control {
    height: auto !important;
    padding: 8px 12px !important;
    background-color: none !important;
+   border-radius: 10px;
+   border-color: #b6b6b6; 
+   border-width: 1px;
+   width: 460px;
+   border-style: solid;
 }
 
-.btn{
+.btn {
    width: 100%;
 }
-
 
 span.input-group-addon i {
    color: #fff;
@@ -138,12 +81,7 @@ span.input-group-addon i {
    padding: 10px;
 }
 
-.login-register {
-   font-size: 11px;
-   text-align: center;
-}
-
-.error_msg{
+.error_msg {
    font-size: 12px;
    border-radius: 10px;
    border-width: 1px;
@@ -152,7 +90,3 @@ span.input-group-addon i {
    padding: 3px;
    height: 62px;
 }
-
-
-
-
