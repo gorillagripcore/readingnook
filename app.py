@@ -161,6 +161,30 @@ def public_clubs():
     book_clubs = cursor.fetchall()
     return render_template('public_clubs.html', book_clubs=book_clubs)
 
+@app.route('/join_club', methods=['GET', 'POST'])
+def join_club():
+    if request.method == 'POST':
+        username = session['username'] 
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT * FROM in_club WHERE username=%s', (username,))
+        user_in_club = cursor.fetchone()
+        if user_in_club:
+            flash('You have already joined this book club.')
+        else:
+            book_title = request.form['book_title']
+            cursor.execute('SELECT title FROM book_club WHERE title = %s', (book_title,))
+            book_club_name = cursor.fetchone()
+            if book_club_name:
+                cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, book_club_name))
+                conn.commit()
+            else:
+                flash('The book club does not exist')
+                
+        return redirect('your_club.html')
+    else:
+        return render_template('public_clubs.html')
+
+
 
 @app.route('/logout')
 def logout():
