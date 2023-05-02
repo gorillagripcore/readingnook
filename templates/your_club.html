@@ -20,12 +20,11 @@
 <body>
   {% include 'navbar.html' %}
 
-  <form action="{{ url_for('leave_club') }}" method="POST">
-    <input type="submit" value="Leave" class="form-control btn leave_button" name="leave_club">
-  </form>
-
   <div class="profile_section">
     <div class="container text-center">
+      <form action="{{ url_for('leave_club') }}" method="POST">
+        <input type="submit" value="Leave" class="form-control btn leave_button" name="leave_club">
+      </form>
       <div class="row">
         <div class="col-2">
           <img src="{{ club_info[3] }}" alt="Club Picture" class="club_pic">

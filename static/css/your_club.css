@@ -51,7 +51,7 @@ body {
 }
 
 .members_box {
-    margin-top: 20px;
+    margin-top: 10px;
     flex: 0 0 200px;
     background-color: #faf6f0;
     border: 1px solid #898989;
@@ -59,6 +59,7 @@ body {
     padding: 20px;
     text-align: center;
     margin-left: auto;
+    
 }
 
 
@@ -161,23 +162,23 @@ input[type="submit"] {
  }
 
 
-.leave_button {
+ .leave_button {
     width: 60px;
-    height: 32px;
+    height: 40px;
     font-size: 15px;
     padding: 1px;
-    margin: 10px;
+    margin: 15px;
     cursor: pointer;
     background-color: #b8d7e9;
     border: 1px solid #b8d7e9;
     border-radius: 6px;
-    position: absolute;
-   
- }
- 
+    float: right;  
+}
+
+
 img{
     border-radius: 10px;
-    border: 1px #5f5f61;
+    border: 1px solid #d0cece;
 }
  
  
