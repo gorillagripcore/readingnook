@@ -19,6 +19,7 @@
     text-align: center;
 }
 
+/* don't remove! will be used later
 .current_book>h6,
 .current_book>p {
     margin-top: 1px;
@@ -45,7 +46,7 @@
 .meeting_info>p {
     margin-bottom: 1px;
 }
-
+*/
 .posts {
     position: relative;
     margin-top: 15px;
@@ -145,4 +146,14 @@
     width: 70px;
     border-radius: 4px;
     border: 1px solid #888;
+}
+
+.bi{
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.if_none{
+    color: #d3c6b4;
+    padding: 5px;
 }
