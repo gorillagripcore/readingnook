@@ -147,3 +147,15 @@ input[type="submit"] {
     padding-top: 10px;
     text-align: left;
 }
+
+.club_pic {
+    object-fit: cover;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    border: 1px solid #767676;
+ }
+
+#total_members {
+    font-size: 20px;
+ }
