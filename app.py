@@ -69,10 +69,14 @@ def register():
         elif not password or not email or not username:
             flash('Please fill out the form!')
         else:
-            cursor.execute("INSERT INTO users (username, email, password, user_desc, pfp) VALUES (%s,%s,%s,%s,%s)",(username, email, _hashed_password, user_desc, pfp))
-            cursor.execute("INSERT INTO favorite_book (username, isbn) VALUES (%s, 1)",(username,))
-            cursor.execute("INSERT INTO least_favorite_book (username, isbn) VALUES (%s, 2)",(username,))
-            cursor.execute("INSERT INTO favorite_quote (isbn, username, quote) VALUES (%s,%s,%s)",(isbn, username, quote,))
+            cursor.execute("INSERT INTO users (username, email, password, user_desc, pfp) VALUES (%s,%s,%s,%s,%s)",
+                           (username, email, _hashed_password, user_desc, pfp))
+            cursor.execute(
+                "INSERT INTO favorite_book (username, isbn) VALUES (%s, 1)", (username,))
+            cursor.execute(
+                "INSERT INTO least_favorite_book (username, isbn) VALUES (%s, 2)", (username,))
+            cursor.execute(
+                "INSERT INTO favorite_quote (isbn, username, quote) VALUES (%s,%s,%s)", (isbn, username, quote,))
             conn.commit()
             flash('You have successfully registered!')
             return render_template('login.html')
@@ -94,7 +98,7 @@ def profile():
         favorite_book = None
 
     cursor.execute(
-    "select favorite_book.isbn from favorite_book join books on favorite_book.isbn=books.isbn where username = %s", (username,))
+        "select favorite_book.isbn from favorite_book join books on favorite_book.isbn=books.isbn where username = %s", (username,))
     favorite_book_isbn = None
     row = cursor.fetchone()
     if row is not None:
@@ -109,14 +113,14 @@ def profile():
         least_favorite_book = None
 
     cursor.execute(
-    "select least_favorite_book.isbn from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (username,))
+        "select least_favorite_book.isbn from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (username,))
     least_favorite_book_isbn = None
     row = cursor.fetchone()
     if row is not None:
         least_favorite_book_isbn = row[0]
 
     cursor.execute(
-    "select user_desc from users where username = %s", (username,))
+        "select user_desc from users where username = %s", (username,))
     user_desc_row = cursor.fetchone()
     if user_desc_row is not None:
         user_desc = user_desc_row[0]
@@ -130,15 +134,16 @@ def profile():
     else:
         pfp = None
 
-
-    cursor.execute("select quote from favorite_quote where username = %s", (username,))
+    cursor.execute(
+        "select quote from favorite_quote where username = %s", (username,))
     favorite_quote_row = cursor.fetchone()
     if favorite_quote_row is not None:
         favorite_quote = favorite_quote_row[0]
     else:
         favorite_quote = None
 
-    cursor.execute("SELECT title from books join favorite_quote on favorite_quote.isbn=books.isbn where username = %s", (username,))
+    cursor.execute(
+        "SELECT title from books join favorite_quote on favorite_quote.isbn=books.isbn where username = %s", (username,))
     quote_book_row = cursor.fetchone()
     if quote_book_row is not None:
         quote_book = quote_book_row[0]
@@ -150,33 +155,68 @@ def profile():
 
 @app.route('/your_club')
 def your_club():
+
     username = session['username']
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-    cursor.execute("SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
+    cursor.execute(
+        "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
     club_info = cursor.fetchone()
- 
-    cursor.execute("SELECT book_club from in_club WHERE username=%s", (username,))
-    club_name= cursor.fetchone()
-    
-    cursor.execute('select count(username)from in_club where book_club = %s', (club_name))
+
+    cursor.execute(
+        "SELECT book_club from in_club WHERE username=%s", (username,))
+    club_name = cursor.fetchone()
+
+    cursor.execute(
+        'select count(username)from in_club where book_club = %s', (club_name))
     members_row = cursor.fetchone()
     if members_row is not None:
         members = members_row[0]
     else:
         members = None
+
+    cursor.execute(
+        'select cover from books join book_club_info on books.isbn=book_club_info.book_of_the_month where book_club_info.title = %s', (club_name))
+    book_of_the_month_row = cursor.fetchone()
+    if book_of_the_month_row is not None:
+        book_of_the_month = book_of_the_month_row[0]
+    else:
+        book_of_the_month = None
+
+    cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
+    date_row = cursor.fetchone()
+    if date_row is not None:
+        date = date_row[0]
+    else:
+        date = None
+
+    cursor.execute('select time from book_club_info where title = %s', (club_name))
+    time_row = cursor.fetchone()
+    if time_row is not None:
+        time = time_row[0]
+    else:
+        time = None
     
+    cursor.execute(
+        'select location from book_club_info where title = %s', (club_name))
+    location_row = cursor.fetchone()
+    if location_row is not None:
+        location = location_row[0]
+    else:
+        location = None
+
     conn.commit()
     cursor.close()
-    
-    return render_template('your_club.html', username=username, club_info=club_info, members=members)
+
+    return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+
 
 @app.route('/public_clubs')
 def public_clubs():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute("SELECT title, pic, descr FROM book_clubs")
     book_clubs = cursor.fetchall()
-    
+
     book_club_title = request.form.get('book_club_title')
     username = session['username']
     cursor.execute('SELECT * FROM in_club WHERE username=%s', (username,))
@@ -184,12 +224,14 @@ def public_clubs():
     if user_in_club:
         return redirect(url_for('your_club'))
     else:
-        cursor.execute("SELECT * FROM book_clubs WHERE title = %s", (book_club_title,))
+        cursor.execute(
+            "SELECT * FROM book_clubs WHERE title = %s", (book_club_title,))
         book_club_title = None
         row = cursor.fetchone()
         if row is not None:
-                book_club_title= row[0]
+            book_club_title = row[0]
     return render_template('public_clubs.html', book_clubs=book_clubs)
+
 
 @app.route('/join_club', methods=['GET', 'POST'])
 def join_club():
@@ -198,21 +240,24 @@ def join_club():
         username = session['username']
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, book_club_title))
-        conn.commit() 
+        cursor.execute("INSERT INTO in_club VALUES (%s, %s)",
+                       (username, book_club_title))
+        conn.commit()
         return redirect(url_for('your_club'))
-    else: 
+    else:
         return redirect(url_for('home.html'))
-    
-#@app.route('/leave_club', methods=['GET', 'POST'])
-#def leave_club():
-    
-        username = session['username']
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, book_club_title))
-        conn.commit() 
-    return redirect(url_for('your_club'))
+
+@app.route('/leave_club', methods=['GET', 'POST'])
+def leave_club():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    cursor.execute("DELETE FROM in_club WHERE username = %s",
+                   (username,))  # den
+    conn.commit()
+    return redirect(url_for('public_clubs'))
+
 
 @app.route('/logout')
 def logout():
@@ -267,6 +312,7 @@ def update_fav_book():
             flash('Book Not Found :c Make sure you capitalized the title corretly.')
     return redirect(url_for('profile'))
 
+
 @app.route('/update_least_fav_book', methods=['GET', 'POST'])
 def update_least_fav_book():
     if request.method == 'POST':
@@ -286,6 +332,7 @@ def update_least_fav_book():
         else:
             flash('Could not find the book. Please try again.')
     return redirect(url_for('profile'))
+
 
 @app.route('/favorite_quote', methods=['GET', 'POST'])
 def favorite_quote():
@@ -307,6 +354,7 @@ def favorite_quote():
         else:
             flash('Could not find the book. Please try again.')
     return redirect(url_for('profile'))
+
 
 @app.route('/books/<int:book_isbn>')
 def book(book_isbn):

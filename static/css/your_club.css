@@ -159,3 +159,25 @@ input[type="submit"] {
 #total_members {
     font-size: 20px;
  }
+
+
+.leave_button {
+    width: 60px;
+    height: 32px;
+    font-size: 15px;
+    padding: 1px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #b8d7e9;
+    border: 1px solid #b8d7e9;
+    border-radius: 6px;
+    position: absolute;
+   
+ }
+ 
+img{
+    border-radius: 10px;
+    border: 1px #5f5f61;
+}
+ 
+ 
