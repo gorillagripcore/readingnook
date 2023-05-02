@@ -151,16 +151,68 @@ def profile():
 @app.route('/your_club')
 def your_club():
     username = session['username']
-    return render_template('your_club.html', username=username)
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
+    cursor.execute("SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
+    club_info = cursor.fetchone()
+ 
+    cursor.execute("SELECT book_club from in_club WHERE username=%s", (username,))
+    club_name= cursor.fetchone()
+    
+    cursor.execute('select count(username)from in_club where book_club = %s', (club_name))
+    members_row = cursor.fetchone()
+    if members_row is not None:
+        members = members_row[0]
+    else:
+        members = None
+    
+    conn.commit()
+    cursor.close()
+    
+    return render_template('your_club.html', username=username, club_info=club_info, members=members)
 
 @app.route('/public_clubs')
 def public_clubs():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("select title, pic, descr from book_clubs")
+    cursor.execute("SELECT title, pic, descr FROM book_clubs")
     book_clubs = cursor.fetchall()
+    
+    book_club_title = request.form.get('book_club_title')
+    username = session['username']
+    cursor.execute('SELECT * FROM in_club WHERE username=%s', (username,))
+    user_in_club = cursor.fetchone()
+    if user_in_club:
+        return redirect(url_for('your_club'))
+    else:
+        cursor.execute("SELECT * FROM book_clubs WHERE title = %s", (book_club_title,))
+        book_club_title = None
+        row = cursor.fetchone()
+        if row is not None:
+                book_club_title= row[0]
     return render_template('public_clubs.html', book_clubs=book_clubs)
 
+@app.route('/join_club', methods=['GET', 'POST'])
+def join_club():
+    if request.method == 'POST':
+        book_club_title = request.form.get('book_club_title')
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, book_club_title))
+        conn.commit() 
+        return redirect(url_for('your_club'))
+    else: 
+        return redirect(url_for('home.html'))
+    
+#@app.route('/leave_club', methods=['GET', 'POST'])
+#def leave_club():
+    
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, book_club_title))
+        conn.commit() 
+    return redirect(url_for('your_club'))
 
 @app.route('/logout')
 def logout():
