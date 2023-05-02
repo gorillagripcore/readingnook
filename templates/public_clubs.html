@@ -33,7 +33,10 @@
             <div class="col-8">
               <h4>{{ book_club[0] }}</h4>
               <p>{{ book_club[2] }}</p>
-              <input type="submit" value="Join" class="form-control btn" name="submitjoinbookclub">
+              <form action="{{ url_for('join_club') }}" method="POST">
+                <input type="hidden" name="book_club_id" value="{{ book_club.id }}">
+                <input type="submit" value="Join" class="form-control btn" name="submitjoinbookclub">
+              </form>
             </div>
           </div>
         </div>

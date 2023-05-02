@@ -164,25 +164,29 @@ def public_clubs():
 @app.route('/join_club', methods=['GET', 'POST'])
 def join_club():
     if request.method == 'POST':
-        username = session['username'] 
+        book_club_id = request.form.get('book_club_id')
+        username = session['username']
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT * FROM in_club WHERE username=%s', (username,))
         user_in_club = cursor.fetchone()
         if user_in_club:
-            flash('You have already joined this book club.')
+            return "You have already joined this book club"
         else:
-            book_title = request.form['book_title']
-            cursor.execute('SELECT title FROM book_club WHERE title = %s', (book_title,))
-            book_club_name = cursor.fetchone()
-            if book_club_name:
-                cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, book_club_name))
-                conn.commit()
-            else:
-                flash('The book club does not exist')
-                
-        return redirect('your_club.html')
+            cursor.execute("SELECT * FROM book_clubs WHERE title = %s", (book_club_id,))
+            book_club_name = None
+            row = cursor.fetchone()
+            if row is not None:
+                book_club_name = row[0]
+
+            cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, book_club_name))
+            conn.commit()
+            
+        return redirect(url_for('your_club'))
     else:
-        return render_template('public_clubs.html')
+        # Handle GET requests, such as rendering the book club page
+        # ...
+        book_clubs = [...] # list of book clubs
+        return render_template('public_clubs.html', book_clubs=book_clubs)
 
 
 
