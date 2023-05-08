@@ -93,17 +93,29 @@
     <div class="col">
       <div class="col-6 col-sm-3 mx-auto widget current_book">
         <h4>Currently reading</h4>
+        {% if user_in_club==None or book_of_the_month=='' %}
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-bookmark-heart-fill if_none" viewBox="0 0 16 16">
           <path d="M2 15.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v13.5zM8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
         </svg>
         <p class="text-center if_none">A book has not been chosen</p>
+        {% else %}
+        <img src="{{book_of_the_month}}" alt="" class="book_cover">
+        <h6 class="text-center">{{ book_of_the_month_title }}</h6>
+        <em><p class="text-center">None</p></em>
+        {% endif %}
       </div>
       <div class="col-6 col-sm-3 mx-auto widget meeting_info">
         <h4>Upcoming meeting</h4>
+        {% if user_in_club==None or date=='' %}
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-geo-alt-fill if_none" viewBox="0 0 16 16">
           <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
         </svg>
         <p class="text-center if_none">There is no upcoming meeting</p>
+        {% else %}
+        <h5 class="text-center">{{ date }}</h5>
+        <p class="text-center">Time: {{ time }}</p>
+        <em><p class="text-center">{{ location }}</p></em>
+        {% endif %} 
       </div>
     </div>
   </div>

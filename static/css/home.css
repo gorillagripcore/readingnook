@@ -19,7 +19,7 @@
     text-align: center;
 }
 
-/* don't remove! will be used later
+
 .current_book>h6,
 .current_book>p {
     margin-top: 1px;
@@ -34,7 +34,6 @@
     width: 90px;
     border: 1px solid #888;
 }
-
 .meeting_info {
     font-size: 18px;
 }
@@ -46,7 +45,6 @@
 .meeting_info>p {
     margin-bottom: 1px;
 }
-*/
 .posts {
     position: relative;
     margin-top: 15px;

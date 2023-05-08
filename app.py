@@ -22,7 +22,42 @@ def home():
     if 'loggedin' not in session:
         return redirect(url_for('login'))
     username = session['username']
-    return render_template('home.html', username=username)
+
+    book_of_the_month = ''
+    book_of_the_month_title = ''
+    book_of_the_month_author = ''
+    date = ''
+    time = ''
+    location = ''
+    
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    cursor.execute('SELECT * FROM in_club WHERE username=%s', (username,))
+    user_in_club = cursor.fetchone()
+    if user_in_club is not None:
+        cursor.execute(
+            "SELECT book_club FROM in_club WHERE username=%s", (username,))
+        club_name = cursor.fetchone()
+
+        cursor.execute(
+            "SELECT * FROM books join book_club_info ON books.isbn=book_club_info.book_of_the_month WHERE book_club_info.title = %s", (club_name))
+        book_of_the_month_row = cursor.fetchone()
+        if book_of_the_month_row is not None:
+            book_of_the_month = book_of_the_month_row[2]
+            book_of_the_month_title = book_of_the_month_row[1]
+        
+        cursor.execute("SELECT * FROM book_club_info WHERE title = %s", (club_name))
+        date_row = cursor.fetchone()
+        if date_row is not None:
+            date = date_row[2]
+            time = date_row[4]
+            location = date_row[3]
+    else:
+        user_in_club = None
+    conn.commit()
+    cursor.close()
+    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_of_the_month_author=book_of_the_month_author, date=date, time=time, location=location) 
+
 
 
 @app.route('/login/', methods=['GET', 'POST'])
