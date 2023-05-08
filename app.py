@@ -26,6 +26,7 @@ def home():
     book_of_the_month = ''
     book_of_the_month_title = ''
     book_of_the_month_author = ''
+    book_isbn = None
     date = ''
     time = ''
     location = ''
@@ -52,12 +53,17 @@ def home():
             date = date_row[2]
             time = date_row[4]
             location = date_row[3]
+
+        cursor.execute(
+        "SELECT books.isbn FROM books join book_club_info ON books.isbn=book_club_info.book_of_the_month WHERE book_club_info.title = %s", (club_name))
+        book_isbn_row = cursor.fetchone()
+        if book_isbn_row is not None:
+            book_isbn = book_isbn_row[0]
     else:
         user_in_club = None
     conn.commit()
     cursor.close()
-    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_of_the_month_author=book_of_the_month_author, date=date, time=time, location=location) 
-
+    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_of_the_month_author=book_of_the_month_author, book_isbn=book_isbn, date=date, time=time, location=location) 
 
 
 @app.route('/login/', methods=['GET', 'POST'])
