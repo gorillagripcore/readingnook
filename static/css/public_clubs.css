@@ -44,3 +44,9 @@
     border-width: 1px;
     border-style: solid;
 }
+
+.btn{
+    width: 70px; 
+    background-color:#c8ebf7;
+    float:left;
+}

@@ -307,9 +307,8 @@ def your_club():
         cursor.close()
 
         return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
-        
 
-
+    
 @app.route('/public_clubs')
 def public_clubs():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -352,9 +351,23 @@ def join_club():
 def leave_club():
     username = session['username']
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
     cursor.execute("DELETE FROM in_club WHERE username = %s",
                    (username,))  # den
+    conn.commit()
+    return redirect(url_for('public_clubs'))
+
+@app.route('/delete_club', methods=['GET', 'POST'])
+def delete_club():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute('SELECT book_club FROM in_club WHERE username=%s', (username,))
+    club_name= cursor.fetchone()
+
+    cursor.execute("DELETE FROM in_club WHERE book_club = %s", (club_name))
+    conn.commit()
+    cursor.execute("DELETE FROM public.book_club_info WHERE title = %s", (club_name))
+    conn.commit()
+    cursor.execute("DELETE FROM book_clubs WHERE owner = %s", (username,))
     conn.commit()
     return redirect(url_for('public_clubs'))
 
