@@ -22,21 +22,22 @@
 
   <div class="profile_section">
     <div class="container text-center">
-      <form action="{{ url_for('leave_club') }}" method="POST">
-        <input type="submit" value="Leave" class="form-control btn leave_button" name="leave_club">
-      </form>
+      
       <div class="row">
         <div class="col-2">
           <img src="{{ club_info[3] }}" alt="Club Picture" class="club_pic">
         </div>
-        <div class="col-8 name_desc">
+        <div class="col-5 name_desc">
           <h3>{{ club_info[0] }}</h3>
           <p>{{ club_info[1] }}</p>
         </div>
-        <div class="col-2">
+        <div class="col-4">
+          <form action="{{ url_for('leave_club') }}" method="POST">
+            <input type="submit" value="Leave" class="form-control btn leave_button" name="leave_club">
+          </form>
           <div class="members_box">
             <h2>Members</h2>
-            <p, id="total_members">{{members}}</p>
+            <p id="total_members">{{members}}</p>
           </div>
         </div>
       </div>
@@ -75,23 +76,27 @@
       <div class="col">
       </div>
       <div class="col">
-        <div class="poll_box">
+        <div class="poll_box" id="poll_box_1"> 
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgrNzpOiLkOZWT6vG9WYXo87UmC0Azo1Amg&usqp=CAU"
-            alt="poll_box_img1">
+            alt="poll_box_img1" onclick="vote(1)">
+          <div id="poll_count_1">0</div>
         </div>
       </div>
       <div class="col">
-        <div class="poll_box">
+        <div class="poll_box" id="poll_box_2">
           <img src="https://cdn.penguin.co.uk/dam-assets/books/9780241573730/9780241573730-jacket-large.jpg"
-            alt="poll_box_img2">
+            alt="poll_box_img2" onclick="vote(2)">
+          <div id="poll_count_2">0</div>
         </div>
       </div>
       <div class="col"></div>
     </div>
   </div>
   <div class="text-center">
-    <input type="submit" value="Submit" class="form-control btn" name="submitpoll">
+    <input type="submit" value="Submit" class="form-control btn" name="submitpoll" onclick="submitPoll()" id="submitBtn">
   </div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>
