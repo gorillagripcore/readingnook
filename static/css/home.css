@@ -19,6 +19,13 @@
     text-align: center;
 }
 
+
+.current_book>h6,
+.current_book>p {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
 .book_cover {
     display: block;
     margin: auto;
@@ -27,11 +34,6 @@
     width: 90px;
     border: 1px solid #888;
 }
-
-.current_book>h6{
-    margin-top: 10px;
-}
-
 .meeting_info {
     font-size: 18px;
 }

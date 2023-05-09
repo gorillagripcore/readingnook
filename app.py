@@ -23,10 +23,11 @@ def home():
         return redirect(url_for('login'))
     username = session['username']
 
-    book_of_the_month = None
+    book_of_the_month = ''
     book_of_the_month_title = ''
+    book_of_the_month_author = ''
     book_isbn = None
-    date = None
+    date = ''
     time = ''
     location = ''
     
@@ -62,7 +63,7 @@ def home():
         user_in_club = None
     conn.commit()
     cursor.close()
-    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location) 
+    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_of_the_month_author=book_of_the_month_author, book_isbn=book_isbn, date=date, time=time, location=location) 
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -297,12 +298,6 @@ def leave_club():
                    (username,))  # den
     conn.commit()
     return redirect(url_for('public_clubs'))
-
-
-@app.route('/create_club')
-def create_club():
-
-    return render_template('create_club.html')
 
 
 @app.route('/logout')
