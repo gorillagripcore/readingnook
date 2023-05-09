@@ -43,7 +43,9 @@
         {% endfor %}
       </div>
       <div class="col">
-
+        <form action="{{ url_for('create_club') }}" >
+          <input type="submit" value="Create" class="form-control btn" name="create_book_club">
+        </form>
       </div>
     </div>
   </div>

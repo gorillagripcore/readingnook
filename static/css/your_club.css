@@ -31,13 +31,10 @@ body {
 }
 
 /* Members Box Styles */
-.members_box {
-    margin-top: 20px;
-    flex: 1;
-}
 
 .members_box h2 {
     margin-top: 0;
+    font-size: 25px;
 }
 
 .members_box ul {
@@ -46,17 +43,14 @@ body {
     margin: 0;
 }
 
-.members_box li {
-    margin-bottom: 10px;
-}
-
 .members_box {
-    margin-top: 10px;
-    flex: 0 0 200px;
+    flex: 1;
+    margin-top: 70px;
+    width: 150px;
     background-color: #faf6f0;
     border: 1px solid #898989;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     margin-left: auto;
     
@@ -147,6 +141,7 @@ input[type="submit"] {
 .name_desc {
     padding-top: 10px;
     text-align: left;
+    width: 500px;
 }
 
 .club_pic {
@@ -162,17 +157,17 @@ input[type="submit"] {
  }
 
 
- .leave_button {
+.leave_button {
     width: 60px;
     height: 40px;
     font-size: 15px;
-    padding: 1px;
-    margin: 15px;
+    margin-right: 24px;
     cursor: pointer;
     background-color: #b8d7e9;
     border: 1px solid #b8d7e9;
     border-radius: 6px;
-    float: right;  
+    float: right;
+    
 }
 
 

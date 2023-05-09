@@ -62,6 +62,26 @@ quote_dialog.addEventListener('click', (e) => {
   }
 });
 
+//Poll counts
+var pollCount1 = 0;
+var pollCount2 = 0;
+
+function vote(pollBoxId) {
+  if (pollBoxId == 1) {
+    pollCount1++;
+    document.getElementById("poll_count_1").innerHTML = pollCount1;
+  } 
+  else if (pollBoxId == 2){
+    pollCount2++;
+    document.getElementById("poll_count_2").innerHTML = pollCount2;
+  }
+
+  return false;
+}
+
+function submitPoll(){
+  alert("Poll submitted!");
+}
 
 
 
