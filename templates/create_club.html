@@ -17,13 +17,13 @@
 
 <body>
   {% include 'navbar.html' %}
-    <div class="create_club_container mx-auto text-center">
+    <div class="create_club_container mx-auto text-center" method="post">
         <form class="form-group" action="{{ url_for('create_club') }}" method="post">
-            <input type="text" class="form-control" name="pfp" placeholder="Name" id="pfp" required>
+            <input type="text" class="form-control" name="name" placeholder="Name" id="name" required>
             <label> </label>
-            <input type="text" class="form-control" name="pfp" placeholder="Picture (Link please)" id="pfp" required>
+            <input type="text" class="form-control" name="club_picture" placeholder="Picture (Link please)" id="club_picture" required>
             <label> </label>
-            <input type="text" class="form-control" name="pfp" placeholder="Description" id="pfp" required>
+            <input type="text" class="form-control" name="club_desc" placeholder="Description" id="club_desc" required>
             <input type="submit" value="Submit" class="form-control btn" name="submitpfp"
             style="width:80px; margin-top: 10px; background-color: #b8d7e9;">
         </form>

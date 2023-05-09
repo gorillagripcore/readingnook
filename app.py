@@ -198,57 +198,116 @@ def your_club():
 
     username = session['username']
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-    cursor.execute(
-        "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
-    club_info = cursor.fetchone()
-
-    cursor.execute(
-        "SELECT book_club from in_club WHERE username=%s", (username,))
-    club_name = cursor.fetchone()
-
-    cursor.execute(
-        'select count(username)from in_club where book_club = %s', (club_name))
-    members_row = cursor.fetchone()
-    if members_row is not None:
-        members = members_row[0]
-    else:
-        members = None
-
-    cursor.execute(
-        'select cover from books join book_club_info on books.isbn=book_club_info.book_of_the_month where book_club_info.title = %s', (club_name))
-    book_of_the_month_row = cursor.fetchone()
-    if book_of_the_month_row is not None:
-        book_of_the_month = book_of_the_month_row[0]
-    else:
-        book_of_the_month = None
-
-    cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
-    date_row = cursor.fetchone()
-    if date_row is not None:
-        date = date_row[0]
-    else:
-        date = None
-
-    cursor.execute('select time from book_club_info where title = %s', (club_name))
-    time_row = cursor.fetchone()
-    if time_row is not None:
-        time = time_row[0]
-    else:
-        time = None
     
     cursor.execute(
-        'select location from book_club_info where title = %s', (club_name))
-    location_row = cursor.fetchone()
-    if location_row is not None:
-        location = location_row[0]
-    else:
-        location = None
+        "SELECT owner FROM book_clubs WHERE owner=%s", (username,))
+    owner = cursor.fetchone()
 
-    conn.commit()
-    cursor.close()
+    
+    if owner is None:
 
-    return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+        cursor.execute(
+            "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
+        club_info = cursor.fetchone()
+
+        cursor.execute(
+            "SELECT book_club from in_club WHERE username=%s", (username,))
+        club_name = cursor.fetchone()
+
+        cursor.execute(
+            'select count(username)from in_club where book_club = %s', (club_name))
+        members_row = cursor.fetchone()
+        if members_row is not None:
+            members = members_row[0]
+        else:
+            members = None
+
+        cursor.execute(
+            'select cover from books join book_club_info on books.isbn=book_club_info.book_of_the_month where book_club_info.title = %s', (club_name))
+        book_of_the_month_row = cursor.fetchone()
+        if book_of_the_month_row is not None:
+            book_of_the_month = book_of_the_month_row[0]
+        else:
+            book_of_the_month = None
+
+        cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
+        date_row = cursor.fetchone()
+        if date_row is not None:
+            date = date_row[0]
+        else:
+            date = None
+
+        cursor.execute('select time from book_club_info where title = %s', (club_name))
+        time_row = cursor.fetchone()
+        if time_row is not None:
+            time = time_row[0]
+        else:
+            time = None
+        
+        cursor.execute(
+            'select location from book_club_info where title = %s', (club_name))
+        location_row = cursor.fetchone()
+        if location_row is not None:
+            location = location_row[0]
+        else:
+            location = None
+
+        conn.commit()
+        cursor.close()
+
+        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+    else: 
+        cursor.execute(
+            "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
+        club_info = cursor.fetchone()
+
+        cursor.execute(
+            "SELECT book_club from in_club WHERE username=%s", (username,))
+        club_name = cursor.fetchone()
+
+        cursor.execute(
+            'select count(username)from in_club where book_club = %s', (club_name))
+        members_row = cursor.fetchone()
+        if members_row is not None:
+            members = members_row[0]
+        else:
+            members = None
+
+        cursor.execute(
+            'select cover from books join book_club_info on books.isbn=book_club_info.book_of_the_month where book_club_info.title = %s', (club_name))
+        book_of_the_month_row = cursor.fetchone()
+        if book_of_the_month_row is not None:
+            book_of_the_month = book_of_the_month_row[0]
+        else:
+            book_of_the_month = None
+
+        cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
+        date_row = cursor.fetchone()
+        if date_row is not None:
+            date = date_row[0]
+        else:
+            date = None
+
+        cursor.execute('select time from book_club_info where title = %s', (club_name))
+        time_row = cursor.fetchone()
+        if time_row is not None:
+            time = time_row[0]
+        else:
+            time = None
+        
+        cursor.execute(
+            'select location from book_club_info where title = %s', (club_name))
+        location_row = cursor.fetchone()
+        if location_row is not None:
+            location = location_row[0]
+        else:
+            location = None
+
+        conn.commit()
+        cursor.close()
+
+        return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+        
 
 
 @app.route('/public_clubs')
@@ -271,6 +330,7 @@ def public_clubs():
         if row is not None:
             book_club_title = row[0]
     return render_template('public_clubs.html', book_clubs=book_clubs)
+    
 
 
 @app.route('/join_club', methods=['GET', 'POST'])
@@ -299,9 +359,20 @@ def leave_club():
     return redirect(url_for('public_clubs'))
 
 
-@app.route('/create_club')
+@app.route('/create_club', methods=['GET', 'POST'])
 def create_club():
-
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        title = request.form['name']
+        club_picture = request.form['club_picture']
+        club_desc = request.form['club_desc']
+        cursor.execute(
+            "INSERT INTO public.book_clubs(title, descr, owner, pic) VALUES (%s, %s, %s, %s);", (title, club_desc, username, club_picture,))
+        cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, title))
+        conn.commit()
+        cursor.close()
+        return redirect(url_for('your_club'))
     return render_template('create_club.html')
 
 
