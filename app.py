@@ -324,6 +324,28 @@ def admin_suggestions():
     print(suggestions)
     return render_template('suggestions.html', suggestions=suggestions)
 
+@app.route('/suggest_book', methods=['GET', 'POST'])
+def suggest_book():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT book_club FROM in_club where username = %s", (username,))
+    book_club_name_row = cursor.fetchone()
+    if book_club_name_row is not None:
+        book_club_name = book_club_name_row[0]
+    else:
+        book_club_name = None
+
+
+    suggested_title = request.form['titel_suggestion']
+    suggested_author = request.form['author_suggestion']
+        
+    cursor.execute("INSERT INTO public.suggestion_box( book_club, book_title, author) VALUES (%s, %s, %s);", (book_club_name, suggested_title, suggested_author))
+        
+    conn.commit()
+    cursor.close()
+    return redirect(url_for('your_club'))
+
+
     
 @app.route('/public_clubs')
 def public_clubs():
@@ -346,7 +368,6 @@ def public_clubs():
             book_club_title = row[0]
     return render_template('public_clubs.html', book_clubs=book_clubs)
     
-
 
 @app.route('/join_club', methods=['GET', 'POST'])
 def join_club():

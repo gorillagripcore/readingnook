@@ -95,10 +95,3 @@ submitBtn.addEventListener('click', () => {
 });
 
 
-
-
-
-
-
-
-

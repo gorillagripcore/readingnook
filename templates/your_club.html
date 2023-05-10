@@ -50,9 +50,9 @@
     </div>
     <div class="wrapper_box">
       <h2>Books to Come Suggestion Box</h2>
-      <form>
-        <label for="book_suggestion">Suggest a Book:</label>
-        <input type="text" id="book_suggestion" name="book_suggestion">
+      <form class="form-group" action="{{ url_for('suggest_book') }}" method="post">
+        <input type="text" placeholder="Title" id="titel_suggestion" name="titel_suggestion" class="suggest_input">
+        <input type="text" placeholder="Author" id="author_suggestion" name="author_suggestion"  class="suggest_input">
         <div class="text-center">
           <input type="submit" value="Submit" class="form_control" name="submit_suggest_book">
         </div>
