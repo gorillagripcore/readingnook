@@ -63,36 +63,52 @@ quote_dialog.addEventListener('click', (e) => {
 });
 
 //Poll counts
-const pollBoxes = document.querySelectorAll('.poll_box');
-const submitBtn = document.querySelector('#submitBtn');
-let selectedBoxId;
+// initialize the vote counts
+var voteCount1 = 0;
+var voteCount2 = 0;
 
-// Add click event listener to each poll box
-pollBoxes.forEach((box) => {
-  box.addEventListener('click', () => {
-    // Clear previous selection
-    if (selectedBoxId) {
-      document.querySelector(`#${selectedBoxId}`).classList.remove('selected');
-    }
-    // Highlight the clicked box
-    selectedBoxId = box.id;
-    box.classList.add('selected');
-  });
-});
-
-// Add click event listener to the submit button
-submitBtn.addEventListener('click', () => {
-  // Count the votes
-  const selectedBox = document.querySelector(`#${selectedBoxId}`);
-  if (selectedBox) {
-    const pollOption = selectedBox.querySelector('img').alt;
-    console.log(`Voted for ${pollOption}`);
-    // TODO: Implement the vote counting logic
-  } else {
-    console.log('Please select an option');
-    // TODO: Show an error message to the user
+// function to toggle the selection of a poll box
+function toggleSelection(pollBox) {
+  // remove the selected class from all poll boxes
+  var pollBoxes = document.getElementsByClassName("poll_box");
+  for (var i = 0; i < pollBoxes.length; i++) {
+    pollBoxes[i].classList.remove("selected");
   }
+
+  // add the selected class to the clicked poll box
+  pollBox.classList.add("selected");
+}
+
+// function to count the votes
+function countVotes() {
+  // get the selected poll box
+  var selectedPollBox = document.getElementsByClassName("selected")[0];
+
+  // increment the vote count for the selected poll box
+  if (selectedPollBox.id === "poll_box_1") {
+    voteCount1++;
+  } else if (selectedPollBox.id === "poll_box_2") {
+    voteCount2++;
+  }
+
+  // display the vote counts
+  alert("Vote count for poll box 1: " + voteCount1 + "\nVote count for poll box 2: " + voteCount2);
+}
+
+// add event listeners to the poll boxes
+var pollBoxes = document.getElementsByClassName("poll_box");
+for (var i = 0; i < pollBoxes.length; i++) {
+  pollBoxes[i].addEventListener("click", function() {
+    toggleSelection(this);
+  });
+}
+
+// add event listener to the submit button
+var submitButton = document.getElementById("submitBtn");
+submitButton.addEventListener("click", function() {
+  countVotes();
 });
+
 
 
 
