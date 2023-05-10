@@ -195,7 +195,6 @@ def profile():
 
 @app.route('/your_club')
 def your_club():
-
     username = session['username']
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
@@ -203,7 +202,6 @@ def your_club():
         "SELECT owner FROM book_clubs WHERE owner=%s", (username,))
     owner = cursor.fetchone()
 
-    
     if owner is None:
 
         cursor.execute(
@@ -307,6 +305,24 @@ def your_club():
         cursor.close()
 
         return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+    
+@app.route('/admin_suggestions', methods=['GET', 'POST'])
+def admin_suggestions():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT title FROM book_clubs where owner = %s", (username,))
+    book_club_title_row = cursor.fetchone()
+    if book_club_title_row is not None:
+        book_club_title = book_club_title_row[0]
+    else:
+        book_club_title = None
+
+
+    cursor.execute( "SELECT book_title, author FROM suggestion_box where book_club = %s", (book_club_title,))
+    suggestions = cursor.fetchall()
+    
+    print(suggestions)
+    return render_template('suggestions.html', suggestions=suggestions)
 
     
 @app.route('/public_clubs')
@@ -364,9 +380,8 @@ def delete_club():
     club_name= cursor.fetchone()
 
     cursor.execute("DELETE FROM in_club WHERE book_club = %s", (club_name))
-    conn.commit()
     cursor.execute("DELETE FROM public.book_club_info WHERE title = %s", (club_name))
-    conn.commit()
+    cursor.execute("DELETE FROM suggestion_box WHERE book_club = %s", (club_name))
     cursor.execute("DELETE FROM book_clubs WHERE owner = %s", (username,))
     conn.commit()
     return redirect(url_for('public_clubs'))
@@ -380,9 +395,15 @@ def create_club():
         title = request.form['name']
         club_picture = request.form['club_picture']
         club_desc = request.form['club_desc']
-        cursor.execute(
-            "INSERT INTO public.book_clubs(title, descr, owner, pic) VALUES (%s, %s, %s, %s);", (title, club_desc, username, club_picture,))
+        
+        cursor.execute("INSERT INTO public.book_clubs(title, descr, owner, pic) VALUES (%s, %s, %s, %s);", (title, club_desc, username, club_picture,))
         cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, title))
+        
+        book_of_the_month = '9780140449174'
+        date = "0001-01-01"
+        location = 'Malmö, Sweden'
+        time = '00:00'
+        cursor.execute("INSERT INTO public.book_club_info(title, book_of_the_month, meeting_date, location, time) VALUES (%s, %s, %s, %s, %s)", (title, book_of_the_month, date, location, time))
         conn.commit()
         cursor.close()
         return redirect(url_for('your_club'))

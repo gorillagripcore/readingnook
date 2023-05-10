@@ -90,3 +90,18 @@ span.input-group-addon i {
    padding: 3px;
    height: 62px;
 }
+
+.admin_suggestions_layout{
+   width: 450px !important;
+   border-radius: 10px;
+   border-style: solid;
+   border-color: #b9b9b9;
+   border-width: 1px;
+   background-color: #fffcf7;
+   margin-top: 10px;
+}
+
+.admin_suggestions_layout p{
+   padding: 5px;
+   margin: 1px;
+}
