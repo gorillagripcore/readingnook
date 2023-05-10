@@ -63,25 +63,38 @@ quote_dialog.addEventListener('click', (e) => {
 });
 
 //Poll counts
-var pollCount1 = 0;
-var pollCount2 = 0;
+const pollBoxes = document.querySelectorAll('.poll_box');
+const submitBtn = document.querySelector('#submitBtn');
+let selectedBoxId;
 
-function vote(pollBoxId) {
-  if (pollBoxId == 1) {
-    pollCount1++;
-    document.getElementById("poll_count_1").innerHTML = pollCount1;
-  } 
-  else if (pollBoxId == 2){
-    pollCount2++;
-    document.getElementById("poll_count_2").innerHTML = pollCount2;
+// Add click event listener to each poll box
+pollBoxes.forEach((box) => {
+  box.addEventListener('click', () => {
+    // Clear previous selection
+    if (selectedBoxId) {
+      document.querySelector(`#${selectedBoxId}`).classList.remove('selected');
+    }
+    // Highlight the clicked box
+    selectedBoxId = box.id;
+    box.classList.add('selected');
+  });
+});
+
+// Add click event listener to the submit button
+submitBtn.addEventListener('click', () => {
+  // Count the votes
+  const selectedBox = document.querySelector(`#${selectedBoxId}`);
+  if (selectedBox) {
+    const pollOption = selectedBox.querySelector('img').alt;
+    console.log(`Voted for ${pollOption}`);
+    // TODO: Implement the vote counting logic
+  } else {
+    console.log('Please select an option');
+    // TODO: Show an error message to the user
   }
+});
 
-  return false;
-}
 
-function submitPoll(){
-  alert("Poll submitted!");
-}
 
 
 
