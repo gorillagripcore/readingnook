@@ -47,7 +47,8 @@
   <div class="book_container">
     <div class="wrapper_box">
       <h2>Book of the Month</h2>
-      <img src="{{book_of_the_month}}" alt="Book Cover">
+      <a href="{{ url_for('book', book_isbn=book_of_the_month_isbn) }}"> <img src="{{book_of_the_month}}" alt="Book Cover"></a>
+      
 
       <button class="btn" id="open_botm_dialog_btn">
         <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" viewBox="0 0 16 16">

@@ -301,10 +301,18 @@ def your_club():
         else:
             location = None
 
+        cursor.execute(
+            'select book_of_the_month from book_club_info where title = %s', (club_name))
+        book_of_the_month_isbn_row = cursor.fetchone()
+        if book_of_the_month_isbn_row is not None:
+            book_of_the_month_isbn = book_of_the_month_isbn_row[0]
+        else:
+            book_of_the_month_isbn = None
+
         conn.commit()
         cursor.close()
 
-        return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+        return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn)
     
 @app.route('/admin_suggestions', methods=['GET', 'POST'])
 def admin_suggestions():
