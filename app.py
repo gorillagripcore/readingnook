@@ -367,7 +367,29 @@ def public_clubs():
         if row is not None:
             book_club_title = row[0]
     return render_template('public_clubs.html', book_clubs=book_clubs)
-    
+
+@app.route('/botm', methods=['GET', 'POST'])
+def botm():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club = cursor.fetchone()[0]  # extract the single value from the array
+        botm = request.form['botm']
+
+        cursor.execute(
+            "SELECT isbn FROM books WHERE title = %s;", (botm,))
+        result = cursor.fetchone()
+        if result is not None:
+            cursor.execute("UPDATE book_club_info SET book_of_the_month = %s WHERE title = %s;", (result[0], book_club,))
+            # extract the single value from the array
+
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('your_club'))
+        else:
+            flash('Book Not Found :c Make sure you capitalized the title correctly.')
+    return redirect(url_for('your_club'))
 
 @app.route('/join_club', methods=['GET', 'POST'])
 def join_club():
@@ -382,7 +404,6 @@ def join_club():
         return redirect(url_for('your_club'))
     else:
         return redirect(url_for('home.html'))
-
 
 @app.route('/leave_club', methods=['GET', 'POST'])
 def leave_club():

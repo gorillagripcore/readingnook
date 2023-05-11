@@ -65,7 +65,7 @@ input::-webkit-input-placeholder {
    padding: 8px 12px !important;
    background-color: none !important;
    border-radius: 10px;
-   border-color: #b6b6b6; 
+   border-color: #b6b6b6;
    border-width: 1px;
    width: 460px;
    border-style: solid;
@@ -91,7 +91,7 @@ span.input-group-addon i {
    height: 62px;
 }
 
-.admin_suggestions_layout{
+.admin_suggestions_layout {
    width: 450px !important;
    border-radius: 10px;
    border-style: solid;
@@ -101,7 +101,15 @@ span.input-group-addon i {
    margin-top: 10px;
 }
 
-.admin_suggestions_layout p{
+.admin_suggestions_layout p {
    padding: 5px;
    margin: 1px;
+}
+
+svg {
+   width: 35px;
+   height: 20px;
+   background-color: #c8ebf7;
+   padding: 2px;
+   border-radius: 5px;
 }

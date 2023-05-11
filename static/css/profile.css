@@ -9,7 +9,6 @@ hr {
    width: 100%;
 }
 
-
 .section {
    border-radius: 10px;
    border-color: rgb(195, 195, 195);
@@ -168,15 +167,6 @@ textarea {
 .submit_button:hover {
    background-color: #bce0ec;
    transition: 0.3s;
-}
-
-svg {
-   width: 35px;
-   height: 20px;
-   margin-top: -10px;
-   background-color: #b8d7e9;
-   padding: 2px;
-   border-radius: 5px;
 }
 
 .quote_box {

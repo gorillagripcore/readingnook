@@ -53,7 +53,7 @@ body {
     padding: 10px;
     text-align: center;
     margin-left: auto;
-    
+
 }
 
 
@@ -68,26 +68,26 @@ body {
 
 .wrapper_box {
     width: 300px;
-    height: 400px;
+    height: 390px;
     margin: 10px;
     border-radius: 10px;
     background-color: #faf6f0;
     border-color: rgb(171, 171, 171);
     border-width: 1px;
     border-style: solid;
-    margin: 10px;
+    margin: 15px;
     padding: 20px;
     text-align: center;
 }
 
 .wrapper_box h2 {
-    margin-top: 20px;
     font-size: 24px;
     font-weight: bold;
 }
 
 .wrapper_box img {
-    height: 300px;
+    margin-top: 10px;
+    height: 280px;
 }
 
 .wrapper_box p {
@@ -150,11 +150,11 @@ input[type="submit"] {
     height: 200px;
     width: 200px;
     border: 1px solid #767676;
- }
+}
 
 #total_members {
     font-size: 20px;
- }
+}
 
 
 .leave_button {
@@ -167,20 +167,20 @@ input[type="submit"] {
     border: 1px solid #b8d7e9;
     border-radius: 6px;
     float: right;
-    
+
 }
 
 
-img{
+img {
     border-radius: 10px;
     border: 1px solid #d0cece;
 }
 
-.suggest_btn{
+.suggest_btn {
     width: 150px !important;
 }
- 
-.suggest_input{
+
+.suggest_input {
     border-radius: 6px;
     border-style: solid;
     margin: 10px;
@@ -188,4 +188,11 @@ img{
     border-width: 1px;
     padding: 4px;
 }
- 
+
+.dialog_box {
+    border-radius: 10px;
+    border-color: black;
+    border-width: 1px;
+    width: 435px;
+    height: 130px;
+}
