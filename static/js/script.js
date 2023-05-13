@@ -63,51 +63,41 @@ quote_dialog.addEventListener('click', (e) => {
 });
 
 //Poll counts
-// initialize the vote counts
-var voteCount1 = 0;
-var voteCount2 = 0;
+// initialize the vote count for each poll box to 0
+let voteCount = [0, 0];
 
-// function to toggle the selection of a poll box
+// function to toggle the selected state of a poll box
 function toggleSelection(pollBox) {
-  // remove the selected class from all poll boxes
-  var pollBoxes = document.getElementsByClassName("poll_box");
-  for (var i = 0; i < pollBoxes.length; i++) {
-    pollBoxes[i].classList.remove("selected");
+  // get the index of the poll box that was clicked
+  let index = Array.from(pollBox.parentNode.children).indexOf(pollBox);
+  
+  // set the vote count for this poll box to 1 and reset the vote count for the other poll box to 0
+  voteCount[index] = 1;
+  voteCount[1 - index] = 0;
+  
+  // update the style of the poll boxes to reflect the selected state
+  for (let i = 0; i < 2; i++) {
+    let pollBox = document.getElementById(`poll_box_${i+1}`);
+    pollBox.classList.toggle("selected", voteCount[i] > 0);
   }
-
-  // add the selected class to the clicked poll box
-  pollBox.classList.add("selected");
 }
 
-// function to count the votes
+// function to count the votes and display the results
 function countVotes() {
-  // get the selected poll box
-  var selectedPollBox = document.getElementsByClassName("selected")[0];
+  // get the vote count for each poll box
+  let voteCount1 = voteCount[0];
+  let voteCount2 = voteCount[1];
 
-  // increment the vote count for the selected poll box
-  if (selectedPollBox.id === "poll_box_1") {
-    voteCount1++;
-  } else if (selectedPollBox.id === "poll_box_2") {
-    voteCount2++;
-  }
+  // calculate the total number of votes
+  let totalVotes = voteCount1 + voteCount2;
 
-  // display the vote counts
-  alert("Vote count for poll box 1: " + voteCount1 + "\nVote count for poll box 2: " + voteCount2);
+  // display the vote count for each poll box and the total number of votes
+  document.getElementById("poll_box_1").innerHTML = `Vote count for poll box 1: ${voteCount1}`;
+  document.getElementById("poll_box_2").innerHTML = `Vote count for poll box 2: ${voteCount2}`;
+  document.getElementById("submitBtn").style.display = "none";
 }
 
-// add event listeners to the poll boxes
-var pollBoxes = document.getElementsByClassName("poll_box");
-for (var i = 0; i < pollBoxes.length; i++) {
-  pollBoxes[i].addEventListener("click", function() {
-    toggleSelection(this);
-  });
-}
 
-// add event listener to the submit button
-var submitButton = document.getElementById("submitBtn");
-submitButton.addEventListener("click", function() {
-  countVotes();
-});
 
 
 
