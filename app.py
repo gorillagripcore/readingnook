@@ -228,6 +228,14 @@ def your_club():
         else:
             book_of_the_month = None
 
+        cursor.execute(
+            'select book_of_the_month from book_club_info where title = %s', (club_name))
+        book_of_the_month_isbn_row = cursor.fetchone()
+        if book_of_the_month_isbn_row is not None:
+            book_of_the_month_isbn = book_of_the_month_isbn_row[0]
+        else:
+            book_of_the_month_isbn = None
+
         cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
         date_row = cursor.fetchone()
         if date_row is not None:
@@ -253,7 +261,7 @@ def your_club():
         conn.commit()
         cursor.close()
 
-        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, book_of_the_month_isbn=book_of_the_month_isbn, location=location, date=date, time=time,)
     else: 
         cursor.execute(
             "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
