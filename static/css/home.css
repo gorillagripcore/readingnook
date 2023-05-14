@@ -19,6 +19,10 @@
     text-align: center;
 }
 
+.club_goal>svg{
+    margin-top: 25px;
+}
+
 .book_cover {
     display: block;
     margin: auto;
@@ -32,10 +36,6 @@
     margin-top: 10px;
 }
 
-.meeting_info {
-    font-size: 18px;
-}
-
 .meeting_info>h4 {
     margin-bottom: 15px;
 }
@@ -43,6 +43,7 @@
 .meeting_info>p {
     margin-bottom: 1px;
 }
+
 .posts {
     position: relative;
     margin-top: 15px;
