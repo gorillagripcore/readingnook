@@ -28,17 +28,19 @@
             </div>
             <div class="col">
                 {% for index in range(users|length) %}
-                <div class="container text-center">
-                    <div class="row users_card">
-                        <div class="col-3" class="pic_box">
-                            <img src="{{ users_info[index][0]  }}" alt="Profile Picture" class="pic">
-                        </div>
-                        <div class="col info_box">
-                            <h4 class="user_info">{{ users[index] }}</h4>
-                            <p class="user_info">{{ users_info[index][1] }}</p>
+                <a href="{{ url_for('profiles', users=users[index]) }}" class="a">
+                    <div class="container text-center">
+                        <div class="row users_card">
+                            <div class="col-3" class="pic_box">
+                                <img src="{{ users_info[index][0]  }}" alt="Profile Picture" class="pic">
+                            </div>
+                            <div class="col info_box">
+                                <h4 class="user_info">{{ users[index] }}</h4>
+                                <p class="user_info">{{ users_info[index][1] }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 {% endfor %}
             </div>
             <div class="col">

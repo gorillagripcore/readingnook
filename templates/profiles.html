@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Nook</title>
+    <link rel="icon" href="https://cdn.discordapp.com/attachments/1078973373608112128/1089867595383050291/2opekg.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+
+    <header style="margin-top: 50px;"></header>
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-3" style="margin-right: 42px;">
+                <!--Empty Sides-->
+            </div>
+            <div class="col-5 section" style="width: 600px;">
+
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                            <!--Profile Picture-->
+                            <div class="pfp_container">
+                                <img src="{{pfp}}" alt="pfp" class="pfp">
+                            </div>
+                        </div>
+
+                        <!--Name and Description-->
+                        <div class="col-4 name_desc">
+                            <h2>{{ users }}</h2>
+                            <p>{{user_desc}}</p>
+                        </div>
+
+                        <div class="col-4 currently_reading">
+                            <!--add currently reading senare-->
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+
+                <!--Favorite Book Box-->
+                <div class="container text-center container_widget">
+                    <div class="row">
+                        <div class="col widget widget_alt">
+                            <p>Favorite book</p>
+                            <a href="{{ url_for('book', book_isbn=favorite_book_isbn) }}"><img src="{{ favorite_book }}"
+                                    alt="favorite_book"></a>
+                        </div>
+
+                        <div class="col widget">
+                            <p>Favorite quote</p>
+                            <div class="quote_box">
+                                <i>"{{ favorite_quote }}"</i>
+                                <p>- {{ quote_book }}</p>
+                            </div>
+                        </div>
+
+                        <!--Least Favorite Book Box-->
+                        <div class="col widget widget_alt">
+                            <p>Least favorite book</p>
+                            <a href="{{ url_for('book', book_isbn=least_favorite_book_isbn) }}"><img
+                                    src="{{ least_favorite_book }}" alt="least_favorite_book"></a>
+                        </div>
+                    </div>
+                </div>
+            
+
+                <hr>
+
+                <!--Hela denna ska bli till en forloop-->
+                <div class="col">
+                    <div class="col-6 col-sm-3 mx-auto posts" style="width: 500px;">
+                        <div class="col user user_post">
+                            <img src="{{pfp}}" alt="">
+                            <p>{{users}}</p>
+                        </div>
+                        <div class="col">
+                            <p class="content">
+                                Hello everyone! How are you? Fine, thank you!
+                            </p>
+                        </div>
+                        <div class="col text-center">
+                            <form action="POST">
+                                <textarea placeholder="Add comment"></textarea>
+                                <input type="submit" value="Send" class="submit_button">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+            <!--Empty Sides-->
+             </div>
+        </div> <!--Hela row slut-->
+    </div> <!--Hela container slut-->
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>

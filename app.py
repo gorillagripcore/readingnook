@@ -456,9 +456,6 @@ def member_list():
 
     return render_template('members.html', users_info=users_info, users=users)
 
-
-  
-
 @app.route('/join_club', methods=['GET', 'POST'])
 def join_club():
     if request.method == 'POST':
@@ -636,6 +633,75 @@ def book(book_isbn):
 
     return render_template('books.html', book_isbn=book_isbn, book=book, author_name=author_name)
 
+@app.route('/profiles/<users>')
+def profiles(users):
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute(
+        "select cover from favorite_book join books on favorite_book.isbn=books.isbn where username = %s", (users,))
+    favorite_book_row = cursor.fetchone()
+    if favorite_book_row is not None:
+        favorite_book = favorite_book_row[0]
+    else:
+        favorite_book = None
+
+    cursor.execute(
+        "select favorite_book.isbn from favorite_book join books on favorite_book.isbn=books.isbn where username = %s", (users,))
+    favorite_book_isbn = None
+    row = cursor.fetchone()
+    if row is not None:
+        favorite_book_isbn = row[0]
+
+    cursor.execute(
+        "select cover from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (users,))
+    least_favorite_book_row = cursor.fetchone()
+    if least_favorite_book_row is not None:
+        least_favorite_book = least_favorite_book_row[0]
+    else:
+        least_favorite_book = None
+
+    cursor.execute(
+        "select least_favorite_book.isbn from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (users,))
+    least_favorite_book_isbn = None
+    row = cursor.fetchone()
+    if row is not None:
+        least_favorite_book_isbn = row[0]
+
+    cursor.execute(
+        "select user_desc from users where username = %s", (users,))
+    user_desc_row = cursor.fetchone()
+    if user_desc_row is not None:
+        user_desc = user_desc_row[0]
+    else:
+        user_desc = None
+
+    cursor.execute("select pfp from users where username = %s", (users,))
+    pfp_row = cursor.fetchone()
+    if pfp_row is not None:
+        pfp = pfp_row[0]
+    else:
+        pfp = None
+
+    cursor.execute(
+        "select quote from favorite_quote where username = %s", (users,))
+    favorite_quote_row = cursor.fetchone()
+    if favorite_quote_row is not None:
+        favorite_quote = favorite_quote_row[0]
+    else:
+        favorite_quote = None
+
+    cursor.execute(
+        "SELECT title from books join favorite_quote on favorite_quote.isbn=books.isbn where username = %s", (users,))
+    quote_book_row = cursor.fetchone()
+    if quote_book_row is not None:
+        quote_book = quote_book_row[0]
+    else:
+        quote_book = None
+
+    if username == users:
+        return redirect(url_for('profile'))
+    else:
+        return render_template('profiles.html',  users=users, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book)
 
 if __name__ == "__main__":
     app.run(debug=True)
