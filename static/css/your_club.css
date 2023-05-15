@@ -67,7 +67,7 @@ body {
 }
 
 .wrapper_box {
-    width: 300px;
+    width: 290px;
     height: 390px;
     margin: 10px;
     border-radius: 10px;
@@ -195,4 +195,20 @@ img {
     border-width: 1px;
     width: 435px;
     height: 130px;
+}
+
+#date_dialog{
+    height: 185px;
+}
+
+#open_location_dialog_btn{
+    margin-top: 248px;
+}
+
+#open_date_dialog_btn{
+    margin-top: 208px;
+}
+
+.fixlink{
+    color: #000000;
 }

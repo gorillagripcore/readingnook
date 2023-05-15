@@ -390,7 +390,7 @@ def botm():
         username = session['username']
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
-        book_club = cursor.fetchone()[0]  # extract the single value from the array
+        book_club = cursor.fetchone()[0]
         botm = request.form['botm']
 
         cursor.execute(
@@ -398,7 +398,7 @@ def botm():
         result = cursor.fetchone()
         if result is not None:
             cursor.execute("UPDATE book_club_info SET book_of_the_month = %s WHERE title = %s;", (result[0], book_club,))
-            # extract the single value from the array
+
 
             conn.commit()
             cursor.close()
@@ -406,6 +406,58 @@ def botm():
         else:
             flash('Book Not Found :c Make sure you capitalized the title correctly.')
     return redirect(url_for('your_club'))
+
+@app.route('/date', methods=['GET', 'POST'])
+def date():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club = cursor.fetchone()[0]  
+        date = request.form['date']
+        time = request.form['time']
+
+        cursor.execute("UPDATE book_club_info SET meeting_date = %s WHERE title = %s;", (date, book_club,))
+        cursor.execute("UPDATE book_club_info SET time = %s WHERE title = %s;", (time, book_club,))
+        conn.commit()
+        cursor.close()
+    return redirect(url_for('your_club'))
+  
+@app.route('/location', methods=['GET', 'POST'])
+def location():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club = cursor.fetchone()[0]  
+        location = request.form['location']
+
+        cursor.execute("UPDATE book_club_info SET location = %s WHERE title = %s;", (location, book_club,))
+        conn.commit()
+        cursor.close()
+    return redirect(url_for('your_club'))
+
+
+@app.route('/member_list')
+def member_list():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute('SELECT book_club FROM in_club WHERE username = %s', (username,))
+    book_club = cursor.fetchone()[0]
+
+    cursor.execute("SELECT username FROM in_club WHERE book_club = %s;", (book_club,))
+    users = [user['username'] for user in cursor.fetchall()]  
+
+    users_info = []
+    for user in users:
+        cursor.execute("SELECT pfp, user_desc FROM users WHERE username = %s;", (user,))
+        user_info = cursor.fetchone()
+        users_info.append(user_info)
+
+    return render_template('members.html', users_info=users_info, users=users)
+
+
+  
 
 @app.route('/join_club', methods=['GET', 'POST'])
 def join_club():
