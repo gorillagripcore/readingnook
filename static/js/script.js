@@ -101,10 +101,3 @@ function countVotes() {
 
 
 
-
-
-
-
-
-
-

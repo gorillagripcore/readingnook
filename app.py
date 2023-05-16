@@ -195,7 +195,6 @@ def profile():
 
 @app.route('/your_club')
 def your_club():
-
     username = session['username']
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
@@ -203,7 +202,6 @@ def your_club():
         "SELECT owner FROM book_clubs WHERE owner=%s", (username,))
     owner = cursor.fetchone()
 
-    
     if owner is None:
 
         cursor.execute(
@@ -230,6 +228,14 @@ def your_club():
         else:
             book_of_the_month = None
 
+        cursor.execute(
+            'select book_of_the_month from book_club_info where title = %s', (club_name))
+        book_of_the_month_isbn_row = cursor.fetchone()
+        if book_of_the_month_isbn_row is not None:
+            book_of_the_month_isbn = book_of_the_month_isbn_row[0]
+        else:
+            book_of_the_month_isbn = None
+
         cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
         date_row = cursor.fetchone()
         if date_row is not None:
@@ -255,7 +261,7 @@ def your_club():
         conn.commit()
         cursor.close()
 
-        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, book_of_the_month_isbn=book_of_the_month_isbn, location=location, date=date, time=time,)
     else: 
         cursor.execute(
             "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
@@ -303,10 +309,58 @@ def your_club():
         else:
             location = None
 
+        cursor.execute(
+            'select book_of_the_month from book_club_info where title = %s', (club_name))
+        book_of_the_month_isbn_row = cursor.fetchone()
+        if book_of_the_month_isbn_row is not None:
+            book_of_the_month_isbn = book_of_the_month_isbn_row[0]
+        else:
+            book_of_the_month_isbn = None
+
         conn.commit()
         cursor.close()
 
-        return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time,)
+        return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn)
+    
+@app.route('/admin_suggestions', methods=['GET', 'POST'])
+def admin_suggestions():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT title FROM book_clubs where owner = %s", (username,))
+    book_club_title_row = cursor.fetchone()
+    if book_club_title_row is not None:
+        book_club_title = book_club_title_row[0]
+    else:
+        book_club_title = None
+
+
+    cursor.execute( "SELECT book_title, author FROM suggestion_box where book_club = %s", (book_club_title,))
+    suggestions = cursor.fetchall()
+    
+    print(suggestions)
+    return render_template('suggestions.html', suggestions=suggestions)
+
+@app.route('/suggest_book', methods=['GET', 'POST'])
+def suggest_book():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT book_club FROM in_club where username = %s", (username,))
+    book_club_name_row = cursor.fetchone()
+    if book_club_name_row is not None:
+        book_club_name = book_club_name_row[0]
+    else:
+        book_club_name = None
+
+
+    suggested_title = request.form['titel_suggestion']
+    suggested_author = request.form['author_suggestion']
+        
+    cursor.execute("INSERT INTO public.suggestion_box( book_club, book_title, author) VALUES (%s, %s, %s);", (book_club_name, suggested_title, suggested_author))
+        
+    conn.commit()
+    cursor.close()
+    return redirect(url_for('your_club'))
+
 
     
 @app.route('/public_clubs')
@@ -329,8 +383,78 @@ def public_clubs():
         if row is not None:
             book_club_title = row[0]
     return render_template('public_clubs.html', book_clubs=book_clubs)
-    
 
+@app.route('/botm', methods=['GET', 'POST'])
+def botm():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club = cursor.fetchone()[0]
+        botm = request.form['botm']
+
+        cursor.execute(
+            "SELECT isbn FROM books WHERE title = %s;", (botm,))
+        result = cursor.fetchone()
+        if result is not None:
+            cursor.execute("UPDATE book_club_info SET book_of_the_month = %s WHERE title = %s;", (result[0], book_club,))
+
+
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('your_club'))
+        else:
+            flash('Book Not Found :c Make sure you capitalized the title correctly.')
+    return redirect(url_for('your_club'))
+
+@app.route('/date', methods=['GET', 'POST'])
+def date():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club = cursor.fetchone()[0]  
+        date = request.form['date']
+        time = request.form['time']
+
+        cursor.execute("UPDATE book_club_info SET meeting_date = %s WHERE title = %s;", (date, book_club,))
+        cursor.execute("UPDATE book_club_info SET time = %s WHERE title = %s;", (time, book_club,))
+        conn.commit()
+        cursor.close()
+    return redirect(url_for('your_club'))
+  
+@app.route('/location', methods=['GET', 'POST'])
+def location():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club = cursor.fetchone()[0]  
+        location = request.form['location']
+
+        cursor.execute("UPDATE book_club_info SET location = %s WHERE title = %s;", (location, book_club,))
+        conn.commit()
+        cursor.close()
+    return redirect(url_for('your_club'))
+
+
+@app.route('/member_list')
+def member_list():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute('SELECT book_club FROM in_club WHERE username = %s', (username,))
+    book_club = cursor.fetchone()[0]
+
+    cursor.execute("SELECT username FROM in_club WHERE book_club = %s;", (book_club,))
+    users = [user['username'] for user in cursor.fetchall()]  
+
+    users_info = []
+    for user in users:
+        cursor.execute("SELECT pfp, user_desc FROM users WHERE username = %s;", (user,))
+        user_info = cursor.fetchone()
+        users_info.append(user_info)
+
+    return render_template('members.html', users_info=users_info, users=users)
 
 @app.route('/join_club', methods=['GET', 'POST'])
 def join_club():
@@ -345,7 +469,6 @@ def join_club():
         return redirect(url_for('your_club'))
     else:
         return redirect(url_for('home.html'))
-
 
 @app.route('/leave_club', methods=['GET', 'POST'])
 def leave_club():
@@ -364,9 +487,8 @@ def delete_club():
     club_name= cursor.fetchone()
 
     cursor.execute("DELETE FROM in_club WHERE book_club = %s", (club_name))
-    conn.commit()
     cursor.execute("DELETE FROM public.book_club_info WHERE title = %s", (club_name))
-    conn.commit()
+    cursor.execute("DELETE FROM suggestion_box WHERE book_club = %s", (club_name))
     cursor.execute("DELETE FROM book_clubs WHERE owner = %s", (username,))
     conn.commit()
     return redirect(url_for('public_clubs'))
@@ -380,9 +502,15 @@ def create_club():
         title = request.form['name']
         club_picture = request.form['club_picture']
         club_desc = request.form['club_desc']
-        cursor.execute(
-            "INSERT INTO public.book_clubs(title, descr, owner, pic) VALUES (%s, %s, %s, %s);", (title, club_desc, username, club_picture,))
+        
+        cursor.execute("INSERT INTO public.book_clubs(title, descr, owner, pic) VALUES (%s, %s, %s, %s);", (title, club_desc, username, club_picture,))
         cursor.execute("INSERT INTO in_club VALUES (%s, %s)", (username, title))
+        
+        book_of_the_month = '9780140449174'
+        date = "0001-01-01"
+        location = 'Malmö, Sweden'
+        time = '00:00'
+        cursor.execute("INSERT INTO public.book_club_info(title, book_of_the_month, meeting_date, location, time) VALUES (%s, %s, %s, %s, %s)", (title, book_of_the_month, date, location, time))
         conn.commit()
         cursor.close()
         return redirect(url_for('your_club'))
@@ -505,6 +633,75 @@ def book(book_isbn):
 
     return render_template('books.html', book_isbn=book_isbn, book=book, author_name=author_name)
 
+@app.route('/profiles/<users>')
+def profiles(users):
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute(
+        "select cover from favorite_book join books on favorite_book.isbn=books.isbn where username = %s", (users,))
+    favorite_book_row = cursor.fetchone()
+    if favorite_book_row is not None:
+        favorite_book = favorite_book_row[0]
+    else:
+        favorite_book = None
+
+    cursor.execute(
+        "select favorite_book.isbn from favorite_book join books on favorite_book.isbn=books.isbn where username = %s", (users,))
+    favorite_book_isbn = None
+    row = cursor.fetchone()
+    if row is not None:
+        favorite_book_isbn = row[0]
+
+    cursor.execute(
+        "select cover from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (users,))
+    least_favorite_book_row = cursor.fetchone()
+    if least_favorite_book_row is not None:
+        least_favorite_book = least_favorite_book_row[0]
+    else:
+        least_favorite_book = None
+
+    cursor.execute(
+        "select least_favorite_book.isbn from least_favorite_book join books on least_favorite_book.isbn=books.isbn where username = %s", (users,))
+    least_favorite_book_isbn = None
+    row = cursor.fetchone()
+    if row is not None:
+        least_favorite_book_isbn = row[0]
+
+    cursor.execute(
+        "select user_desc from users where username = %s", (users,))
+    user_desc_row = cursor.fetchone()
+    if user_desc_row is not None:
+        user_desc = user_desc_row[0]
+    else:
+        user_desc = None
+
+    cursor.execute("select pfp from users where username = %s", (users,))
+    pfp_row = cursor.fetchone()
+    if pfp_row is not None:
+        pfp = pfp_row[0]
+    else:
+        pfp = None
+
+    cursor.execute(
+        "select quote from favorite_quote where username = %s", (users,))
+    favorite_quote_row = cursor.fetchone()
+    if favorite_quote_row is not None:
+        favorite_quote = favorite_quote_row[0]
+    else:
+        favorite_quote = None
+
+    cursor.execute(
+        "SELECT title from books join favorite_quote on favorite_quote.isbn=books.isbn where username = %s", (users,))
+    quote_book_row = cursor.fetchone()
+    if quote_book_row is not None:
+        quote_book = quote_book_row[0]
+    else:
+        quote_book = None
+
+    if username == users:
+        return redirect(url_for('profile'))
+    else:
+        return render_template('profiles.html',  users=users, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book)
 
 if __name__ == "__main__":
     app.run(debug=True)
