@@ -474,7 +474,7 @@ def leave_club():
     username = session['username']
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute("DELETE FROM in_club WHERE username = %s",
-                   (username,))  # den
+                   (username,)) 
     conn.commit()
     return redirect(url_for('public_clubs'))
 
