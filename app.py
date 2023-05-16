@@ -337,7 +337,6 @@ def admin_suggestions():
     cursor.execute( "SELECT book_title, author FROM suggestion_box where book_club = %s", (book_club_title,))
     suggestions = cursor.fetchall()
     
-    print(suggestions)
     return render_template('suggestions.html', suggestions=suggestions)
 
 @app.route('/suggest_book', methods=['GET', 'POST'])
