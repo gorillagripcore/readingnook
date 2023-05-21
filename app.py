@@ -98,9 +98,6 @@ def home():
     cursor.close()
     return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews, book_covers=book_covers, user_profile_pics=user_profile_pics)
 
-
-
-
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
