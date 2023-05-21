@@ -29,6 +29,8 @@ def home():
     date = None
     time = ''
     location = ''
+    value = ''
+    goal_type = ''
     
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -58,11 +60,29 @@ def home():
         book_isbn_row = cursor.fetchone()
         if book_isbn_row is not None:
             book_isbn = book_isbn_row[0]
+
+        cursor.execute(
+            'SELECT goal_type FROM public.goals where book_club = %s', (club_name))
+        goal_type_row = cursor.fetchone()
+        if goal_type_row is not None:
+            goal_type = goal_type_row[0]
+        else:
+            goal_type = None
+
+        cursor.execute(
+            'SELECT value FROM public.goals where book_club = %s', (club_name))
+        value_row = cursor.fetchone()
+        if value_row is not None:
+            value = value_row[0]
+        else:
+            value = None
     else:
         user_in_club = None
+        
+
     conn.commit()
     cursor.close()
-    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location) 
+    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type) 
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -258,10 +278,26 @@ def your_club():
         else:
             location = None
 
+        cursor.execute(
+            'SELECT goal_type FROM public.goals where book_club = %s', (club_name))
+        goal_type_row = cursor.fetchone()
+        if goal_type_row is not None:
+            goal_type = goal_type_row[0]
+        else:
+            goal_type = None
+
+        cursor.execute(
+            'SELECT value FROM public.goals where book_club = %s', (club_name))
+        value_row = cursor.fetchone()
+        if value_row is not None:
+            value = value_row[0]
+        else:
+            value = None
+
         conn.commit()
         cursor.close()
 
-        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, book_of_the_month_isbn=book_of_the_month_isbn, location=location, date=date, time=time,)
+        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, book_of_the_month_isbn=book_of_the_month_isbn, location=location, date=date, time=time, goal_type=goal_type, value=value)
     else: 
         cursor.execute(
             "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
@@ -317,10 +353,26 @@ def your_club():
         else:
             book_of_the_month_isbn = None
 
+        cursor.execute(
+            'SELECT goal_type FROM public.goals where book_club = %s', (club_name))
+        goal_type_row = cursor.fetchone()
+        if goal_type_row is not None:
+            goal_type = goal_type_row[0]
+        else:
+            goal_type = None
+
+        cursor.execute(
+            'SELECT value FROM public.goals where book_club = %s', (club_name))
+        value_row = cursor.fetchone()
+        if value_row is not None:
+            value = value_row[0]
+        else:
+            value = None
+
         conn.commit()
         cursor.close()
 
-        return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn)
+        return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn, goal_type=goal_type, value=value)
     
 @app.route('/admin_suggestions', methods=['GET', 'POST'])
 def admin_suggestions():
@@ -455,6 +507,22 @@ def member_list():
 
     return render_template('members.html', users_info=users_info, users=users)
 
+@app.route('/goal', methods=['GET', 'POST'])
+def goal():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club = cursor.fetchone()[0]  
+        goal_type = request.form['goal_type']
+        number = request.form['number']
+
+        cursor.execute('UPDATE public.goals SET goal_type = %s, value = %s WHERE book_club = %s;', (goal_type, number, book_club))
+        conn.commit()
+        cursor.close()
+       
+    return redirect(url_for('your_club'))
+
 @app.route('/join_club', methods=['GET', 'POST'])
 def join_club():
     if request.method == 'POST':
@@ -509,7 +577,11 @@ def create_club():
         date = "0001-01-01"
         location = 'Malmö, Sweden'
         time = '00:00'
+        goal_type = 'Books'
+        value = '1'
         cursor.execute("INSERT INTO public.book_club_info(title, book_of_the_month, meeting_date, location, time) VALUES (%s, %s, %s, %s, %s)", (title, book_of_the_month, date, location, time))
+        cursor.execute("INSERT INTO public.goals(book_club, goal_type, value) VALUES (%s, %s, %s)", (title, goal_type, value))
+        
         conn.commit()
         cursor.close()
         return redirect(url_for('your_club'))
