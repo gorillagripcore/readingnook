@@ -83,9 +83,23 @@ def home():
     cursor.execute("SELECT * FROM reviews ORDER BY date DESC")
     reviews = cursor.fetchall()
 
+    cursor.execute("SELECT books.cover, users.pfp FROM books JOIN reviews ON books.isbn=reviews.book_isbn JOIN users ON reviews.username=users.username order by reviews.date desc")
+    book_cover_rows = cursor.fetchall()
+
+    book_covers = []
+    user_profile_pics = []
+    for row in book_cover_rows:
+        book_cover = row[0]
+        user_profile_pic = row[1]
+        book_covers.append(book_cover)
+        user_profile_pics.append(user_profile_pic)
+
     conn.commit()
     cursor.close()
-    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews) 
+    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews, book_covers=book_covers, user_profile_pics=user_profile_pics)
+
+
+
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():

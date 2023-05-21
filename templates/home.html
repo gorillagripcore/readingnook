@@ -67,7 +67,7 @@
         <div class="col-6 col-sm-3 mx-auto posts">
           <div class="user user_post">
             <!-- add each users profile picture -->
-            <img src="#" alt="">
+            <img src="{{ user_profile_pics[loop.index0] }}" alt="">
             <p>{{ review[0] }}</p>
           </div>
           <div class="star_container">
@@ -83,7 +83,7 @@
           </div>
           <div class="rating">
             <!-- add book cover -->
-            <img src="#" alt="">
+            <img src="{{ book_covers[loop.index0] }}" alt="">
             <p class="content">
               {{ review[3] }}
             </p>
