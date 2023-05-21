@@ -3,6 +3,7 @@ import psycopg2  # pip install psycopg2
 import psycopg2.extras
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -78,12 +79,13 @@ def home():
             value = None
     else:
         user_in_club = None
-        
+    
+    cursor.execute("SELECT * FROM reviews ORDER BY date DESC")
+    reviews = cursor.fetchall()
 
     conn.commit()
     cursor.close()
-    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type) 
-
+    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews) 
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -689,6 +691,7 @@ def favorite_quote():
 def book(book_isbn):
     if book_isbn in (1, 2):
         return redirect(url_for('profile'))
+    username = session['username']
 
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute(
@@ -699,10 +702,44 @@ def book(book_isbn):
         "select * from authors join authors_books on authors.author_id=authors_books.author_id where authors_books.isbn=%s", (book_isbn,))
     author_name = cursor.fetchone()
 
+    cursor.execute("SELECT * FROM reviews WHERE username=%s and book_isbn=%s", (username, book_isbn))
+    reviews = cursor.fetchone()
+
     conn.commit()
     cursor.close()
 
-    return render_template('books.html', book_isbn=book_isbn, book=book, author_name=author_name)
+    return render_template('books.html', book_isbn=book_isbn, book=book, author_name=author_name, reviews=reviews)
+
+@app.route('/review_book/<int:book_isbn>', methods=['POST'])
+def review_book(book_isbn):
+    book_isbn=book_isbn
+    username = session['username']
+
+    review_comment = request.form['review_comment']
+    rating = request.form['rating']
+
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    cursor.execute("INSERT INTO reviews (username, book_isbn, rating, comment, date) VALUES (%s, %s, %s, %s, %s)", (username, book_isbn, rating, review_comment, datetime.now()))
+
+    conn.commit()
+
+    return redirect(url_for('book', book_isbn=book_isbn))
+
+@app.route('/edit_review/<int:book_isbn>', methods=['POST'])
+def edit_review(book_isbn):
+    username = session['username']
+
+    review_comment = request.form['review_comment']
+    rating = request.form['rating']
+
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    cursor.execute("UPDATE reviews SET rating=%s, comment=%s, date=%s WHERE username=%s and book_isbn=%s", (rating, review_comment, datetime.now(), username, book_isbn))
+
+    conn.commit()
+
+    return redirect(url_for('book', book_isbn=book_isbn))
 
 @app.route('/profiles/<users>')
 def profiles(users):

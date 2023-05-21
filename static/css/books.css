@@ -62,3 +62,85 @@
     background-color: #bce0ec;
     transition: 0.3s;
 }
+
+.form_row {
+    display: flex;
+    padding: 10px;
+    max-width: 450px;
+}
+
+.form_row>h3 {
+    margin-top: 12px;
+    margin-left: -10px;
+}
+
+.open_button {
+    font-size: 15px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #c8ebf7;
+    border: 1px solid #c8ebf7;
+    border-radius: 6px;
+    margin-top: 80px;
+    margin-left: 270px;
+}
+
+.open_button:hover {
+    background-color: #bce0ec;
+    transition: 0.3s;
+}
+
+/* fix so the form doesn't move */
+#review_form {
+    display: none;
+    position: fixed;
+    right: 600px;
+    top: 75px;
+    border: 1px solid #c3c3c3;
+    z-index: 1;
+}
+
+.review_form_container {
+    max-width: 500px;
+    padding: 10px;
+    background-color: white;
+}
+
+.review_form_container textarea,
+.review_form_container input[type=number] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+.review_form_container textareafocus,
+.review_form_container input[type=number]focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+#cancel_button {
+    margin-left: 330px;
+    border: none;
+    background: none;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+#cancel_button:hover {
+    color: #aa0404;
+    transform: 1s;
+}
+
+.review_form_container .btn {
+    background-color: #c8ebf7;
+    color: #000;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
