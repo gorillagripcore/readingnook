@@ -223,7 +223,18 @@ def profile():
     else:
         quote_book = None
 
-    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book)
+
+    cursor.execute("SELECT * FROM reviews WHERE username = %s ORDER BY date DESC", (username,))
+    reviews = cursor.fetchall()
+
+    cursor.execute("SELECT cover FROM books JOIN reviews ON books.isbn = reviews.book_isbn WHERE reviews.username = %s ORDER BY reviews.date DESC", (username,))
+    book_covers = cursor.fetchall()
+
+    # Construct a list of book covers from the fetched result
+    book_cover_list = [cover[0] for cover in book_covers]
+
+    # Pass the book_cover_list variable to the HTML template rendering code
+    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list)
 
 
 @app.route('/your_club')
