@@ -226,7 +226,6 @@ def profile():
     else:
         quote_book = None
 
-
     cursor.execute("SELECT * FROM reviews WHERE username = %s ORDER BY date DESC", (username,))
     reviews = cursor.fetchall()
 
@@ -835,11 +834,25 @@ def profiles(users):
         quote_book = quote_book_row[0]
     else:
         quote_book = None
+    
+    cursor.execute("SELECT * FROM reviews WHERE username = %s ORDER BY date DESC", (users,))
+    reviews = cursor.fetchall()
+
+    cursor.execute("SELECT cover FROM books JOIN reviews ON books.isbn = reviews.book_isbn WHERE reviews.username = %s ORDER BY reviews.date DESC", (users,))
+    book_covers = cursor.fetchall()
+
+    # Construct a list of book covers from the fetched result
+    book_cover_list = [cover[0] for cover in book_covers]
+
+    cursor.execute("SELECT book_isbn FROM reviews WHERE username = %s ORDER BY date DESC", (users,))
+    review_book_isbn = cursor.fetchall()
+
+    book_isbn_list = [book_isbn[0] for book_isbn in review_book_isbn]
 
     if username == users:
         return redirect(url_for('profile'))
     else:
-        return render_template('profiles.html',  users=users, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book)
+        return render_template('profiles.html',  users=users, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list)
 
 if __name__ == "__main__":
     app.run(debug=True)
