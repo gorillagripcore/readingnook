@@ -194,7 +194,7 @@
               </div>
             </div>
             <div class="rating">
-              <img src="{{ book_cover_list[loop.index0] }}" alt="hello">
+               <a href="{{ url_for('book', book_isbn=book_isbn_list[loop.index0]) }}"><img src="{{ book_cover_list[loop.index0] }}" alt="book cover"></a>
               <p class="content">
                 {{ review[3] }}
               </p>

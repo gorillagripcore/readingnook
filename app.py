@@ -83,20 +83,23 @@ def home():
     cursor.execute("SELECT * FROM reviews ORDER BY date DESC")
     reviews = cursor.fetchall()
 
-    cursor.execute("SELECT books.cover, users.pfp FROM books JOIN reviews ON books.isbn=reviews.book_isbn JOIN users ON reviews.username=users.username order by reviews.date desc")
+    cursor.execute("SELECT books.cover, users.pfp, reviews.book_isbn FROM books JOIN reviews ON books.isbn=reviews.book_isbn JOIN users ON reviews.username=users.username order by reviews.date desc")
     book_cover_rows = cursor.fetchall()
 
     book_covers = []
     user_profile_pics = []
+    review_book_isbns = []
     for row in book_cover_rows:
         book_cover = row[0]
         user_profile_pic = row[1]
+        review_book_isbn = row[2]
         book_covers.append(book_cover)
         user_profile_pics.append(user_profile_pic)
+        review_book_isbns.append(review_book_isbn)
 
     conn.commit()
     cursor.close()
-    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews, book_covers=book_covers, user_profile_pics=user_profile_pics)
+    return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews, book_covers=book_covers, user_profile_pics=user_profile_pics, review_book_isbns=review_book_isbns)
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -233,8 +236,13 @@ def profile():
     # Construct a list of book covers from the fetched result
     book_cover_list = [cover[0] for cover in book_covers]
 
+    cursor.execute("SELECT book_isbn FROM reviews WHERE username = %s ORDER BY date DESC", (username,))
+    review_book_isbn = cursor.fetchall()
+
+    book_isbn_list = [book_isbn[0] for book_isbn in review_book_isbn]
+
     # Pass the book_cover_list variable to the HTML template rendering code
-    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list)
+    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list)
 
 
 @app.route('/your_club')
