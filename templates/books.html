@@ -64,7 +64,7 @@
                         </div>
 
                         <label for="review_comment"><b>Your comment</b></label>
-                        <textarea name="review_comment" cols="30" rows="5" placeholder="Write here..."></textarea>
+                        <textarea name="review_comment" cols="30" rows="5" maxlength="250" placeholder="Write here..."></textarea>
 
                         <label for="rating"><b>Rating</b></label>
                         <input name="rating" type="number" value="1" min="1" max="5" required>
@@ -84,7 +84,7 @@
                         </div>
 
                         <label for="review_comment"><b>Your comment</b></label>
-                        <textarea name="review_comment" cols="30" rows="5" placeholder="Write here...">{{ reviews[3] }}</textarea>
+                        <textarea name="review_comment" cols="30" rows="5" maxlength="250" placeholder="Write here...">{{ reviews[3] }}</textarea>
 
                         <label for="rating"><b>Rating</b></label>
                         <input name="rating" type="number" value="{{ reviews[2] }}" min="1" max="5" required>
