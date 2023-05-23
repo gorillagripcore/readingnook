@@ -442,9 +442,7 @@ def suggest_book():
     conn.commit()
     cursor.close()
     return redirect(url_for('your_club'))
-
-
-    
+ 
 @app.route('/public_clubs')
 def public_clubs():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -465,6 +463,42 @@ def public_clubs():
         if row is not None:
             book_club_title = row[0]
     return render_template('public_clubs.html', book_clubs=book_clubs)
+
+@app.route('/bcp', methods=['GET', 'POST'])
+def bcp():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club_row = cursor.fetchone()
+        if book_club_row is not None:
+            book_club = book_club_row[0]
+        else:
+            book_club = None 
+        bcp = request.form['bcp']
+
+        cursor.execute("UPDATE book_clubs SET pic = %s WHERE title = %s;", (bcp, book_club))
+        conn.commit()
+        cursor.close()
+    return redirect(url_for('your_club'))
+
+@app.route('/club_desc', methods=['GET', 'POST'])
+def club_desc():
+    if request.method == 'POST':
+        username = session['username']
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+        book_club_row = cursor.fetchone()
+        if book_club_row is not None:
+            book_club = book_club_row[0]
+        else:
+            book_club = None 
+        club_desc = request.form['club_desc']
+
+        cursor.execute("UPDATE book_clubs SET descr = %s WHERE title = %s;", (club_desc, book_club))
+        conn.commit()
+        cursor.close()
+    return redirect(url_for('your_club'))
 
 @app.route('/botm', methods=['GET', 'POST'])
 def botm():

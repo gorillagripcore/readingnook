@@ -244,3 +244,11 @@ img {
     margin-top: 40px;
 }
 
+.book_club_info{
+    height: 220px;
+}
+
+#open_club_desc_dialog_btn{
+    margin-left: -245px;
+    margin-top: -10px;
+}
