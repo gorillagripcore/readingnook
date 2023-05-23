@@ -908,5 +908,28 @@ def profiles(users):
     else:
         return render_template('profiles.html',  users=users, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list)
 
+vote_count_1 = 0
+vote_count_2 = 0
+
+@app.route('/')
+def index():
+    count_1 = vote_count_1  # Use the variable directly instead of calling a function
+    count_2 = vote_count_2  # Use the variable directly instead of calling a function
+
+    return render_template('your_club.html', count_1=count_1, count_2=count_2)
+
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    global vote_count_1, vote_count_2
+    if request.method == 'POST':
+        selected_poll_box = request.form['poll_box']
+        if selected_poll_box == 'poll_box_1':
+            vote_count_1 += 1
+        elif selected_poll_box == 'poll_box_2':
+            vote_count_2 += 1
+    return render_template('your_club.html', count_1=vote_count_1, count_2=vote_count_2)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

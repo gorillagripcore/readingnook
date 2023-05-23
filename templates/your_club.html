@@ -83,8 +83,6 @@
 
 <h2 style="text-align: center;">Poll</h2>
 
-<h2 style="text-align: center;">Poll</h2>
-
 <div class="container text-center">
   <div class="row">
     <div class="col"></div>
@@ -92,12 +90,14 @@
       <div class="poll_box" id="poll_box_1" onclick="selectPollBox(this)">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgrNzpOiLkOZWT6vG9WYXo87UmC0Azo1Amg&usqp=CAU"
           alt="poll_box_img1">
+          <p>Vote Count: {{ count_1 }}</p>
       </div>
     </div>
     <div class="col">
-      <div class="poll_box" id="poll_box_2" onclick="selectPollBox(this)">
+      <div class="poll_box" id="poll_box_2" onclick="selectPollBox(this)" >
         <img src="https://cdn.penguin.co.uk/dam-assets/books/9780241573730/9780241573730-jacket-large.jpg"
           alt="poll_box_img2">
+         <p>Vote Count: {{ count_2 }}</p>
       </div>
     </div>
     <div class="col"></div>
@@ -105,14 +105,19 @@
 </div>
 
 <div class="text-center">
-  <form id="pollForm">
+  <form id="pollForm" action="/submit" method="post">
+    <input type="hidden" name="poll_box" id="selectedPollBox">
     <input type="submit" value="Submit" class="form-control btn" name="submitpoll" id="submitBtn">
   </form>
 </div>
 
-<script src="poll.js"></script>
+<script>
+  function selectPollBox(pollBox) {
+    var selectedPollBox = document.getElementById('selectedPollBox');
+    selectedPollBox.value = pollBox.id;
+  }
+</script>
 
-  
 
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
