@@ -63,39 +63,29 @@ quote_dialog.addEventListener('click', (e) => {
 });
 
 //Poll counts
-// initialize the vote count for each poll box to 0
-let voteCount = [0, 0];
-
-// function to toggle the selected state of a poll box
 function toggleSelection(pollBox) {
-  // get the index of the poll box that was clicked
-  let index = Array.from(pollBox.parentNode.children).indexOf(pollBox);
-  
-  // set the vote count for this poll box to 1 and reset the vote count for the other poll box to 0
-  voteCount[index] = 1;
-  voteCount[1 - index] = 0;
-  
-  // update the style of the poll boxes to reflect the selected state
-  for (let i = 0; i < 2; i++) {
-    let pollBox = document.getElementById(`poll_box_${i+1}`);
-    pollBox.classList.toggle("selected", voteCount[i] > 0);
+  var pollBoxes = document.getElementsByClassName('poll_box');
+  for (var i = 0; i < pollBoxes.length; i++) {
+    pollBoxes[i].classList.remove('selected');
+  }
+  pollBox.classList.add('selected');
+}
+
+function countVotes() {
+  var selectedPollBox = document.querySelector('.poll_box.selected');
+  if (selectedPollBox) {
+    var selectedPollBoxId = selectedPollBox.id;
+    var pollBoxNumber = parseInt(selectedPollBoxId.split('_')[2]);
+    console.log('Selected Poll Box:', pollBoxNumber);
+  } else {
+    console.log('No poll box selected.');
   }
 }
 
-// function to count the votes and display the results
-function countVotes() {
-  // get the vote count for each poll box
-  let voteCount1 = voteCount[0];
-  let voteCount2 = voteCount[1];
-
-  // calculate the total number of votes
-  let totalVotes = voteCount1 + voteCount2;
-
-  // display the vote count for each poll box and the total number of votes
-  document.getElementById("poll_box_1").innerHTML = `Vote count for poll box 1: ${voteCount1}`;
-  document.getElementById("poll_box_2").innerHTML = `Vote count for poll box 2: ${voteCount2}`;
-  document.getElementById("submitBtn").style.display = "none";
-}
+document.getElementById('pollForm').addEventListener('submit', function (event) {
+  event.preventDefault();
+  countVotes();
+});
 
 
 

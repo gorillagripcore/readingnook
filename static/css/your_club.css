@@ -252,3 +252,8 @@ img {
     margin-left: -245px;
     margin-top: -10px;
 }
+
+.selected {
+    border: 2px solid blue;
+}
+  

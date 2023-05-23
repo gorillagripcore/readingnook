@@ -82,7 +82,6 @@
   </div>
 
   <h2 style="text-align: center;">Poll</h2>
-
   <div class="container text-center">
     <div class="row">
       <div class="col">
@@ -108,8 +107,32 @@
       onclick="countVotes()">
   </div>
 
-
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    function toggleSelection(pollBox) {
+      var pollBoxes = document.getElementsByClassName('poll_box');
+      for (var i = 0; i < pollBoxes.length; i++) {
+        pollBoxes[i].classList.remove('selected');
+      }
+      pollBox.classList.add('selected');
+    }
+  
+    function countVotes() {
+      var selectedPollBox = document.querySelector('.poll_box.selected');
+      if (selectedPollBox) {
+        var selectedPollBoxId = selectedPollBox.id;
+        var pollBoxNumber = parseInt(selectedPollBoxId.split('_')[2]);
+        console.log('Selected Poll Box:', pollBoxNumber);
+      } else {
+        console.log('No poll box selected.');
+      }
+    }
+  
+    document.getElementById('pollForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      countVotes();
+    });
+</script>
+  
 </body>
 
 </html>
