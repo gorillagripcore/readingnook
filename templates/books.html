@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reading Nook</title>
-    <link rel="icon" href="https://cdn.discordapp.com/attachments/1078973373608112128/1099769461256503396/Untitled_Artwork.png">
+    <link rel="icon"
+        href="https://cdn.discordapp.com/attachments/1078973373608112128/1099769461256503396/Untitled_Artwork.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -64,10 +65,18 @@
                         </div>
 
                         <label for="review_comment"><b>Your comment</b></label>
-                        <textarea name="review_comment" cols="30" rows="5" maxlength="250" placeholder="Write here..."></textarea>
+                        <textarea name="review_comment" cols="30" rows="5" maxlength="250"
+                            placeholder="Write here..." required></textarea>
 
                         <label for="rating"><b>Rating</b></label>
-                        <input name="rating" type="number" value="1" min="1" max="5" required>
+                        <select name="rating" id="rating" required>
+                            <option value="">--Select--</option>
+                            <option value="1">(1) Very bad</option>
+                            <option value="2">(2) Bad</option>
+                            <option value="3">(3) OK</option>
+                            <option value="4">(4) Good</option>
+                            <option value="5">(5) Very good</option>
+                        </select>
 
                         <button type="submit" class="btn">Submit</button>
                     </form>
@@ -84,10 +93,18 @@
                         </div>
 
                         <label for="review_comment"><b>Your comment</b></label>
-                        <textarea name="review_comment" cols="30" rows="5" maxlength="250" placeholder="Write here...">{{ reviews[3] }}</textarea>
+                        <textarea name="review_comment" cols="30" rows="5" maxlength="250"
+                            placeholder="Write here..." required>{{ reviews[3] }}</textarea>
 
                         <label for="rating"><b>Rating</b></label>
-                        <input name="rating" type="number" value="{{ reviews[2] }}" min="1" max="5" required>
+                        <select name="rating" id="rating" required>
+                            <option value="">--Select--</option>
+                            <option value="1">(1) Very bad</option>
+                            <option value="2">(2) Bad</option>
+                            <option value="3">(3) OK</option>
+                            <option value="4">(4) Good</option>
+                            <option value="5">(5) Very good</option>
+                        </select>
 
                         <button type="submit" class="btn">Submit</button>
                     </form>
@@ -99,11 +116,11 @@
 
     <script>
         function openForm() {
-          document.getElementById("review_form").style.display = "block";
+            document.getElementById("review_form").style.display = "block";
         }
-        
+
         function closeForm() {
-          document.getElementById("review_form").style.display = "none";
+            document.getElementById("review_form").style.display = "none";
         }
     </script>
 </body>
