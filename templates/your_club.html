@@ -22,7 +22,6 @@
 
   <div class="profile_section">
     <div class="container text-center">
-
       <div class="row">
         <div class="col-2">
           <img src="{{ club_info[3] }}" alt="Club Picture" class="club_pic">
@@ -35,24 +34,23 @@
           <form action="{{ url_for('leave_club') }}" method="POST">
             <input type="submit" value="Leave" class="form-control btn leave_button" name="leave_club">
           </form>
-
           <a href="{{ url_for('member_list') }}" class="fixlink">
             <div class="members_box">
               <h2>Members</h2>
               <p id="total_members">{{members}}</p>
             </div>
-
+          </a>
         </div>
       </div>
     </div>
   </div>
   <div class="book_container">
-    <div class="wrapper_box">
+    <div class="book_club_box">
       <h2>Book of the Month</h2>
       <a href="{{ url_for('book', book_isbn=book_of_the_month_isbn) }}"><img src="{{book_of_the_month}}"
           alt="book cover" class="book_cover"></a>
     </div>
-    <div class="wrapper_box">
+    <div class="book_club_box">
       <h2>Books to Come Suggestion Box</h2>
       <form class="form-group" action="{{ url_for('suggest_book') }}" method="post">
         <input type="text" placeholder="Title" id="titel_suggestion" name="titel_suggestion" class="suggest_input">
@@ -62,17 +60,26 @@
         </div>
       </form>
     </div>
-    <div class="wrapper_box">
-      <h2>Upcoming Meeting</h2>
-      <p>Date: {{date}}</p>
-      <p>Time: {{time}}</p>
+    
+    <div class="row">
+      <div class="col">
+        <div class="meeting_box">
+          <h2>Upcoming Meeting</h2>
+          <p>Date: {{date}}</p>
+          <p>Time: {{time}}</p>
+        </div>
+        <div class="meeting_box">
+          <h2>Meeting Location</h2>
+          <p>{{location}}</p>
+        </div>
+      </div>
     </div>
-    <div class="wrapper_box">
-      <h2>Meeting Location</h2>
-      <p>{{location}}</p>
+
+    <div class="book_club_box">
+      <h2>Goals</h2>
+      <h5 id="goals"><b>{{goal_type}}:</b> {{value}}</h5>
     </div>
   </div>
-
 
   <h2 style="text-align: center;">Poll</h2>
 

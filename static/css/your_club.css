@@ -66,7 +66,7 @@ body {
     align-items: center;
 }
 
-.wrapper_box {
+.book_club_box {
     width: 290px;
     height: 390px;
     margin: 10px;
@@ -80,17 +80,42 @@ body {
     text-align: center;
 }
 
-.wrapper_box h2 {
+.meeting_box {
+    width: 290px;
+    height: 187px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #faf6f0;
+    border-color: rgb(171, 171, 171);
+    border-width: 1px;
+    border-style: solid;
+    margin: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.meeting_box h2 {
     font-size: 24px;
     font-weight: bold;
 }
 
-.wrapper_box img {
+.book_club_box h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.book_club_box img {
     margin-top: 10px;
     height: 280px;
 }
 
-.wrapper_box p {
+.meeting_box p {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.book_club_box p {
     margin-top: 10px;
     font-size: 16px;
     line-height: 1.5;
@@ -156,7 +181,6 @@ input[type="submit"] {
     font-size: 20px;
 }
 
-
 .leave_button {
     width: 60px;
     height: 40px;
@@ -169,7 +193,6 @@ input[type="submit"] {
     float: right;
 
 }
-
 
 img {
     border-radius: 10px;
@@ -202,13 +225,30 @@ img {
 }
 
 #open_location_dialog_btn{
-    margin-top: 248px;
+    margin-top: 40px;
 }
 
 #open_date_dialog_btn{
-    margin-top: 208px;
+    margin-top: 1px;
 }
 
 .fixlink{
     color: #000000;
+}
+
+.form-select{
+    margin-top: 20px;
+}
+
+#goals{
+    margin-top: 40px;
+}
+
+.book_club_info{
+    height: 220px;
+}
+
+#open_club_desc_dialog_btn{
+    margin-left: -245px;
+    margin-top: -10px;
 }
