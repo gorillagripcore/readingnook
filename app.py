@@ -472,7 +472,11 @@ def botm():
         username = session['username']
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
-        book_club = cursor.fetchone()[0]
+        book_club_row = cursor.fetchone()
+        if book_club_row is not None:
+            book_club = book_club_row[0]
+        else:
+            book_club = None 
         botm = request.form['botm']
 
         cursor.execute(
@@ -495,7 +499,11 @@ def date():
         username = session['username']
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
-        book_club = cursor.fetchone()[0]  
+        book_club_row = cursor.fetchone()
+        if book_club_row is not None:
+            book_club = book_club_row[0]
+        else:
+            book_club = None  
         date = request.form['date']
         time = request.form['time']
 
@@ -511,7 +519,11 @@ def location():
         username = session['username']
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
-        book_club = cursor.fetchone()[0]  
+        book_club_row = cursor.fetchone()
+        if book_club_row is not None:
+            book_club = book_club_row[0]
+        else:
+            book_club = None   
         location = request.form['location']
 
         cursor.execute("UPDATE book_club_info SET location = %s WHERE title = %s;", (location, book_club,))
@@ -525,7 +537,11 @@ def member_list():
     username = session['username']
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute('SELECT book_club FROM in_club WHERE username = %s', (username,))
-    book_club = cursor.fetchone()[0]
+    book_club_row = cursor.fetchone()
+    if book_club_row is not None:
+        book_club = book_club_row[0]
+    else:
+        book_club = None 
 
     cursor.execute("SELECT username FROM in_club WHERE book_club = %s;", (book_club,))
     users = [user['username'] for user in cursor.fetchall()]  
@@ -544,7 +560,11 @@ def goal():
         username = session['username']
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
-        book_club = cursor.fetchone()[0]  
+        book_club_row = cursor.fetchone()
+        if book_club_row is not None:
+            book_club = book_club_row[0]
+        else:
+            book_club = None 
         goal_type = request.form['goal_type']
         number = request.form['number']
 
