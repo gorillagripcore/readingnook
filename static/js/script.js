@@ -63,30 +63,49 @@ quote_dialog.addEventListener('click', (e) => {
 });
 
 //Poll counts
-function toggleSelection(pollBox) {
-  var pollBoxes = document.getElementsByClassName('poll_box');
-  for (var i = 0; i < pollBoxes.length; i++) {
-    pollBoxes[i].classList.remove('selected');
-  }
-  pollBox.classList.add('selected');
-}
+document.getElementById("submitBtn").addEventListener("click", function() {
+  // Get the selected poll option
+  var selectedOption = document.querySelector(".poll_box.selected");
 
-function countVotes() {
-  var selectedPollBox = document.querySelector('.poll_box.selected');
-  if (selectedPollBox) {
-    var selectedPollBoxId = selectedPollBox.id;
-    var pollBoxNumber = parseInt(selectedPollBoxId.split('_')[2]);
-    console.log('Selected Poll Box:', pollBoxNumber);
+  if (selectedOption) {
+    // Get the ID of the selected poll box
+    var selectedBoxId = selectedOption.getAttribute("id");
+
+    // Remove the "poll_box_" prefix to get the selected option number
+    var selectedOptionNumber = selectedBoxId.replace("poll_box_", "");
+
+    // Display the selected option in the console (you can modify this part to perform other actions)
+    console.log("Selected option: " + selectedOptionNumber);
   } else {
-    console.log('No poll box selected.');
+    // No option selected, display an error message (you can modify this part to perform other actions)
+    console.log("Please select an option.");
   }
-}
-
-document.getElementById('pollForm').addEventListener('submit', function (event) {
-  event.preventDefault();
-  countVotes();
 });
 
+// Event listener for the poll boxes
+var pollBoxes = document.querySelectorAll(".poll_box");
+pollBoxes.forEach(function(box) {
+  box.addEventListener("click", function() {
+    // Remove the "selected" class from all poll boxes
+    pollBoxes.forEach(function(box) {
+      box.classList.remove("selected");
+      box.classList.remove("selected-box"); // Remove the border highlight class from all poll boxes
+    });
+
+    // Add the "selected" class to the clicked poll box
+    this.classList.add("selected");
+    this.classList.add("selected-box"); // Add the border highlight class to the selected poll box
+  });
+});
+
+function selectPollBox(pollBox) {
+  var pollBoxes = document.querySelectorAll(".poll_box");
+  pollBoxes.forEach(function(box) {
+    box.classList.remove("selected");
+  });
+
+  pollBox.classList.add("selected");
+}
 
 
 
