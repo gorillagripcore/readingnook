@@ -176,7 +176,7 @@
           <div class="container text-center">
             <div class="row">
               <div class="col widget read">
-                <a>
+                <a href="{{ url_for('want_to_read_page') }}">
                   <p>Want To Read</p>
                   <div class="read_books">
                     {% if book1 == None:%}
@@ -198,7 +198,7 @@
                 </a>
               </div>
               <div class="col widget read">
-                <a>
+                <a href="{{ url_for('read_page') }}">
                   <p>Read</p>
                   <div class="read_books">
                     {% if book4 == None:%}

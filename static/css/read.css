@@ -1,0 +1,22 @@
+.book_box{
+    margin-top: 100px;
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+
+.books_container{
+    width: 800px;
+}
+
+.books{
+    margin: 20px;
+    padding: 20px;
+    background-color: #faf6f0;
+    border-radius: 10px;
+    width: 200px !important;
+}
+
+.books img{
+    height: 170px;
+}

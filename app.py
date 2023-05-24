@@ -277,6 +277,47 @@ def profile():
 
     return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list, book1=book1, book2=book2, book3=book3, book4=book4, book5=book5, book6=book6)
 
+@app.route('/wanttoread')
+def want_to_read_page():
+    username = session['username']
+
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT isbn FROM want_to_read WHERE username = %s;", (username,))
+    read_books = cursor.fetchall()
+
+    books = []
+
+    #Iterate over all books in 'read_books'
+    for book in read_books:
+        isbn = book['isbn']
+        #Get information of the book from the 'books' table using isbn
+        cursor.execute("SELECT * FROM books WHERE isbn = %s;", (isbn,))
+        book_info = cursor.fetchone()
+        #add the book information to the 'books' list
+        books.append(book_info)
+    
+    return render_template('want_to_read.html', username=username, books=books)
+
+@app.route('/read')
+def read_page():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT book_isbn FROM reviews WHERE username = %s;", (username,))
+    read_books = cursor.fetchall()
+
+    books = []
+
+    #Iterate over all books in 'read_books'
+    for book in read_books:
+        isbn = book['book_isbn']
+        #Get information of the book from the 'books' table using isbn
+        cursor.execute("SELECT * FROM books WHERE isbn = %s;", (isbn,))
+        book_info = cursor.fetchone()
+        #add the book information to the 'books' list
+        books.append(book_info)
+
+    return render_template('read.html', username=username, books=books)
+
 
 @app.route('/your_club')
 def your_club():
@@ -598,7 +639,6 @@ def location():
         conn.commit()
         cursor.close()
     return redirect(url_for('your_club'))
-
 
 @app.route('/member_list')
 def member_list():
