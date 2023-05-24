@@ -97,8 +97,7 @@ def home():
         user_profile_pics.append(user_profile_pic)
         review_book_isbns.append(review_book_isbn)
 
-    conn.commit()
-    cursor.close()
+# Render the template and pass the necessary data
     return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews, book_covers=book_covers, user_profile_pics=user_profile_pics, review_book_isbns=review_book_isbns)
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -598,8 +597,6 @@ def botm():
             conn.commit()
             cursor.close()
             return redirect(url_for('your_club'))
-        else:
-            flash('Book Not Found :c Make sure you capitalized the title correctly.')
     return redirect(url_for('your_club'))
 
 @app.route('/date', methods=['GET', 'POST'])
@@ -796,8 +793,6 @@ def update_fav_book():
             conn.commit()
             cursor.close()
             return redirect(url_for('profile'))
-        else:
-            flash('Book Not Found :c Make sure you capitalized the title corretly.')
     return redirect(url_for('profile'))
 
 
@@ -817,8 +812,6 @@ def update_least_fav_book():
             conn.commit()
             cursor.close()
             return redirect(url_for('profile'))
-        else:
-            flash('Could not find the book. Please try again.')
     return redirect(url_for('profile'))
 
 
@@ -839,8 +832,6 @@ def favorite_quote():
             conn.commit()
             cursor.close()
             return redirect(url_for('profile'))
-        else:
-            flash('Could not find the book. Please try again.')
     return redirect(url_for('profile'))
 
 
@@ -881,6 +872,12 @@ def review_book(book_isbn):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     cursor.execute("INSERT INTO reviews (username, book_isbn, rating, comment, date) VALUES (%s, %s, %s, %s, %s)", (username, book_isbn, rating, review_comment, datetime.now()))
+
+    cursor.execute("SELECT isbn FROM want_to_read WHERE username=%s and isbn=%s", (username, book_isbn))
+    want_to_read = cursor.fetchone()
+    
+    if want_to_read != None:
+        cursor.execute("DELETE FROM public.want_to_read WHERE username = %s and isbn = %s", (username, book_isbn,))
 
     conn.commit()
 

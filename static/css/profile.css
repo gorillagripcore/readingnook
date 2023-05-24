@@ -112,7 +112,6 @@ textarea {
    width: 470px;
 }
 
-
 .posts {
    position: relative;
    margin-top: 15px;
@@ -126,9 +125,8 @@ textarea {
 .content {
    margin-left: 15px;
    max-height: 100px;
-   overflow-y: auto;
+   width: 300px;
 }
-
 
 .user>img {
    border: 1px solid;
