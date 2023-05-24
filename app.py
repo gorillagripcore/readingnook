@@ -240,8 +240,42 @@ def profile():
 
     book_isbn_list = [book_isbn[0] for book_isbn in review_book_isbn]
 
-    # Pass the book_cover_list variable to the HTML template rendering code
-    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list)
+    cursor.execute("SELECT isbn FROM want_to_read WHERE username = %s LIMIT 3;", (username,))
+    want_to_read_isbn = cursor.fetchall() 
+
+    isbn_list = [row[0] for row in want_to_read_isbn]
+
+    books = {}
+
+    for i, isbn in enumerate(isbn_list):
+        cursor.execute("SELECT cover FROM books WHERE isbn = %s;", (isbn,))
+        book = cursor.fetchone()
+
+        books[f"book{i+1}"] = book
+
+    book1 = books.get("book1")
+    book2 = books.get("book2")
+    book3 = books.get("book3")
+
+    cursor.execute("SELECT book_isbn FROM reviews WHERE username = %s LIMIT 3;", (username,))
+    read_isbn = cursor.fetchall() 
+
+    read_isbn_list = [row[0] for row in read_isbn]
+
+    read_books = {}
+
+    for i, isbn in enumerate(read_isbn_list):
+        cursor.execute("SELECT cover FROM books WHERE isbn = %s;", (isbn,))
+        read_book = cursor.fetchone()
+
+        read_books[f"read_book{i+1}"] = read_book
+
+    book4 = read_books.get("read_book1")
+    book5 = read_books.get("read_book2")
+    book6 = read_books.get("read_book3")
+    
+
+    return render_template('profile.html', username=username, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list, book1=book1, book2=book2, book3=book3, book4=book4, book5=book5, book6=book6)
 
 
 @app.route('/your_club')
@@ -788,10 +822,13 @@ def book(book_isbn):
     cursor.execute("SELECT * FROM reviews WHERE username=%s and book_isbn=%s", (username, book_isbn))
     reviews = cursor.fetchone()
 
+    cursor.execute("SELECT isbn FROM want_to_read WHERE username=%s and isbn=%s", (username, book_isbn))
+    want_to_read = cursor.fetchone()
+
     conn.commit()
     cursor.close()
 
-    return render_template('books.html', book_isbn=book_isbn, book=book, author_name=author_name, reviews=reviews)
+    return render_template('books.html', book_isbn=book_isbn, book=book, author_name=author_name, reviews=reviews, want_to_read=want_to_read)
 
 @app.route('/review_book/<int:book_isbn>', methods=['POST'])
 def review_book(book_isbn):
@@ -805,6 +842,17 @@ def review_book(book_isbn):
 
     cursor.execute("INSERT INTO reviews (username, book_isbn, rating, comment, date) VALUES (%s, %s, %s, %s, %s)", (username, book_isbn, rating, review_comment, datetime.now()))
 
+    conn.commit()
+
+    return redirect(url_for('book', book_isbn=book_isbn))
+
+@app.route('/want_to_read/<int:book_isbn>')
+def want_to_read(book_isbn):
+    book_isbn=book_isbn
+    username = session['username']
+
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("INSERT INTO public.want_to_read(username, isbn) VALUES (%s, %s);", (username, book_isbn))
     conn.commit()
 
     return redirect(url_for('book', book_isbn=book_isbn))

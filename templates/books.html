@@ -49,12 +49,14 @@
                 <div class="col mx-auto book_description">
                     <p>{{book[5]}}</p>
                 </div>
-                <!--
-                <div>
-                    <input type="submit" value="Want to read" id="want_to_read_button">
-                </div>-->
 
                 {% if reviews == None: %}
+
+                    {% if want_to_read == None:%}
+                    <a href="{{ url_for('want_to_read', book_isbn=book_isbn) }}">
+                        <button class="want_to_read">Want To Read</button>
+                    </a>    
+                    {% endif %}              
                 <button class="open_button" onclick="openForm()">Review</button>
 
                 <div class="review_form-popup" id="review_form">

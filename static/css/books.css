@@ -82,7 +82,19 @@
     border: 1px solid #c8ebf7;
     border-radius: 6px;
     margin-top: 80px;
-    margin-left: 270px;
+    margin-left: 290px;
+}
+
+.want_to_read{
+    position: absolute;
+    font-size: 15px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #c8ebf7;
+    border: 1px solid #c8ebf7;
+    margin-top: 80px;
+    border-radius: 6px;
+    margin-left: 140px;
 }
 
 .open_button:hover {
