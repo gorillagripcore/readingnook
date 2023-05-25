@@ -154,6 +154,11 @@
     padding: 5px;
 }
 
+#no_reviews{
+    margin-top: 100px;
+    color: #747474;
+}
+
 .home_icon{
     margin-top: 10px;
     margin-left: 80px;

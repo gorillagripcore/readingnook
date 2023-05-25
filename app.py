@@ -32,6 +32,10 @@ def home():
     location = ''
     value = ''
     goal_type = ''
+    book_covers = []
+    user_profile_pics = []
+    review_book_isbns = []
+    reviews = None
     
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -77,25 +81,23 @@ def home():
             value = value_row[0]
         else:
             value = None
+        
+        cursor.execute("SELECT * FROM reviews JOIN users ON reviews.username=users.username JOIN in_club ON in_club.username = users.username WHERE in_club.book_club=%s ORDER BY date DESC", (club_name))
+        reviews = cursor.fetchall()
+        if reviews is not None:
+            cursor.execute("SELECT books.cover, users.pfp, reviews.book_isbn FROM books JOIN reviews ON books.isbn=reviews.book_isbn JOIN users ON reviews.username=users.username JOIN in_club ON in_club.username = users.username WHERE in_club.book_club=%s ORDER BY reviews.date DESC", (club_name))
+            book_cover_rows = cursor.fetchall()
+
+            for row in book_cover_rows:
+                book_cover = row[0]
+                user_profile_pic = row[1]
+                review_book_isbn = row[2]
+                book_covers.append(book_cover)
+                user_profile_pics.append(user_profile_pic)
+                review_book_isbns.append(review_book_isbn)
+    
     else:
         user_in_club = None
-    
-    cursor.execute("SELECT * FROM reviews ORDER BY date DESC")
-    reviews = cursor.fetchall()
-
-    cursor.execute("SELECT books.cover, users.pfp, reviews.book_isbn FROM books JOIN reviews ON books.isbn=reviews.book_isbn JOIN users ON reviews.username=users.username order by reviews.date desc")
-    book_cover_rows = cursor.fetchall()
-
-    book_covers = []
-    user_profile_pics = []
-    review_book_isbns = []
-    for row in book_cover_rows:
-        book_cover = row[0]
-        user_profile_pic = row[1]
-        review_book_isbn = row[2]
-        book_covers.append(book_cover)
-        user_profile_pics.append(user_profile_pic)
-        review_book_isbns.append(review_book_isbn)
 
 # Render the template and pass the necessary data
     return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews, book_covers=book_covers, user_profile_pics=user_profile_pics, review_book_isbns=review_book_isbns)
