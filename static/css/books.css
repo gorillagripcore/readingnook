@@ -104,11 +104,14 @@
 
 /* fix so the form doesn't move */
 #review_form {
-    display: none;
+    width: 500px;
+    margin: 0;
     position: fixed;
-    right: 600px;
-    top: 75px;
+    top: 18.2em;
+    left: 56%;
+    transform: translate(-50%, -50%);
     border: 1px solid #c3c3c3;
+    border-radius: 5px;
     z-index: 1;
 }
 
