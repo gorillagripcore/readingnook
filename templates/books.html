@@ -71,7 +71,7 @@
                             placeholder="Write here..." required></textarea>
 
                         <label for="rating"><b>Rating</b></label>
-                        <select name="rating" id="rating" required>
+                        <select name="rating" required>
                             <option value="">--Select--</option>
                             <option value="1">(1) Very bad</option>
                             <option value="2">(2) Bad</option>
@@ -99,8 +99,7 @@
                             placeholder="Write here..." required>{{ reviews[3] }}</textarea>
 
                         <label for="rating"><b>Rating</b></label>
-                        <select name="rating" id="rating" required>
-                            <option value="">--Select--</option>
+                        <select name="rating" id="edit_rating" required>
                             <option value="1">(1) Very bad</option>
                             <option value="2">(2) Bad</option>
                             <option value="3">(3) OK</option>
@@ -119,6 +118,7 @@
     <script>
         function openForm() {
             document.getElementById("review_form").style.display = "block";
+            document.getElementById("edit_rating").value="{{ reviews[2] }}";
         }
 
         function closeForm() {
