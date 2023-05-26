@@ -70,10 +70,12 @@
       {% else %}
       {% for review in reviews %}
       <div class="col-6 col-sm-3 mx-auto posts">
+        <a href="{{ url_for('profiles', users=users_name[loop.index0]) }}" class="user_profile">
         <div class="user user_post">
           <img src="{{ user_profile_pics[loop.index0] }}" alt="">
           <p>{{ review[0] }}</p>
         </div>
+        </a>
         <div class="star_container">
           <div class="star">
             {% for _ in range(review[2]) %}

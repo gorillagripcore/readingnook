@@ -102,8 +102,8 @@
     transition: 0.3s;
 }
 
-/* fix so the form doesn't move */
 #review_form {
+    display: none;
     width: 500px;
     margin: 0;
     position: fixed;

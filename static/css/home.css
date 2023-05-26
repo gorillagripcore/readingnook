@@ -75,6 +75,14 @@
     margin-left: 10px;
     margin-top: 10px;
 }
+.user>p:hover{
+    color: #5c4f47;
+}
+
+.user_profile{
+    color: #000;
+    text-decoration: none;
+}
 
 .user_post {
     display: flex;
