@@ -52,23 +52,23 @@
 
                 {% if reviews == None: %}
 
-                    {% if want_to_read == None:%}
-                    <a href="{{ url_for('want_to_read', book_isbn=book_isbn) }}">
-                        <button class="want_to_read">Want To Read</button>
-                    </a>    
-                    {% endif %}              
-                <button class="open_button" onclick="openForm()">Review</button>
+                {% if want_to_read == None:%}
+                <a href="{{ url_for('want_to_read', book_isbn=book_isbn) }}">
+                    <button class="want_to_read">Want To Read</button>
+                </a>
+                {% endif %}
+                <button class="open_button" onclick="open_form()">Review</button>
 
                 <div class="review_form-popup" id="review_form">
                     <form action="/review_book/{{ book_isbn }}" method="POST" class="review_form_container">
-                        <div class="form_row">
+                        <div class="review_form_row">
                             <h3>Review</h3>
-                            <button type="button" id="cancel_button" onclick="closeForm()">&times;</button>
+                            <button type="button" id="cancel_form_button" onclick="close_form()">&times;</button>
                         </div>
 
                         <label for="review_comment"><b>Your comment</b></label>
-                        <textarea name="review_comment" cols="30" rows="5" maxlength="250"
-                            placeholder="Write here..." required></textarea>
+                        <textarea name="review_comment" cols="30" rows="4" maxlength="250" placeholder="Write here..."
+                            required></textarea>
 
                         <label for="rating"><b>Rating</b></label>
                         <select name="rating" required>
@@ -85,18 +85,18 @@
                 </div>
 
                 {% else: %}
-                <button class="open_button" onclick="openForm()">Edit review</button>
+                <button class="open_button" onclick="open_form()">Edit review</button>
 
                 <div class="review_form-popup" id="review_form">
                     <form action="/edit_review/{{ book_isbn }}" method="POST" class="review_form_container">
-                        <div class="form_row">
+                        <div class="review_form_row">
                             <h3>Review</h3>
-                            <button type="button" id="cancel_button" onclick="closeForm()">&times;</button>
+                            <button type="button" id="cancel_form_button" onclick="close_form()">&times;</button>
                         </div>
 
                         <label for="review_comment"><b>Your comment</b></label>
-                        <textarea name="review_comment" cols="30" rows="5" maxlength="250"
-                            placeholder="Write here..." required>{{ reviews[3] }}</textarea>
+                        <textarea name="review_comment" cols="30" rows="4" maxlength="250" placeholder="Write here..."
+                            required>{{ reviews[3] }}</textarea>
 
                         <label for="rating"><b>Rating</b></label>
                         <select name="rating" id="edit_rating" required>
@@ -107,7 +107,10 @@
                             <option value="5">(5) Very good</option>
                         </select>
 
-                        <button type="submit" class="btn">Submit</button>
+                        <button type="submit" name="submit_edit" value="submit_edit" class="btn"
+                            id="submit_edit">Submit</button>
+                        <button type="submit" name="delete_review" value="delete_review" onclick="confirm_delete()"
+                            class="btn" id="delete_review">Delete</button>
                     </form>
                 </div>
                 {% endif %}
@@ -116,13 +119,19 @@
     </div>
 
     <script>
-        function openForm() {
+        function open_form() {
             document.getElementById("review_form").style.display = "block";
-            document.getElementById("edit_rating").value="{{ reviews[2] }}";
+            document.getElementById("edit_rating").value = "{{ reviews[2] }}";
         }
 
-        function closeForm() {
+        function close_form() {
             document.getElementById("review_form").style.display = "none";
         }
+
+        function confirm_delete() {
+            var confirm_delete = confirm('Are you sure that you want to delete your review?');
+            return confirm_delete;
+        }
+
     </script>
 </body>

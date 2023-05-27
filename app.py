@@ -903,14 +903,22 @@ def want_to_read(book_isbn):
 def edit_review(book_isbn):
     username = session['username']
 
-    review_comment = request.form['review_comment']
-    rating = request.form['rating']
+    if request.form.get('submit_edit'):
+        review_comment = request.form['review_comment']
+        rating = request.form['rating']
 
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-    cursor.execute("UPDATE reviews SET rating=%s, comment=%s, date=%s WHERE username=%s and book_isbn=%s", (rating, review_comment, datetime.now(), username, book_isbn))
+        cursor.execute("UPDATE reviews SET rating=%s, comment=%s, date=%s WHERE username=%s and book_isbn=%s", (rating, review_comment, datetime.now(), username, book_isbn))
 
-    conn.commit()
+        conn.commit()
+
+    elif request.form.get('delete_review'):
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute("DELETE FROM reviews WHERE username=%s and book_isbn=%s", (username, book_isbn))
+
+        conn.commit()
 
     return redirect(url_for('book', book_isbn=book_isbn))
 
