@@ -109,8 +109,8 @@
 
                         <button type="submit" name="submit_edit" value="submit_edit" class="btn"
                             id="submit_edit">Submit</button>
-                        <button type="submit" name="delete_review" value="delete_review" onclick="confirm_delete()"
-                            class="btn" id="delete_review">Delete</button>
+                        <button type="submit" name="delete_review" value="delete_review"
+                            onclick="return confirm_delete()" class="btn" id="delete_review">Delete</button>
                     </form>
                 </div>
                 {% endif %}
@@ -129,9 +129,7 @@
         }
 
         function confirm_delete() {
-            var confirm_delete = confirm('Are you sure that you want to delete your review?');
-            return confirm_delete;
+            return confirm('Are you sure that you want to delete your review?');
         }
-
     </script>
 </body>
