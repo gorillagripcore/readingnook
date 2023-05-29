@@ -79,6 +79,57 @@
 
                 <hr>
 
+                <div class="container text-center">
+                    <div class="row">
+                      <div class="col widget read">
+                        <a href="{{ url_for('want_to_read_page') }}">
+                          <p>Want To Read</p>
+                          <div class="read_books">
+                            {% if book1 == None:%}
+                            <img src="https://cdn.discordapp.com/attachments/1078973373608112128/1110915428793987132/nobooktoview.png" alt="book1">
+                            {% else: %}
+                            <img src="{{ book1['cover'] }}" alt="book1">
+                            {% endif %}
+                            {% if book2 == None:%}
+                            <img src="https://cdn.discordapp.com/attachments/1078973373608112128/1110915428793987132/nobooktoview.png" alt="book2">
+                            {% else: %}
+                            <img src="{{ book2['cover'] }}" alt="book2">
+                            {% endif %}
+                            {% if book3 == None:%}
+                            <img src="https://cdn.discordapp.com/attachments/1078973373608112128/1110915428793987132/nobooktoview.png" alt="book3">
+                            {% else: %}
+                            <img src="{{ book3['cover'] }}" alt="book3">
+                            {% endif %}
+                          </div>
+                        </a>
+                      </div>
+                      <div class="col widget read">
+                        <a href="{{ url_for('read_page') }}">
+                          <p>Read</p>
+                          <div class="read_books">
+                            {% if book4 == None:%}
+                            <img src="https://cdn.discordapp.com/attachments/1078973373608112128/1110915428793987132/nobooktoview.png" alt="book4">
+                            {% else: %}
+                            <img src="{{ book4['cover'] }}" alt="book4">
+                            {% endif %}
+                            {% if book5 == None:%}
+                            <img src="https://cdn.discordapp.com/attachments/1078973373608112128/1110915428793987132/nobooktoview.png" alt="book5">
+                            {% else: %}
+                            <img src="{{ book5['cover'] }}" alt="book5">
+                            {% endif %}
+                            {% if book6 == None:%}
+                            <img src="https://cdn.discordapp.com/attachments/1078973373608112128/1110915428793987132/nobooktoview.png" alt="book6">
+                            {% else: %}
+                            <img src="{{ book6['cover'] }}" alt="book3">
+                            {% endif %}
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+        
+                <hr>
+
                 <!--Hela denna ska bli till en forloop-->
                 {% for review in reviews %}
                 <div class="col-6 col-sm-3 mx-auto posts" style="width: 500px;">

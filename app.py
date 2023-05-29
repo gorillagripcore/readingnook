@@ -1001,10 +1001,44 @@ def profiles(users):
 
     book_isbn_list = [book_isbn[0] for book_isbn in review_book_isbn]
 
+    cursor.execute("SELECT isbn FROM want_to_read WHERE username = %s LIMIT 3;", (users,))
+    want_to_read_isbn = cursor.fetchall() 
+
+    isbn_list = [row[0] for row in want_to_read_isbn]
+
+    books = {}
+
+    for i, isbn in enumerate(isbn_list):
+        cursor.execute("SELECT cover FROM books WHERE isbn = %s;", (isbn,))
+        book = cursor.fetchone()
+
+        books[f"book{i+1}"] = book
+
+    book1 = books.get("book1")
+    book2 = books.get("book2")
+    book3 = books.get("book3")
+
+    cursor.execute("SELECT book_isbn FROM reviews WHERE username = %s LIMIT 3;", (users,))
+    read_isbn = cursor.fetchall() 
+
+    read_isbn_list = [row[0] for row in read_isbn]
+
+    read_books = {}
+
+    for i, isbn in enumerate(read_isbn_list):
+        cursor.execute("SELECT cover FROM books WHERE isbn = %s;", (isbn,))
+        read_book = cursor.fetchone()
+
+        read_books[f"read_book{i+1}"] = read_book
+
+    book4 = read_books.get("read_book1")
+    book5 = read_books.get("read_book2")
+    book6 = read_books.get("read_book3")
+
     if username == users:
         return redirect(url_for('profile'))
     else:
-        return render_template('profiles.html',  users=users, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list)
+        return render_template('profiles.html',  users=users, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list, book1=book1, book2=book2, book3=book3, book4=book4, book5=book5, book6=book6)
 
 vote_count_1 = 0
 vote_count_2 = 0
