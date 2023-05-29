@@ -20,7 +20,7 @@
 <body>
     {% include 'navbar.html' %}
 
-    <div class="container text-center" style="margin-top: 100px;">
+    <div class="container" style="margin-top: 100px;">
         <div class="row">
             <div class="col">
                 <!--Empty box-->
@@ -28,7 +28,7 @@
             <div class="col">
                 {% for index in range(users|length) %}
                 <a href="{{ url_for('profiles', users=users[index]) }}" class="a">
-                    <div class="container text-center">
+                    <div class="container">
                         <div class="row users_card">
                             <div class="col-3" class="pic_box">
                                 <img src="{{ users_info[index][0]  }}" alt="Profile Picture" class="pic">

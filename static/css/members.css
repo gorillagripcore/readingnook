@@ -4,7 +4,9 @@
 
 .user_info{
     float: left;
+    width: 190px;
 }
+
 
 .users_card{
     background-color: #fefbf7;
@@ -22,8 +24,4 @@
     width:80px;
     height: 80px;
     float: left;
-}
-
-.info_box h4{
-    margin-right: 120px;
 }
