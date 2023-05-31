@@ -1,0 +1,49 @@
+input[type="submit"]{
+   width: 70px;
+   height: 40px;
+   margin-bottom: 20px;
+   border-radius: 10px;
+   border-style: solid;
+   border-color: #c8ebf7;
+   background-color: #c8ebf7;
+    font-size: 15px;
+}
+
+input[type="radio"]{
+   text-align:center;
+   margin:auto;
+   display:block;
+   margin-top:10px;
+}
+
+#content{
+   width: 600px;
+   margin:0 auto 25px auto;
+   overflow: hidden;
+   background-color: #fefbf7;
+   border-radius:25px;
+   margin-top: 100px;
+   padding: 30px;
+   border-width: 1px;
+   border-style: solid;
+   border-color: #bdbdbd;
+}
+
+.poll_choice{
+   padding: 10px;
+   margin: 20px;
+   margin-left: 35px;
+   float:left;
+   text-align:center;
+   background-color: #faf6f0;
+   border-radius: 25px;
+   border-width: 1px;
+   border-style: solid;
+   border-color: #bdbdbd;
+}
+
+img{
+    border-radius: 10px;
+    width: 190px;
+    height: 290px;
+}

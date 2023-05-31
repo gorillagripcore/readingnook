@@ -404,10 +404,29 @@ def your_club():
         else:
             value = None
 
+        cursor.execute('SELECT book_club, book_1, book_2, poll_id FROM public."Poll" WHERE book_club = %s', (club_name[0],))
+        polls = cursor.fetchall()
+
+        covers = []
+
+        for poll in polls:
+            book_1 = poll[1]
+            book_2 = poll[2]
+
+            cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_1,))
+            cover_book_1 = cursor.fetchone()
+            cover_book_1_url = cover_book_1[0] if cover_book_1 else None  
+
+            cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_2,))
+            cover_book_2 = cursor.fetchone()
+            cover_book_2_url = cover_book_2[0] if cover_book_2 else None  
+
+            covers.append({'cover1': cover_book_1_url, 'cover2': cover_book_2_url})
+
         conn.commit()
         cursor.close()
 
-        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, book_of_the_month_isbn=book_of_the_month_isbn, location=location, date=date, time=time, goal_type=goal_type, value=value)
+        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, book_of_the_month_isbn=book_of_the_month_isbn, location=location, date=date, time=time, goal_type=goal_type, value=value,  polls=polls, covers=covers)
     else: 
         cursor.execute(
             "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
@@ -479,11 +498,31 @@ def your_club():
         else:
             value = None
 
+        cursor.execute('SELECT book_club, book_1, book_2, poll_id FROM public."Poll" WHERE book_club = %s', (club_name[0],))
+        polls = cursor.fetchall()
+
+        covers = []
+
+        for poll in polls:
+            book_1 = poll[1]
+            book_2 = poll[2]
+
+            cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_1,))
+            cover_book_1 = cursor.fetchone()
+            cover_book_1_url = cover_book_1[0] if cover_book_1 else None  
+
+            cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_2,))
+            cover_book_2 = cursor.fetchone()
+            cover_book_2_url = cover_book_2[0] if cover_book_2 else None  
+
+            covers.append({'cover1': cover_book_1_url, 'cover2': cover_book_2_url})
+
+
         conn.commit()
         cursor.close()
 
-        return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn, goal_type=goal_type, value=value)
-    
+    return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn, goal_type=goal_type, value=value, polls=polls, covers=covers)
+
 @app.route('/admin_suggestions', methods=['GET', 'POST'])
 def admin_suggestions():
     username = session['username']
@@ -1040,28 +1079,88 @@ def profiles(users):
     else:
         return render_template('profiles.html',  users=users, pfp=pfp, user_desc=user_desc, favorite_book=favorite_book, favorite_book_isbn=favorite_book_isbn, least_favorite_book=least_favorite_book, least_favorite_book_isbn=least_favorite_book_isbn, favorite_quote=favorite_quote, quote_book=quote_book, reviews=reviews, book_cover_list=book_cover_list, book_isbn_list=book_isbn_list, book1=book1, book2=book2, book3=book3, book4=book4, book5=book5, book6=book6)
 
-vote_count_1 = 0
-vote_count_2 = 0
 
-@app.route('/')
-def index():
-    count_1 = vote_count_1  # Use the variable directly instead of calling a function
-    count_2 = vote_count_2  # Use the variable directly instead of calling a function
+@app.route('/poll_page/<int:poll_id>', methods=['GET'])
+def poll_page(poll_id):
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("SELECT poll_id, username FROM public.voted where username = %s and poll_id = %s", (username, poll_id))
+    voted = cursor.fetchone()
 
-    return render_template('your_club.html', count_1=count_1, count_2=count_2)
+    cursor.execute("SELECT book_1 FROM public.\"Poll\" WHERE poll_id = %s", (poll_id,))
+    book_1 = cursor.fetchone()
+
+    cursor.execute("SELECT book_2 FROM public.\"Poll\" WHERE poll_id = %s", (poll_id,))
+    book_2 = cursor.fetchone()
+
+    cursor.execute("select cover from books where isbn = %s", (book_1))
+    book_1_cover = cursor.fetchone()
+
+    cursor.execute("select cover from books where isbn = %s", (book_2))
+    book_2_cover = cursor.fetchone()
+
+    cursor.execute("SELECT result_1 FROM public.\"Poll\" WHERE poll_id = %s", (poll_id,))
+    result_1 = cursor.fetchone()
+
+    cursor.execute("SELECT result_2 FROM public.\"Poll\" WHERE poll_id = %s", (poll_id,))
+    result_2 = cursor.fetchone()
+
+    print(poll_id)
+
+    if voted == None: 
+        pass
+    else:
+        pass
+        
+    return render_template('poll.html', voted=voted, book_1_cover=book_1_cover, book_2_cover=book_2_cover, poll_id=poll_id, result_1=result_1, result_2=result_2)
+
+@app.route('/vote/<int:poll_id>', methods=['POST'])
+def vote(poll_id):
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    selected_option = request.form.get('vote')
+
+    # Add that the user voted on it so that they can't vote again
+    cursor.execute("INSERT INTO public.voted(poll_id, username) VALUES (%s, %s);", (poll_id, username))
+
+    if selected_option == 'book_1':
+        cursor.execute("SELECT result_1 FROM public.\"Poll\" WHERE poll_id = %s;", (poll_id,))
+        result = cursor.fetchone()
+
+        if result is not None:
+            result = result['result_1'] + 1
+        else:
+            result = 1
+
+        cursor.execute("UPDATE public.\"Poll\" SET result_1 = %s WHERE poll_id = %s;", (result, poll_id))
+
+    elif selected_option == 'book_2':
+        cursor.execute("SELECT result_2 FROM public.\"Poll\" WHERE poll_id = %s;", (poll_id,))
+        result = cursor.fetchone()
+
+        if result is not None:
+            result = result['result_2'] + 1
+        else:
+            result = 1
+
+        cursor.execute("UPDATE public.\"Poll\" SET result_2 = %s WHERE poll_id = %s;", (result, poll_id))
+
+    return redirect(url_for('poll_page', poll_id=poll_id))
 
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    global vote_count_1, vote_count_2
-    if request.method == 'POST':
-        selected_poll_box = request.form['poll_box']
-        if selected_poll_box == 'poll_box_1':
-            vote_count_1 += 1
-        elif selected_poll_box == 'poll_box_2':
-            vote_count_2 += 1
-    return render_template('your_club.html', count_1=vote_count_1, count_2=vote_count_2)
 
+@app.route('/create_poll')
+def create_poll():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute('SELECT book_club FROM in_club WHERE username = %s', (username,))
+    book_club_row = cursor.fetchone()
+    if book_club_row is not None:
+        book_club = book_club_row[0]
+    else:
+        book_club = None
+  
+    return render_template('create_poll.html', book_club=book_club, )
 
 if __name__ == "__main__":
     app.run(debug=True)

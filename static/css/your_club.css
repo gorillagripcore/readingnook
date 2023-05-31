@@ -256,4 +256,12 @@ img {
 .poll_box.selected {
     border: 2px solid rgb(0, 0, 0);
 }
+
+.poll_cards{
+    width: 280px;
+    background-color: #faf6f0;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 10px;
+}
   
