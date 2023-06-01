@@ -10,3 +10,6 @@
 # To view the webiste
 1. open app.py and run it
 2. in your browser go to http://127.0.0.1:5000
+
+# Is hosted here: 
+- https://reading--nook.herokuapp.com/login/
