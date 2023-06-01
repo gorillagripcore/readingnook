@@ -20,52 +20,81 @@
 <body>
     {% include 'navbar.html' %}
 
-    {%if voted == None%}
-    <div class="container text-center">
-        <div class="row">
-            <div id="content">
-                <form action="/vote/{{ poll_id }}" method="post">
-                    <!-- Update form action -->
-                    <div class="poll_choice">
-                        <label for="book_1_radio">
-                            <img src="{{ book_1_cover[0] }}">
-                        </label>
-                        <input type="radio" name="vote" value="book_1" id="book_1_radio">
-                    </div>
-                    <div class="poll_choice">
-                        <label for="book_2_radio">
-                            <img src="{{ book_2_cover[0] }}">
-                        </label>
-                        <input type="radio" name="vote" value="book_2" id="book_2_radio">
-                    </div>
-                    <input type="hidden" name="poll_id" value="{{ poll_id }}">
-                    <input type="submit" value="Vote">
-                </form>
-            </div>
-        </div>
-    </div>
-    {%else%}
-    <div class="container text-center">
-        <div class="row">
-            <div id="content">
-                <form>
-                    <div class="poll_choice">
-                        <label>
-                            <img src="{{ book_1_cover[0] }}">
-                        </label>
-                        <p>{{result_1[0]}}</p>
-                    </div>
-                    <div class="poll_choice">
-                        <label >
-                            <img src="{{ book_2_cover[0] }}">
-                        </label>
-                        <p>{{result_2[0]}}</p>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    {% if ongoing != None %}
 
+        {%if voted == None%}
+        <div class="container text-center">
+            <div class="row">
+                <div id="content">
+                    <form action="/vote/{{ poll_id }}" method="post">
+                        <div class="poll_choice">
+                            <label for="book_1_radio">
+                                <img src="{{ book_1_cover[0] }}">
+                            </label>
+                            <input type="radio" name="vote" value="book_1" id="book_1_radio">
+                        </div>
+                        <div class="poll_choice">
+                            <label for="book_2_radio">
+                                <img src="{{ book_2_cover[0] }}">
+                            </label>
+                            <input type="radio" name="vote" value="book_2" id="book_2_radio">
+                        </div>
+                        <input type="hidden" name="poll_id" value="{{ poll_id }}">
+                        <input type="submit" value="Vote">
+                    </form>
+                </div>
+            </div>
+        </div>
+            {%if owner != None%}
+            <div class="container text-center">
+                <form action="/endvote/{{ poll_id }}" method="post">
+                    <input type="submit" value="End Vote">
+                </form>
+            </div>
+            {%endif%}
+        {%else%}
+        <div class="container text-center">
+            <div class="row">
+                <div id="content">
+                    <form>
+                        <div class="poll_choice">
+                            <label>
+                                <img src="{{ book_1_cover[0] }}">
+                            </label>
+                            <p>{{result_1[0]}}</p>
+                        </div>
+                        <div class="poll_choice">
+                            <label >
+                                <img src="{{ book_2_cover[0] }}">
+                            </label>
+                            <p>{{result_2[0]}}</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {%endif%}  
+    {%else%}
+        <div class="container text-center">
+            <div class="row">
+                <div id="content">
+                    <form>
+                        <div class="poll_choice">
+                            <label>
+                                <img src="{{ book_1_cover[0] }}">
+                            </label>
+                            <p>{{result_1[0]}}</p>
+                        </div>
+                        <div class="poll_choice">
+                            <label >
+                                <img src="{{ book_2_cover[0] }}">
+                            </label>
+                            <p>{{result_2[0]}}</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
     {%endif%}   
         
 

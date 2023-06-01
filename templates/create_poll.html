@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/books.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/poll.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@300&display=swap" rel="stylesheet">
@@ -19,5 +19,30 @@
 
 <body>
     {% include 'navbar.html' %}
+    <div class="container text-center">
+        <div class="row">
+          <div class="col">
 
-    
+          </div>
+          <div class="col">
+            <div class="create_poll_form">
+                <form class="form-group" action="{{ url_for('create_poll_submit') }}" method="post">
+                    <input type="text" class="form-control" name="book_1" style="margin-bottom: 20px;"
+                      placeholder="Enter first book" id="book_1" required>
+
+                    <input type="text" class="form-control" name="book_2" placeholder="Enter second book"
+                      id="book_2" required>
+
+                    <input type="submit" value="Submit" class="form-control btn" name="submitpoll"
+                      style= "margin-top: 10px;">
+                </form>
+            </div>
+          </div>
+          <div class="col">
+
+          </div>
+        </div>
+      </div>
+  
+</body>
+</html>

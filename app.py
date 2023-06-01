@@ -329,199 +329,239 @@ def your_club():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     cursor.execute(
-        "SELECT owner FROM book_clubs WHERE owner=%s", (username,))
+        "SELECT owner FROM book_clubs WHERE owner = %s", (username,))
     owner = cursor.fetchone()
 
-    if owner is None:
+    print(owner)
 
-        cursor.execute(
-            "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
-        club_info = cursor.fetchone()
+    if owner is not None and owner['owner'] == username:
+            cursor.execute(
+                "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
+            club_info = cursor.fetchone()
 
-        cursor.execute(
-            "SELECT book_club from in_club WHERE username=%s", (username,))
-        club_name = cursor.fetchone()
+            cursor.execute(
+                "SELECT book_club from in_club WHERE username=%s", (username,))
+            club_name = cursor.fetchone()
 
-        cursor.execute(
-            'select count(username)from in_club where book_club = %s', (club_name))
-        members_row = cursor.fetchone()
-        if members_row is not None:
-            members = members_row[0]
-        else:
-            members = None
+            cursor.execute(
+                'select count(username)from in_club where book_club = %s', (club_name))
+            members_row = cursor.fetchone()
+            if members_row is not None:
+                members = members_row[0]
+            else:
+                members = None
 
-        cursor.execute(
-            'select cover from books join book_club_info on books.isbn=book_club_info.book_of_the_month where book_club_info.title = %s', (club_name))
-        book_of_the_month_row = cursor.fetchone()
-        if book_of_the_month_row is not None:
-            book_of_the_month = book_of_the_month_row[0]
-        else:
-            book_of_the_month = None
+            cursor.execute(
+                'select cover from books join book_club_info on books.isbn=book_club_info.book_of_the_month where book_club_info.title = %s', (club_name))
+            book_of_the_month_row = cursor.fetchone()
+            if book_of_the_month_row is not None:
+                book_of_the_month = book_of_the_month_row[0]
+            else:
+                book_of_the_month = None
 
-        cursor.execute(
-            'select book_of_the_month from book_club_info where title = %s', (club_name))
-        book_of_the_month_isbn_row = cursor.fetchone()
-        if book_of_the_month_isbn_row is not None:
-            book_of_the_month_isbn = book_of_the_month_isbn_row[0]
-        else:
-            book_of_the_month_isbn = None
+            cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
+            date_row = cursor.fetchone()
+            if date_row is not None:
+                date = date_row[0]
+            else:
+                date = None
 
-        cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
-        date_row = cursor.fetchone()
-        if date_row is not None:
-            date = date_row[0]
-        else:
-            date = None
+            cursor.execute('select time from book_club_info where title = %s', (club_name))
+            time_row = cursor.fetchone()
+            if time_row is not None:
+                time = time_row[0]
+            else:
+                time = None
+            
+            cursor.execute(
+                'select location from book_club_info where title = %s', (club_name))
+            location_row = cursor.fetchone()
+            if location_row is not None:
+                location = location_row[0]
+            else:
+                location = None
 
-        cursor.execute('select time from book_club_info where title = %s', (club_name))
-        time_row = cursor.fetchone()
-        if time_row is not None:
-            time = time_row[0]
-        else:
-            time = None
-        
-        cursor.execute(
-            'select location from book_club_info where title = %s', (club_name))
-        location_row = cursor.fetchone()
-        if location_row is not None:
-            location = location_row[0]
-        else:
-            location = None
+            cursor.execute(
+                'select book_of_the_month from book_club_info where title = %s', (club_name))
+            book_of_the_month_isbn_row = cursor.fetchone()
+            if book_of_the_month_isbn_row is not None:
+                book_of_the_month_isbn = book_of_the_month_isbn_row[0]
+            else:
+                book_of_the_month_isbn = None
 
-        cursor.execute(
-            'SELECT goal_type FROM public.goals where book_club = %s', (club_name))
-        goal_type_row = cursor.fetchone()
-        if goal_type_row is not None:
-            goal_type = goal_type_row[0]
-        else:
-            goal_type = None
+            cursor.execute(
+                'SELECT goal_type FROM public.goals where book_club = %s', (club_name))
+            goal_type_row = cursor.fetchone()
+            if goal_type_row is not None:
+                goal_type = goal_type_row[0]
+            else:
+                goal_type = None
 
-        cursor.execute(
-            'SELECT value FROM public.goals where book_club = %s', (club_name))
-        value_row = cursor.fetchone()
-        if value_row is not None:
-            value = value_row[0]
-        else:
-            value = None
+            cursor.execute(
+                'SELECT value FROM public.goals where book_club = %s', (club_name))
+            value_row = cursor.fetchone()
+            if value_row is not None:
+                value = value_row[0]
+            else:
+                value = None
 
-        cursor.execute('SELECT book_club, book_1, book_2, poll_id FROM public."Poll" WHERE book_club = %s', (club_name[0],))
-        polls = cursor.fetchall()
+            # Fetch ongoing polls
+            cursor.execute('SELECT book_club, book_1, book_2, poll_id FROM public."Poll" WHERE book_club = %s AND ongoing = True', (club_name[0],))
+            ongoing_polls = cursor.fetchall()
 
-        covers = []
+            ongoing_covers = []
 
-        for poll in polls:
-            book_1 = poll[1]
-            book_2 = poll[2]
+            for poll in ongoing_polls:
+                book_1 = poll[1]
+                book_2 = poll[2]
 
-            cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_1,))
-            cover_book_1 = cursor.fetchone()
-            cover_book_1_url = cover_book_1[0] if cover_book_1 else None  
+                cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_1,))
+                cover_book_1 = cursor.fetchone()
+                cover_book_1_url = cover_book_1[0] if cover_book_1 else None  
 
-            cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_2,))
-            cover_book_2 = cursor.fetchone()
-            cover_book_2_url = cover_book_2[0] if cover_book_2 else None  
+                cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_2,))
+                cover_book_2 = cursor.fetchone()
+                cover_book_2_url = cover_book_2[0] if cover_book_2 else None  
 
-            covers.append({'cover1': cover_book_1_url, 'cover2': cover_book_2_url})
+                ongoing_covers.append({'cover1': cover_book_1_url, 'cover2': cover_book_2_url})
 
-        conn.commit()
-        cursor.close()
+            # Fetch non-ongoing polls
+            cursor.execute('SELECT book_club, book_1, book_2, poll_id FROM public."Poll" WHERE book_club = %s AND ongoing = False', (club_name[0],))
+            non_ongoing_polls = cursor.fetchall()
 
-        return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, book_of_the_month_isbn=book_of_the_month_isbn, location=location, date=date, time=time, goal_type=goal_type, value=value,  polls=polls, covers=covers)
+            non_ongoing_covers = []
+
+            for poll in non_ongoing_polls:
+                book_1 = poll[1]
+                book_2 = poll[2]
+
+                cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_1,))
+                cover_book_1 = cursor.fetchone()
+                cover_book_1_url = cover_book_1[0] if cover_book_1 else None  
+
+                cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_2,))
+                cover_book_2 = cursor.fetchone()
+                cover_book_2_url = cover_book_2[0] if cover_book_2 else None  
+
+                non_ongoing_covers.append({'cover1': cover_book_1_url, 'cover2': cover_book_2_url})
+
+            return render_template('your_club_admin.html',username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn, goal_type=goal_type, value=value, ongoing_polls=ongoing_polls, ongoing_covers=ongoing_covers, non_ongoing_polls=non_ongoing_polls, non_ongoing_covers=non_ongoing_covers)
     else: 
-        cursor.execute(
-            "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
-        club_info = cursor.fetchone()
+            cursor.execute(
+                "SELECT * FROM book_clubs JOIN in_club ON book_clubs.title=in_club.book_club WHERE username=%s", (username,))
+            club_info = cursor.fetchone()
 
-        cursor.execute(
-            "SELECT book_club from in_club WHERE username=%s", (username,))
-        club_name = cursor.fetchone()
+            cursor.execute(
+                "SELECT book_club from in_club WHERE username=%s", (username,))
+            club_name = cursor.fetchone()
 
-        cursor.execute(
-            'select count(username)from in_club where book_club = %s', (club_name))
-        members_row = cursor.fetchone()
-        if members_row is not None:
-            members = members_row[0]
-        else:
-            members = None
+            cursor.execute(
+                'select count(username)from in_club where book_club = %s', (club_name))
+            members_row = cursor.fetchone()
+            if members_row is not None:
+                members = members_row[0]
+            else:
+                members = None
 
-        cursor.execute(
-            'select cover from books join book_club_info on books.isbn=book_club_info.book_of_the_month where book_club_info.title = %s', (club_name))
-        book_of_the_month_row = cursor.fetchone()
-        if book_of_the_month_row is not None:
-            book_of_the_month = book_of_the_month_row[0]
-        else:
-            book_of_the_month = None
+            cursor.execute(
+                'select cover from books join book_club_info on books.isbn=book_club_info.book_of_the_month where book_club_info.title = %s', (club_name))
+            book_of_the_month_row = cursor.fetchone()
+            if book_of_the_month_row is not None:
+                book_of_the_month = book_of_the_month_row[0]
+            else:
+                book_of_the_month = None
 
-        cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
-        date_row = cursor.fetchone()
-        if date_row is not None:
-            date = date_row[0]
-        else:
-            date = None
+            cursor.execute(
+                'select book_of_the_month from book_club_info where title = %s', (club_name))
+            book_of_the_month_isbn_row = cursor.fetchone()
+            if book_of_the_month_isbn_row is not None:
+                book_of_the_month_isbn = book_of_the_month_isbn_row[0]
+            else:
+                book_of_the_month_isbn = None
 
-        cursor.execute('select time from book_club_info where title = %s', (club_name))
-        time_row = cursor.fetchone()
-        if time_row is not None:
-            time = time_row[0]
-        else:
-            time = None
-        
-        cursor.execute(
-            'select location from book_club_info where title = %s', (club_name))
-        location_row = cursor.fetchone()
-        if location_row is not None:
-            location = location_row[0]
-        else:
-            location = None
+            cursor.execute('select meeting_date from book_club_info where title = %s', (club_name))
+            date_row = cursor.fetchone()
+            if date_row is not None:
+                date = date_row[0]
+            else:
+                date = None
 
-        cursor.execute(
-            'select book_of_the_month from book_club_info where title = %s', (club_name))
-        book_of_the_month_isbn_row = cursor.fetchone()
-        if book_of_the_month_isbn_row is not None:
-            book_of_the_month_isbn = book_of_the_month_isbn_row[0]
-        else:
-            book_of_the_month_isbn = None
+            cursor.execute('select time from book_club_info where title = %s', (club_name))
+            time_row = cursor.fetchone()
+            if time_row is not None:
+                time = time_row[0]
+            else:
+                time = None
+            
+            cursor.execute(
+                'select location from book_club_info where title = %s', (club_name))
+            location_row = cursor.fetchone()
+            if location_row is not None:
+                location = location_row[0]
+            else:
+                location = None
 
-        cursor.execute(
-            'SELECT goal_type FROM public.goals where book_club = %s', (club_name))
-        goal_type_row = cursor.fetchone()
-        if goal_type_row is not None:
-            goal_type = goal_type_row[0]
-        else:
-            goal_type = None
+            cursor.execute(
+                'SELECT goal_type FROM public.goals where book_club = %s', (club_name))
+            goal_type_row = cursor.fetchone()
+            if goal_type_row is not None:
+                goal_type = goal_type_row[0]
+            else:
+                goal_type = None
 
-        cursor.execute(
-            'SELECT value FROM public.goals where book_club = %s', (club_name))
-        value_row = cursor.fetchone()
-        if value_row is not None:
-            value = value_row[0]
-        else:
-            value = None
+            cursor.execute(
+                'SELECT value FROM public.goals where book_club = %s', (club_name))
+            value_row = cursor.fetchone()
+            if value_row is not None:
+                value = value_row[0]
+            else:
+                value = None
 
-        cursor.execute('SELECT book_club, book_1, book_2, poll_id FROM public."Poll" WHERE book_club = %s', (club_name[0],))
-        polls = cursor.fetchall()
+            # Fetch ongoing polls
+            cursor.execute('SELECT book_club, book_1, book_2, poll_id FROM public."Poll" WHERE book_club = %s AND ongoing = True', (club_name[0],))
+            ongoing_polls = cursor.fetchall()
 
-        covers = []
+            ongoing_covers = []
 
-        for poll in polls:
-            book_1 = poll[1]
-            book_2 = poll[2]
+            for poll in ongoing_polls:
+                book_1 = poll[1]
+                book_2 = poll[2]
 
-            cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_1,))
-            cover_book_1 = cursor.fetchone()
-            cover_book_1_url = cover_book_1[0] if cover_book_1 else None  
+                cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_1,))
+                cover_book_1 = cursor.fetchone()
+                cover_book_1_url = cover_book_1[0] if cover_book_1 else None  
 
-            cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_2,))
-            cover_book_2 = cursor.fetchone()
-            cover_book_2_url = cover_book_2[0] if cover_book_2 else None  
+                cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_2,))
+                cover_book_2 = cursor.fetchone()
+                cover_book_2_url = cover_book_2[0] if cover_book_2 else None  
 
-            covers.append({'cover1': cover_book_1_url, 'cover2': cover_book_2_url})
+                ongoing_covers.append({'cover1': cover_book_1_url, 'cover2': cover_book_2_url})
 
+            # Fetch non-ongoing polls
+            cursor.execute('SELECT book_club, book_1, book_2, poll_id FROM public."Poll" WHERE book_club = %s AND ongoing = False', (club_name[0],))
+            non_ongoing_polls = cursor.fetchall()
 
-        conn.commit()
-        cursor.close()
+            non_ongoing_covers = []
 
-    return render_template('your_club_admin.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn, goal_type=goal_type, value=value, polls=polls, covers=covers)
+            for poll in non_ongoing_polls:
+                book_1 = poll[1]
+                book_2 = poll[2]
+
+                cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_1,))
+                cover_book_1 = cursor.fetchone()
+                cover_book_1_url = cover_book_1[0] if cover_book_1 else None  
+
+                cursor.execute('SELECT cover FROM books WHERE isbn = %s', (book_2,))
+                cover_book_2 = cursor.fetchone()
+                cover_book_2_url = cover_book_2[0] if cover_book_2 else None  
+
+                non_ongoing_covers.append({'cover1': cover_book_1_url, 'cover2': cover_book_2_url})
+
+            conn.commit()
+            cursor.close()
+
+            return render_template('your_club.html', username=username, club_info=club_info, members=members, book_of_the_month=book_of_the_month, location=location, date=date, time=time, book_of_the_month_isbn=book_of_the_month_isbn, goal_type=goal_type, value=value, ongoing_polls=ongoing_polls, ongoing_covers=ongoing_covers, non_ongoing_polls=non_ongoing_polls, non_ongoing_covers=non_ongoing_covers)
+
 
 @app.route('/admin_suggestions', methods=['GET', 'POST'])
 def admin_suggestions():
@@ -1087,6 +1127,10 @@ def poll_page(poll_id):
     cursor.execute("SELECT poll_id, username FROM public.voted where username = %s and poll_id = %s", (username, poll_id))
     voted = cursor.fetchone()
 
+    #Checks if vote is not ongoing
+    cursor.execute("SELECT ongoing FROM public.\"Poll\" WHERE poll_id = %s and ongoing= True", (poll_id,))
+    ongoing = cursor.fetchone()
+
     cursor.execute("SELECT book_1 FROM public.\"Poll\" WHERE poll_id = %s", (poll_id,))
     book_1 = cursor.fetchone()
 
@@ -1105,14 +1149,10 @@ def poll_page(poll_id):
     cursor.execute("SELECT result_2 FROM public.\"Poll\" WHERE poll_id = %s", (poll_id,))
     result_2 = cursor.fetchone()
 
-    print(poll_id)
-
-    if voted == None: 
-        pass
-    else:
-        pass
+    cursor.execute("SELECT owner FROM book_clubs WHERE owner = %s", (username,))
+    owner = cursor.fetchone()
         
-    return render_template('poll.html', voted=voted, book_1_cover=book_1_cover, book_2_cover=book_2_cover, poll_id=poll_id, result_1=result_1, result_2=result_2)
+    return render_template('poll.html', voted=voted, book_1_cover=book_1_cover, book_2_cover=book_2_cover, poll_id=poll_id, result_1=result_1, result_2=result_2, ongoing=ongoing, username=username, owner=owner)
 
 @app.route('/vote/<int:poll_id>', methods=['POST'])
 def vote(poll_id):
@@ -1147,6 +1187,14 @@ def vote(poll_id):
 
     return redirect(url_for('poll_page', poll_id=poll_id))
 
+@app.route('/endvote/<int:poll_id>', methods=['POST'])
+def endvote(poll_id):
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    cursor.execute('UPDATE public."Poll" SET ongoing=false WHERE poll_id = %s;', (poll_id,))
+
+
+    return redirect(url_for('poll_page', poll_id=poll_id))
 
 
 @app.route('/create_poll')
@@ -1161,6 +1209,45 @@ def create_poll():
         book_club = None
   
     return render_template('create_poll.html', book_club=book_club, )
+
+@app.route('/create_poll_submit', methods=['POST'])
+def create_poll_submit():
+    username = session['username']
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute('SELECT title FROM book_clubs WHERE owner = %s', (username,))
+    book_club_row = cursor.fetchone()
+    if book_club_row is not None:
+        book_club = book_club_row[0]
+    else:
+        book_club = None
+
+    book_1 = request.form.get('book_1')
+    book_2 = request.form.get('book_2')
+
+    result_1 = 0
+    result_2 = 0
+    ongoing = True
+
+    cursor.execute('SELECT isbn FROM books where title = %s', (book_1,))
+    book_1_row = cursor.fetchone()
+    if book_1_row is not None:
+        book_1 = book_1_row['isbn']
+    else:
+        book_1 = None
+
+    cursor.execute('SELECT isbn FROM books where title = %s', (book_2,))
+    book_2_row = cursor.fetchone()
+    if book_2_row is not None:
+        book_2 = book_2_row['isbn']
+    else:
+        book_2 = None
+    
+    if book_1 and book_2 != None:
+         cursor.execute('INSERT INTO public.\"Poll\" (book_club, book_1, book_2, result_1, result_2, ongoing) VALUES (%s, %s, %s, %s, %s, %s);', (book_club, book_1, book_2, result_1, result_2, ongoing))
+    else: 
+        pass
+    return redirect(url_for('your_club'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

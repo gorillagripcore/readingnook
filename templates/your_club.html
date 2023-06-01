@@ -85,34 +85,56 @@
     <p>Polls</p>
   </div>
   
-  <div class="container text-center">
-    <div class="row">
-      <div class="col">
-       
-      </div>
-      <div class="col" style="margin-left: 100px;">
-        <div class="container text-center">
-
-            {% for poll in polls %}
-              {% set index = loop.index0 %}
-              <a href="/poll_page/{{ poll[3] }}">
-                <div class="row poll_cards">
-                  <div class="col">
-                    <img src="{{ covers[index].cover1 }}" style="width: 100px;">
-                  </div>
-                  <div class="col">
-                    <img src="{{ covers[index].cover2 }}" style="width: 100px;">
-                  </div>
-                </div>
-              </a>
-            {% endfor %}  
-        </div>
-      </div>
-      <div class="col">
-    
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+     
+    </div>
+    <div class="col">
+      <div class="container text-center">
+        <p>Ongoing</p>
+        {% for poll in ongoing_polls %}
+          {% set index = loop.index0 %}
+          <a href="/poll_page/{{ poll[3] }}">
+            <div class="row poll_cards">
+              <div class="col">
+                <img src="{{ ongoing_covers[index].cover1 }}" style="width: 100px;">
+              </div>
+              <div class="col">
+                <img src="{{ ongoing_covers[index].cover2 }}" style="width: 100px;">
+              </div>
+            </div>
+          </a>
+        {% endfor %}
       </div>
     </div>
+    
+    <div class="col" style="margin-left: 60px;">
+      <div class="container text-center">
+        <p>Finished</p>
+        {% for poll in non_ongoing_polls %}
+          {% set index = loop.index0 %}
+          <a href="/poll_page/{{ poll[3] }}">
+            <div class="row poll_cards">
+              <div class="col">
+                <img src="{{ non_ongoing_covers[index].cover1 }}" style="width: 100px;">
+              </div>
+              <div class="col">
+                <img src="{{ non_ongoing_covers[index].cover2 }}" style="width: 100px;">
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="col">
+  
+    </div>
   </div>
+</div>
+
+</div>
 
 
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>

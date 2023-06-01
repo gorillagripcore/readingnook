@@ -264,4 +264,24 @@ img {
     padding: 15px;
     border-radius: 10px;
 }
+
+.poll_cards img{
+    width: 100px;
+    height: 150px
+}
+
+.poll_btn{
+    width: 100px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #c8ebf7;
+    background-color: #c8ebf7;
+    padding: 7px;
+    color: #000000;
+    text-decoration: none;
+}
+
+
+
   
