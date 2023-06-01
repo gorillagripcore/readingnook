@@ -72,7 +72,14 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div>  
+            {%if owner != None%}
+            <div class="container text-center">
+                <form action="/endvote/{{ poll_id }}" method="post">
+                    <input type="submit" value="End Vote">
+                </form>
+            </div>
+            {%endif%}
         {%endif%}  
     {%else%}
         <div class="container text-center">
