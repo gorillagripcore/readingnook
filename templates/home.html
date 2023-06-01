@@ -36,34 +36,12 @@
         </svg>
         <p class="text-center if_none">No goals are set</p>
         {% else %}
-        <!-- change to checkbox? -->
         <p class="text-center">{{ goal_type }}: {{value}}</p>
         {% endif %}
       </div>
     </div>
 
     <div class="col home_container">
-      <!--
-      <div class="col-6 col-sm-3 mx-auto posts">
-        <div class="col user user_post">
-          <img src="https://i1.sndcdn.com/artworks-000081774154-2c17bp-t500x500.jpg" alt="">
-          <p>Chiyo-chichi</p>
-        </div>
-        <div class="col">
-          <p class="content">
-            Hello everyone! How are you? Fine, thank you!
-          </p>
-        </div>
-        <div class="col text-center">
-          <form action="POST">
-            <textarea placeholder="Add comment" style="width: 400px;"></textarea>
-            <br>
-            <input type="submit" value="Send" class="submit_button form-control btn">
-          </form>
-        </div>
-      </div>
-      -->
-
       {% if reviews==None or reviews|length == 0 %}
       <p class="text-center" id="no_reviews">No reviews has been made</p>
 
@@ -71,10 +49,10 @@
       {% for review in reviews %}
       <div class="col-6 col-sm-3 mx-auto posts">
         <a href="{{ url_for('profiles', users=users_name[loop.index0]) }}" class="user_profile">
-        <div class="user user_post">
-          <img src="{{ user_profile_pics[loop.index0] }}" alt="">
-          <p>{{ review[0] }}</p>
-        </div>
+          <div class="user user_post">
+            <img src="{{ user_profile_pics[loop.index0] }}" alt="">
+            <p>{{ review[0] }}</p>
+          </div>
         </a>
         <div class="star_container">
           <div class="star">
@@ -95,7 +73,7 @@
           </p>
         </div>
         <div class="col text-center">
-          <form action="POST">
+          <form action="#">
             <textarea placeholder="Add comment" class="add_comment" style="width: 400px;"></textarea>
             <input type="submit" value="Send" class="submit_button form-control btn">
           </form>
@@ -132,9 +110,7 @@
         {% else %}
         <h5 class="text-center meeting_date">{{ date }}</h5>
         <p class="text-center meeting_date">Time: {{ time }}</p>
-        <em>
-          <p class="text-center meeting_date">{{ location }}</p>
-        </em>
+        <p class="text-center meeting_date"><em>{{ location }}</em></p>
         {% endif %}
       </div>
     </div>
