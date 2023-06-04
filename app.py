@@ -797,6 +797,7 @@ def delete_club():
     cursor.execute("DELETE FROM public.book_club_info WHERE title = %s", (club_name))
     cursor.execute("DELETE FROM suggestion_box WHERE book_club = %s", (club_name))
     cursor.execute("DELETE FROM book_clubs WHERE owner = %s", (username,))
+    cursor.execute('DELETE FROM "Poll" WHERE book_club = %s', (club_name))
     conn.commit()
     return redirect(url_for('public_clubs'))
 
