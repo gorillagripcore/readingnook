@@ -147,6 +147,12 @@ textarea {
    max-width: 450px;
 }
 
+.content {
+   max-height: 100px;
+   overflow-y: auto;
+   width: 450px;
+}
+
 .submit_button {
    width: 60px;
    height: 32px;

@@ -84,7 +84,7 @@
     margin-left: 290px;
 }
 
-.want_to_read{
+.want_to_read {
     position: absolute;
     font-size: 15px;
     padding: 10px;
@@ -153,22 +153,23 @@
     opacity: 0.8;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: #bce0ec;
     transition: 0.3s;
 }
 
-#submit_edit{
+#submit_edit {
     width: 300px;
     margin-left: 19px;
 }
 
-#delete_review{
+#delete_review {
     width: 100px;
     background-color: #fcb0b0;
     margin-left: 19px;
 }
-#delete_review:hover{
+
+#delete_review:hover {
     background-color: #eb9696;
     transition: 0.3s;
 }

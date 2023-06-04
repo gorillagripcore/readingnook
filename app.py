@@ -102,7 +102,7 @@ def home():
     else:
         user_in_club = None
 
-# Render the template and pass the necessary data
+    # render the template and pass the necessary data
     return render_template('home.html', username=username, user_in_club=user_in_club, book_of_the_month=book_of_the_month, book_of_the_month_title=book_of_the_month_title, book_isbn=book_isbn, date=date, time=time, location=location, value=value, goal_type=goal_type, reviews=reviews, book_covers=book_covers, user_profile_pics=user_profile_pics, review_book_isbns=review_book_isbns, users_name=users_name)
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -236,7 +236,7 @@ def profile():
     cursor.execute("SELECT cover FROM books JOIN reviews ON books.isbn = reviews.book_isbn WHERE reviews.username = %s ORDER BY reviews.date DESC", (username,))
     book_covers = cursor.fetchall()
 
-    # Construct a list of book covers from the fetched result
+    # construct a list of book covers from the fetched result
     book_cover_list = [cover[0] for cover in book_covers]
 
     cursor.execute("SELECT book_isbn FROM reviews WHERE username = %s ORDER BY date DESC", (username,))

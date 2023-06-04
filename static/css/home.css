@@ -19,7 +19,7 @@
     text-align: center;
 }
 
-.club_goal>svg{
+.club_goal>svg {
     margin-top: 25px;
 }
 
@@ -32,7 +32,7 @@
     border: 1px solid #888;
 }
 
-.current_book>h6{
+.current_book>h6 {
     margin-top: 10px;
 }
 
@@ -75,11 +75,12 @@
     margin-left: 10px;
     margin-top: 10px;
 }
-.user>p:hover{
+
+.user>p:hover {
     color: #5c4f47;
 }
 
-.user_profile{
+.user_profile {
     color: #000;
     text-decoration: none;
 }
@@ -157,17 +158,17 @@
     margin-left: 15px;
 }
 
-.if_none{
+.if_none {
     color: #d3c6b4;
     padding: 5px;
 }
 
-#no_reviews{
+#no_reviews {
     margin-top: 100px;
     color: #747474;
 }
 
-.home_icon{
+.home_icon {
     margin-top: 10px;
     margin-left: 80px;
     width: 50px;
